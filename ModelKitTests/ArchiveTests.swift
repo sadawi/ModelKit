@@ -9,13 +9,13 @@
 import XCTest
 import ModelKit
 
-private class Pet: Model {
+fileprivate class Pet: Model {
     let id = Field<String>()
     let name = Field<String>()
     let owner = ModelField<Person>(key: "ownerID", foreignKey: true)
 }
 
-private class Person: Model {
+fileprivate class Person: Model {
     let id = Field<String>()
     let name = Field<String>()
     

@@ -14,6 +14,11 @@
 		220EF8BA1DF0992200B702CC /* RemoteRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8B41DF0992200B702CC /* RemoteRequestTests.swift */; };
 		220EF8BB1DF0992200B702CC /* ArchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8B51DF0992200B702CC /* ArchiveTests.swift */; };
 		220EF8BC1DF0992200B702CC /* TypeDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8B61DF0992200B702CC /* TypeDictionaryTests.swift */; };
+		220EF8C31DF099A000B702CC /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8BE1DF099A000B702CC /* Tests.swift */; };
+		220EF8C41DF099A000B702CC /* ArrayFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8BF1DF099A000B702CC /* ArrayFieldTests.swift */; };
+		220EF8C51DF099A000B702CC /* ObservationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8C01DF099A000B702CC /* ObservationTests.swift */; };
+		220EF8C61DF099A000B702CC /* TransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8C11DF099A000B702CC /* TransformerTests.swift */; };
+		220EF8C71DF099A000B702CC /* CustomFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8C21DF099A000B702CC /* CustomFieldTests.swift */; };
 		224F97F91DF095A5001E851F /* ModelKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224F97EF1DF095A5001E851F /* ModelKit.framework */; };
 		224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F97FD1DF095A5001E851F /* ModelKitTests.swift */; };
 		224F98001DF095A5001E851F /* ModelKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 224F97F21DF095A5001E851F /* ModelKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -69,6 +74,11 @@
 		220EF8B41DF0992200B702CC /* RemoteRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteRequestTests.swift; sourceTree = "<group>"; };
 		220EF8B51DF0992200B702CC /* ArchiveTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveTests.swift; sourceTree = "<group>"; };
 		220EF8B61DF0992200B702CC /* TypeDictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeDictionaryTests.swift; sourceTree = "<group>"; };
+		220EF8BE1DF099A000B702CC /* Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		220EF8BF1DF099A000B702CC /* ArrayFieldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayFieldTests.swift; sourceTree = "<group>"; };
+		220EF8C01DF099A000B702CC /* ObservationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationTests.swift; sourceTree = "<group>"; };
+		220EF8C11DF099A000B702CC /* TransformerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformerTests.swift; sourceTree = "<group>"; };
+		220EF8C21DF099A000B702CC /* CustomFieldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFieldTests.swift; sourceTree = "<group>"; };
 		224F97EF1DF095A5001E851F /* ModelKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModelKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		224F97F21DF095A5001E851F /* ModelKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelKit.h; sourceTree = "<group>"; };
 		224F97F31DF095A5001E851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -246,6 +256,32 @@
 			name = extensions;
 			sourceTree = "<group>";
 		};
+		220EF8BD1DF0998300B702CC /* models */ = {
+			isa = PBXGroup;
+			children = (
+				224F97FD1DF095A5001E851F /* ModelKitTests.swift */,
+				220EF8B11DF0992200B702CC /* APIKitTests.swift */,
+				220EF8B21DF0992200B702CC /* ModelTests.swift */,
+				220EF8B31DF0992200B702CC /* ArrayTests.swift */,
+				220EF8B41DF0992200B702CC /* RemoteRequestTests.swift */,
+				220EF8B51DF0992200B702CC /* ArchiveTests.swift */,
+				220EF8B61DF0992200B702CC /* TypeDictionaryTests.swift */,
+			);
+			name = models;
+			sourceTree = "<group>";
+		};
+		220EF8C81DF099A400B702CC /* fields */ = {
+			isa = PBXGroup;
+			children = (
+				220EF8BE1DF099A000B702CC /* Tests.swift */,
+				220EF8BF1DF099A000B702CC /* ArrayFieldTests.swift */,
+				220EF8C01DF099A000B702CC /* ObservationTests.swift */,
+				220EF8C11DF099A000B702CC /* TransformerTests.swift */,
+				220EF8C21DF099A000B702CC /* CustomFieldTests.swift */,
+			);
+			name = fields;
+			sourceTree = "<group>";
+		};
 		224F97E51DF095A5001E851F = {
 			isa = PBXGroup;
 			children = (
@@ -284,13 +320,8 @@
 		224F97FC1DF095A5001E851F /* ModelKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				224F97FD1DF095A5001E851F /* ModelKitTests.swift */,
-				220EF8B11DF0992200B702CC /* APIKitTests.swift */,
-				220EF8B21DF0992200B702CC /* ModelTests.swift */,
-				220EF8B31DF0992200B702CC /* ArrayTests.swift */,
-				220EF8B41DF0992200B702CC /* RemoteRequestTests.swift */,
-				220EF8B51DF0992200B702CC /* ArchiveTests.swift */,
-				220EF8B61DF0992200B702CC /* TypeDictionaryTests.swift */,
+				220EF8C81DF099A400B702CC /* fields */,
+				220EF8BD1DF0998300B702CC /* models */,
 				224F97FF1DF095A5001E851F /* Info.plist */,
 			);
 			path = ModelKitTests;
@@ -575,9 +606,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				220EF8C51DF099A000B702CC /* ObservationTests.swift in Sources */,
 				220EF8B81DF0992200B702CC /* ModelTests.swift in Sources */,
+				220EF8C61DF099A000B702CC /* TransformerTests.swift in Sources */,
+				220EF8C31DF099A000B702CC /* Tests.swift in Sources */,
+				220EF8C41DF099A000B702CC /* ArrayFieldTests.swift in Sources */,
 				220EF8B91DF0992200B702CC /* ArrayTests.swift in Sources */,
 				220EF8BC1DF0992200B702CC /* TypeDictionaryTests.swift in Sources */,
+				220EF8C71DF099A000B702CC /* CustomFieldTests.swift in Sources */,
 				224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */,
 				220EF8BA1DF0992200B702CC /* RemoteRequestTests.swift in Sources */,
 				220EF8BB1DF0992200B702CC /* ArchiveTests.swift in Sources */,
