@@ -142,6 +142,98 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		220EF8A61DF0973800B702CC /* common protocols */ = {
+			isa = PBXGroup;
+			children = (
+				224F98491DF096A8001E851F /* Routable.swift */,
+				224F984A1DF096A8001E851F /* DictionarySerializable.swift */,
+			);
+			name = "common protocols";
+			sourceTree = "<group>";
+		};
+		220EF8A71DF0974900B702CC /* fields */ = {
+			isa = PBXGroup;
+			children = (
+				224F98301DF09626001E851F /* EnumField.swift */,
+				224F98311DF09626001E851F /* Field.swift */,
+				224F982D1DF09626001E851F /* ArrayField.swift */,
+				224F982E1DF09626001E851F /* BaseField.swift */,
+				224F98371DF09626001E851F /* ValueTransformable.swift */,
+			);
+			name = fields;
+			sourceTree = "<group>";
+		};
+		220EF8A81DF0974D00B702CC /* validation */ = {
+			isa = PBXGroup;
+			children = (
+				224F98361DF09626001E851F /* ValidationRule.swift */,
+			);
+			name = validation;
+			sourceTree = "<group>";
+		};
+		220EF8A91DF0975200B702CC /* observation */ = {
+			isa = PBXGroup;
+			children = (
+				224F98321DF09626001E851F /* Observable.swift */,
+				224F98331DF09626001E851F /* Observation.swift */,
+				224F98341DF09626001E851F /* Observer.swift */,
+			);
+			name = observation;
+			sourceTree = "<group>";
+		};
+		220EF8AA1DF0976300B702CC /* transformers */ = {
+			isa = PBXGroup;
+			children = (
+				224F98381DF09626001E851F /* ValueTransformer.swift */,
+				224F982F1DF09626001E851F /* DateTransformer.swift */,
+			);
+			name = transformers;
+			sourceTree = "<group>";
+		};
+		220EF8AB1DF0978000B702CC /* operators */ = {
+			isa = PBXGroup;
+			children = (
+				224F98351DF09626001E851F /* operators.swift */,
+			);
+			name = operators;
+			sourceTree = "<group>";
+		};
+		220EF8AC1DF0978C00B702CC /* local */ = {
+			isa = PBXGroup;
+			children = (
+				224F980F1DF095F6001E851F /* MemoryDataStore.swift */,
+				224F980D1DF095F6001E851F /* ArchiveDataStore.swift */,
+			);
+			name = local;
+			sourceTree = "<group>";
+		};
+		220EF8AD1DF0978F00B702CC /* remote */ = {
+			isa = PBXGroup;
+			children = (
+				224F98131DF095F6001E851F /* RequestEncoder.swift */,
+				224F981E1DF095FD001E851F /* Response.swift */,
+				224F98101DF095F6001E851F /* RemoteDataStore.swift */,
+			);
+			name = remote;
+			sourceTree = "<group>";
+		};
+		220EF8AE1DF0979200B702CC /* protocols */ = {
+			isa = PBXGroup;
+			children = (
+				224F980E1DF095F6001E851F /* DataStore.swift */,
+				224F98121DF095F6001E851F /* DataStoreDelegate.swift */,
+			);
+			name = protocols;
+			sourceTree = "<group>";
+		};
+		220EF8AF1DF097B300B702CC /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				224F981B1DF095FD001E851F /* Mirror+Super.swift */,
+			);
+			name = extensions;
+			sourceTree = "<group>";
+		};
 		224F97E51DF095A5001E851F = {
 			isa = PBXGroup;
 			children = (
@@ -166,9 +258,7 @@
 		224F97F11DF095A5001E851F /* ModelKit */ = {
 			isa = PBXGroup;
 			children = (
-				224F98481DF096A8001E851F /* ModelManager.swift */,
-				224F98491DF096A8001E851F /* Routable.swift */,
-				224F984A1DF096A8001E851F /* DictionarySerializable.swift */,
+				220EF8A61DF0973800B702CC /* common protocols */,
 				224F980C1DF095DF001E851F /* extensions */,
 				224F980B1DF095D5001E851F /* fields */,
 				224F980A1DF095D0001E851F /* data store */,
@@ -191,10 +281,10 @@
 		224F98091DF095CB001E851F /* models */ = {
 			isa = PBXGroup;
 			children = (
-				224F981B1DF095FD001E851F /* Mirror+Super.swift */,
+				220EF8AF1DF097B300B702CC /* extensions */,
+				224F98481DF096A8001E851F /* ModelManager.swift */,
 				224F981C1DF095FD001E851F /* ModelValueTransformer.swift */,
 				224F981D1DF095FD001E851F /* Model.swift */,
-				224F981E1DF095FD001E851F /* Response.swift */,
 				224F981F1DF095FD001E851F /* ModelField.swift */,
 				224F98201DF095FD001E851F /* TypeDictionary.swift */,
 				224F98211DF095FD001E851F /* TransformerCache.swift */,
@@ -205,12 +295,9 @@
 		224F980A1DF095D0001E851F /* data store */ = {
 			isa = PBXGroup;
 			children = (
-				224F980D1DF095F6001E851F /* ArchiveDataStore.swift */,
-				224F980E1DF095F6001E851F /* DataStore.swift */,
-				224F980F1DF095F6001E851F /* MemoryDataStore.swift */,
-				224F98101DF095F6001E851F /* RemoteDataStore.swift */,
-				224F98121DF095F6001E851F /* DataStoreDelegate.swift */,
-				224F98131DF095F6001E851F /* RequestEncoder.swift */,
+				220EF8AE1DF0979200B702CC /* protocols */,
+				220EF8AD1DF0978F00B702CC /* remote */,
+				220EF8AC1DF0978C00B702CC /* local */,
 			);
 			name = "data store";
 			sourceTree = "<group>";
@@ -218,18 +305,11 @@
 		224F980B1DF095D5001E851F /* fields */ = {
 			isa = PBXGroup;
 			children = (
-				224F982D1DF09626001E851F /* ArrayField.swift */,
-				224F982E1DF09626001E851F /* BaseField.swift */,
-				224F982F1DF09626001E851F /* DateTransformer.swift */,
-				224F98301DF09626001E851F /* EnumField.swift */,
-				224F98311DF09626001E851F /* Field.swift */,
-				224F98321DF09626001E851F /* Observable.swift */,
-				224F98331DF09626001E851F /* Observation.swift */,
-				224F98341DF09626001E851F /* Observer.swift */,
-				224F98351DF09626001E851F /* operators.swift */,
-				224F98361DF09626001E851F /* ValidationRule.swift */,
-				224F98371DF09626001E851F /* ValueTransformable.swift */,
-				224F98381DF09626001E851F /* ValueTransformer.swift */,
+				220EF8AB1DF0978000B702CC /* operators */,
+				220EF8AA1DF0976300B702CC /* transformers */,
+				220EF8A91DF0975200B702CC /* observation */,
+				220EF8A81DF0974D00B702CC /* validation */,
+				220EF8A71DF0974900B702CC /* fields */,
 			);
 			name = fields;
 			sourceTree = "<group>";
