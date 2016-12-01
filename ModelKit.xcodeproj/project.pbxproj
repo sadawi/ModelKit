@@ -41,8 +41,6 @@
 		220EF8F21DF09CB500B702CC /* ModelValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8F01DF09CB500B702CC /* ModelValueTransformer.swift */; };
 		220EF8F41DF09D4E00B702CC /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8F31DF09D4E00B702CC /* Routable.swift */; };
 		220EF8F61DF09D7700B702CC /* DictionarySerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8F51DF09D7700B702CC /* DictionarySerializable.swift */; };
-		220EF8F81DF09DA200B702CC /* Array+Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8F71DF09DA200B702CC /* Array+Difference.swift */; };
-		220EF8FA1DF09DAE00B702CC /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8F91DF09DAE00B702CC /* DictionaryExtension.swift */; };
 		220EF8FC1DF09DC600B702CC /* DateTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8FB1DF09DC600B702CC /* DateTransformer.swift */; };
 		220EF8FE1DF09DE000B702CC /* ValidationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8FD1DF09DE000B702CC /* ValidationRule.swift */; };
 		220EF9001DF09DEE00B702CC /* ValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8FF1DF09DEE00B702CC /* ValueTransformer.swift */; };
@@ -50,6 +48,9 @@
 		220EF9041DF09E1500B702CC /* operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF9031DF09E1500B702CC /* operators.swift */; };
 		220EF9071DF09E3100B702CC /* TransformerCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF9051DF09E3100B702CC /* TransformerCache.swift */; };
 		220EF9081DF09E3100B702CC /* TypeDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF9061DF09E3100B702CC /* TypeDictionary.swift */; };
+		220EF90A1DF09E6D00B702CC /* ModelKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 220EF9091DF09E6D00B702CC /* ModelKit.podspec */; };
+		220EF90E1DF09FF200B702CC /* Array+Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF90D1DF09FF200B702CC /* Array+Difference.swift */; };
+		220EF9101DF0A01F00B702CC /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF90F1DF0A01F00B702CC /* DictionaryExtension.swift */; };
 		224F97F91DF095A5001E851F /* ModelKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224F97EF1DF095A5001E851F /* ModelKit.framework */; };
 		224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F97FD1DF095A5001E851F /* ModelKitTests.swift */; };
 		224F98001DF095A5001E851F /* ModelKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 224F97F21DF095A5001E851F /* ModelKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -102,8 +103,6 @@
 		220EF8F01DF09CB500B702CC /* ModelValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelValueTransformer.swift; path = Models/ModelValueTransformer.swift; sourceTree = "<group>"; };
 		220EF8F31DF09D4E00B702CC /* Routable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Routable.swift; path = DataStore/Routable.swift; sourceTree = "<group>"; };
 		220EF8F51DF09D7700B702CC /* DictionarySerializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DictionarySerializable.swift; path = Models/DictionarySerializable.swift; sourceTree = "<group>"; };
-		220EF8F71DF09DA200B702CC /* Array+Difference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Array+Difference.swift"; path = "Core/Array+Difference.swift"; sourceTree = "<group>"; };
-		220EF8F91DF09DAE00B702CC /* DictionaryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DictionaryExtension.swift; path = Core/DictionaryExtension.swift; sourceTree = "<group>"; };
 		220EF8FB1DF09DC600B702CC /* DateTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateTransformer.swift; path = Fields/DateTransformer.swift; sourceTree = "<group>"; };
 		220EF8FD1DF09DE000B702CC /* ValidationRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidationRule.swift; path = Fields/ValidationRule.swift; sourceTree = "<group>"; };
 		220EF8FF1DF09DEE00B702CC /* ValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueTransformer.swift; path = Fields/ValueTransformer.swift; sourceTree = "<group>"; };
@@ -111,6 +110,9 @@
 		220EF9031DF09E1500B702CC /* operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = operators.swift; path = Fields/operators.swift; sourceTree = "<group>"; };
 		220EF9051DF09E3100B702CC /* TransformerCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransformerCache.swift; path = Models/TransformerCache.swift; sourceTree = "<group>"; };
 		220EF9061DF09E3100B702CC /* TypeDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TypeDictionary.swift; path = Models/TypeDictionary.swift; sourceTree = "<group>"; };
+		220EF9091DF09E6D00B702CC /* ModelKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = ModelKit.podspec; sourceTree = "<group>"; };
+		220EF90D1DF09FF200B702CC /* Array+Difference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Array+Difference.swift"; path = "Models/Array+Difference.swift"; sourceTree = "<group>"; };
+		220EF90F1DF0A01F00B702CC /* DictionaryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DictionaryExtension.swift; path = DataStore/DictionaryExtension.swift; sourceTree = "<group>"; };
 		224F97EF1DF095A5001E851F /* ModelKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModelKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		224F97F21DF095A5001E851F /* ModelKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelKit.h; sourceTree = "<group>"; };
 		224F97F31DF095A5001E851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -250,7 +252,7 @@
 			name = extensions;
 			sourceTree = "<group>";
 		};
-		220EF8BD1DF0998300B702CC /* models */ = {
+		220EF8BD1DF0998300B702CC /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				224F97FD1DF095A5001E851F /* ModelKitTests.swift */,
@@ -261,10 +263,10 @@
 				220EF8B51DF0992200B702CC /* ArchiveTests.swift */,
 				220EF8B61DF0992200B702CC /* TypeDictionaryTests.swift */,
 			);
-			name = models;
+			name = Models;
 			sourceTree = "<group>";
 		};
-		220EF8C81DF099A400B702CC /* fields */ = {
+		220EF8C81DF099A400B702CC /* Fields */ = {
 			isa = PBXGroup;
 			children = (
 				220EF8BE1DF099A000B702CC /* Tests.swift */,
@@ -273,12 +275,21 @@
 				220EF8C11DF099A000B702CC /* TransformerTests.swift */,
 				220EF8C21DF099A000B702CC /* CustomFieldTests.swift */,
 			);
-			name = fields;
+			name = Fields;
+			sourceTree = "<group>";
+		};
+		220EF9111DF0A02500B702CC /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				220EF90F1DF0A01F00B702CC /* DictionaryExtension.swift */,
+			);
+			name = extensions;
 			sourceTree = "<group>";
 		};
 		224F97E51DF095A5001E851F = {
 			isa = PBXGroup;
 			children = (
+				220EF9091DF09E6D00B702CC /* ModelKit.podspec */,
 				224F98451DF09642001E851F /* Podfile */,
 				224F97F11DF095A5001E851F /* ModelKit */,
 				224F97FC1DF095A5001E851F /* ModelKitTests */,
@@ -300,10 +311,9 @@
 		224F97F11DF095A5001E851F /* ModelKit */ = {
 			isa = PBXGroup;
 			children = (
-				224F980C1DF095DF001E851F /* extensions */,
-				224F980B1DF095D5001E851F /* fields */,
-				224F980A1DF095D0001E851F /* data store */,
-				224F98091DF095CB001E851F /* models */,
+				224F980B1DF095D5001E851F /* Fields */,
+				224F980A1DF095D0001E851F /* DataStore */,
+				224F98091DF095CB001E851F /* Models */,
 				224F97F21DF095A5001E851F /* ModelKit.h */,
 				224F97F31DF095A5001E851F /* Info.plist */,
 			);
@@ -313,16 +323,17 @@
 		224F97FC1DF095A5001E851F /* ModelKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				220EF8C81DF099A400B702CC /* fields */,
-				220EF8BD1DF0998300B702CC /* models */,
+				220EF8C81DF099A400B702CC /* Fields */,
+				220EF8BD1DF0998300B702CC /* Models */,
 				224F97FF1DF095A5001E851F /* Info.plist */,
 			);
 			path = ModelKitTests;
 			sourceTree = "<group>";
 		};
-		224F98091DF095CB001E851F /* models */ = {
+		224F98091DF095CB001E851F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				220EF90D1DF09FF200B702CC /* Array+Difference.swift */,
 				220EF9051DF09E3100B702CC /* TransformerCache.swift */,
 				220EF9061DF09E3100B702CC /* TypeDictionary.swift */,
 				220EF8F51DF09D7700B702CC /* DictionarySerializable.swift */,
@@ -333,20 +344,21 @@
 				220EF8CF1DF09C1600B702CC /* ModelField.swift */,
 				220EF8AF1DF097B300B702CC /* extensions */,
 			);
-			name = models;
+			name = Models;
 			sourceTree = "<group>";
 		};
-		224F980A1DF095D0001E851F /* data store */ = {
+		224F980A1DF095D0001E851F /* DataStore */ = {
 			isa = PBXGroup;
 			children = (
+				220EF9111DF0A02500B702CC /* extensions */,
 				220EF8AE1DF0979200B702CC /* protocols */,
 				220EF8AD1DF0978F00B702CC /* remote */,
 				220EF8AC1DF0978C00B702CC /* local */,
 			);
-			name = "data store";
+			name = DataStore;
 			sourceTree = "<group>";
 		};
-		224F980B1DF095D5001E851F /* fields */ = {
+		224F980B1DF095D5001E851F /* Fields */ = {
 			isa = PBXGroup;
 			children = (
 				220EF8AB1DF0978000B702CC /* operators */,
@@ -355,16 +367,7 @@
 				220EF8A81DF0974D00B702CC /* validation */,
 				220EF8A71DF0974900B702CC /* fields */,
 			);
-			name = fields;
-			sourceTree = "<group>";
-		};
-		224F980C1DF095DF001E851F /* extensions */ = {
-			isa = PBXGroup;
-			children = (
-				220EF8F91DF09DAE00B702CC /* DictionaryExtension.swift */,
-				220EF8F71DF09DA200B702CC /* Array+Difference.swift */,
-			);
-			name = extensions;
+			name = Fields;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,6 +472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				224F98461DF09642001E851F /* Podfile in Resources */,
+				220EF90A1DF09E6D00B702CC /* ModelKit.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,10 +574,11 @@
 				220EF9021DF09DFD00B702CC /* Mirror+Super.swift in Sources */,
 				220EF8EE1DF09C9400B702CC /* Observer.swift in Sources */,
 				220EF8D11DF09C1600B702CC /* ModelArrayField.swift in Sources */,
+				220EF90E1DF09FF200B702CC /* Array+Difference.swift in Sources */,
+				220EF9101DF0A01F00B702CC /* DictionaryExtension.swift in Sources */,
 				220EF8DC1DF09C4400B702CC /* ValueTransformable.swift in Sources */,
 				220EF9071DF09E3100B702CC /* TransformerCache.swift in Sources */,
 				220EF8ED1DF09C9400B702CC /* Observation.swift in Sources */,
-				220EF8F81DF09DA200B702CC /* Array+Difference.swift in Sources */,
 				220EF9041DF09E1500B702CC /* operators.swift in Sources */,
 				220EF8DA1DF09C3800B702CC /* Field.swift in Sources */,
 				220EF8D21DF09C1600B702CC /* ModelField.swift in Sources */,
@@ -591,7 +596,6 @@
 				220EF8D01DF09C1600B702CC /* Model.swift in Sources */,
 				220EF8EC1DF09C9400B702CC /* Observable.swift in Sources */,
 				220EF8E21DF09C7100B702CC /* DataStoreDelegate.swift in Sources */,
-				220EF8FA1DF09DAE00B702CC /* DictionaryExtension.swift in Sources */,
 				220EF8FC1DF09DC600B702CC /* DateTransformer.swift in Sources */,
 				220EF8E61DF09C7B00B702CC /* RemoteDataStore.swift in Sources */,
 				220EF8D91DF09C3800B702CC /* EnumField.swift in Sources */,
