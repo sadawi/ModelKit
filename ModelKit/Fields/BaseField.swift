@@ -143,7 +143,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
     
     internal var valueUpdatedHandler:((T?) -> Void)?
     
-    open func valueUpdated(_ handler: @escaping ((T?) -> Void)) -> Self {
+    @discardableResult open func valueUpdated(_ handler: @escaping ((T?) -> Void)) -> Self {
         self.valueUpdatedHandler = handler
         return self
     }
@@ -222,16 +222,16 @@ open class BaseField<T>: FieldType, Observer, Observable {
      - parameter allowNil: Whether nil values should be considered valid
      - parameter rule: A closure containing validation logic for an unwrapped field value
      */
-    open func require(message:String?=nil, allowNil:Bool=true, test:@escaping ((T) -> Bool)) -> Self {
+    @discardableResult open func require(message:String?=nil, allowNil:Bool=true, test:@escaping ((T) -> Bool)) -> Self {
         let rule = ValidationRule<T>(test: test, message:message, allowNil: allowNil)
         return self.require(rule)
     }
     
-    open func requireNotNil() -> Self {
+    @discardableResult open func requireNotNil() -> Self {
         return self.require(message: "is required", allowNil:false) { T -> Bool in return true }
     }
     
-    open func require(_ rule: ValidationRule<T>) -> Self {
+    @discardableResult open func require(_ rule: ValidationRule<T>) -> Self {
         self.validationRules.append(rule)
         return self
     }
