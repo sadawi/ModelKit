@@ -325,6 +325,5 @@ extension FieldTests {
         size2.value = 500
         size.merge(from: size2)
         XCTAssertEqual(size.value, 500)
-        
     }
 }

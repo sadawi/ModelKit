@@ -27,10 +27,15 @@ class ModelTests: XCTestCase {
     }
     
     fileprivate class Company: Model {
+        let id = Field<Identifier>()
         let name = Field<String>()
         let size = Field<Int>()
         let parentCompany = ModelField<Company>()
         let employees:ModelArrayField<Person> = *ModelField<Person>(inverse: { person in return person.company })
+        
+        override var identifierField: FieldType? {
+            return id
+        }
     }
     
     fileprivate class Person: Model {
@@ -309,5 +314,21 @@ class ModelTests: XCTestCase {
         XCTAssert(d2["name"] is NSNull)
         
         
+    }
+    
+    func testMerging() {
+        let model = Company()
+        let model2 = Company()
+        
+        model.identifier = "1"
+        model2.identifier = "2"
+        
+        model.name.value = "Apple"
+        model2.name.value = "Google"
+        
+        model.merge(from: model2)
+        
+        XCTAssertEqual(model.name.value, "Google")
+        XCTAssertEqual(model.identifier, "1")
     }
 }
