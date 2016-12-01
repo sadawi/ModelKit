@@ -21,8 +21,8 @@ open class Field<T:Equatable>: BaseField<T>, Equatable {
      - parameter transformer: The ValueTransformer to set
      - parameter name: An identifier for the transformer.
      */
-    open func transform(_ transformer:ValueTransformer<T>, name transformerName:String?=nil) -> Self {
-        self.valueTransformers[transformerName ?? DefaultValueTransformerKey] = transformer
+    open func transform(_ transformer:ValueTransformer<T>, in context:ValueTransformerContext=ValueTransformerContext.defaultContext) -> Self {
+        self.valueTransformers[context.name] = transformer
         return self
     }
     
