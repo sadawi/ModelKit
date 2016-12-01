@@ -8,12 +8,18 @@
 
 import Foundation
 
-public protocol ValueTransformerContext {
-    func transformer<T:Equatable>(for field: Field<T>) -> ValueTransformer<T>?
+/**
+ An object that identifies a particular system of transformations. For example, there might be one context for writing to a JSON API,
+ and another for writing user-readable strings.
+ */
+public class ValueTransformerContext {
+    public var name: String
+    
+    public init(name: String) {
+        self.name = name
+    }
 }
 
-public class DefaultValueTransformerContext: ValueTransformerContext {
-    public func transformer<T:Equatable>(for field: Field<T>) -> ValueTransformer<T>? {
-        return SimpleValueTransformer<T>()
-    }
+public extension ValueTransformerContext {
+    static let defaultContext = ValueTransformerContext(name: "default")
 }

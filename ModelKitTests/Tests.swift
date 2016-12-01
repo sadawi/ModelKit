@@ -178,36 +178,6 @@ class FieldTests: XCTestCase {
         XCTAssertEqual(a.size.value, 100)
     }
     
-    func testCustomTransformers() {
-        let a = Entity()
-        a.size.value = 100
-        
-        a.size.transform(
-            importValue: { $0 as? Int },
-            exportValue: { $0 == nil ? nil : (String(describing: $0) as AnyObject) },
-            name: "stringify"
-        )
-        var dict:[String:AnyObject] = [:]
-        
-        a.size.write(to: &dict)
-        XCTAssertNil(dict["size"] as? String)
-        
-        /**
-        
-        //        a.size.writeToDictionary(&dict, name: "size", valueTransformer: "stringify")
-        //        XCTAssertEqual(dict["size"] as? String, "100")
-        
-        Just upgraded XCode to 7.2, now this dies with:
-        
-        Invalid bitcast
-        %.asUnsubstituted = bitcast i64 %90 to i8*, !dbg !668
-        LLVM ERROR: Broken function found, compilation aborted!
-
-        Hmm...
-        
-        */
-    }
-    
     func testAnyObjectValue() {
         let a = Entity()
         a.name.value = "Bob"
@@ -291,4 +261,44 @@ class ValueFieldTests: XCTestCase {
 ////        a.name.value = "alice"
 ////        XCTAssertEqual(b.name.value, "ALICE")
 //    }
+}
+
+
+extension ValueTransformerContext {
+    static let string = ValueTransformerContext(name: "string")
+}
+
+extension FieldTests {
+    
+    func testCustomTransformers() {
+        let size = Field<Int>(key: "size")
+        size.value = 100
+        
+        // Specify custom import/export logic for this field only, scoped to a particular context
+        size.transform(
+            importValue: { $0 as? Int },
+            exportValue: { $0 == nil ? nil : (String(describing: $0) as AnyObject) },
+            in: ValueTransformerContext.string
+        )
+
+        var dict:[String:AnyObject] = [:]
+        
+        size.write(to: &dict)
+        XCTAssertNil(dict["size"] as? String)
+        
+        /**
+         
+         //        a.size.writeToDictionary(&dict, name: "size", valueTransformer: "stringify")
+         //        XCTAssertEqual(dict["size"] as? String, "100")
+         
+         Just upgraded XCode to 7.2, now this dies with:
+         
+         Invalid bitcast
+         %.asUnsubstituted = bitcast i64 %90 to i8*, !dbg !668
+         LLVM ERROR: Broken function found, compilation aborted!
+         
+         Hmm...
+         
+         */
+    }
 }

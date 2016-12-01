@@ -33,13 +33,12 @@ open class Field<T:Equatable>: BaseField<T>, Equatable {
      - parameter importValue: A closure mapping an external value (e.g., a string) to a value for this field.
      - parameter exportValue: A closure mapping a field value to an external value
      */
-    @discardableResult open func transform(importValue:@escaping ((AnyObject?) -> T?), exportValue:@escaping ((T?) -> AnyObject?), name transformerName: String?=nil) -> Self {
+    @discardableResult open func transform(importValue:@escaping ((AnyObject?) -> T?), exportValue:@escaping ((T?) -> AnyObject?), in context: ValueTransformerContext = ValueTransformerContext.defaultContext) -> Self {
         
-        self.valueTransformers[transformerName ?? DefaultValueTransformerKey] = ValueTransformer(importAction: importValue, exportAction: exportValue)
+        self.valueTransformers[context.name] = ValueTransformer(importAction: importValue, exportAction: exportValue)
         return self
     }
     
-    // TODO: don't repeat this.
     open func defaultValueTransformer() -> ValueTransformer<T> {
         return SimpleValueTransformer<T>()
     }
@@ -53,20 +52,33 @@ open class Field<T:Equatable>: BaseField<T>, Equatable {
     
     // MARK: Value transformers
     
-    open func valueTransformer(name key: String? = nil) -> ValueTransformer<T> {
-        return self.valueTransformers[key ??  DefaultValueTransformerKey] ?? self.defaultValueTransformer()
+    /**
+     Finds a value transformer (either in the default transformer context or a specified one) for this field.
+     
+     Priority:
+     - A transformer manually specified on this field (for the specified context)
+     - This field's default transformer
+     */
+    open func valueTransformer(in context: ValueTransformerContext = ValueTransformerContext.defaultContext) -> ValueTransformer<T>? {
+        if let transformer = self.valueTransformers[context.name] {
+            return transformer
+        } else {
+            return self.defaultValueTransformer()
+        }
     }
     
     // MARK: - Dictionary values
     
     open override func read(from dictionary:[String:AnyObject]) {
-        if let key = self.key, let dictionaryValue = dictionary[key] {
-            self.value = self.valueTransformer().importValue(dictionaryValue)
+        if let key = self.key, let dictionaryValue = dictionary[key], let transformer = self.valueTransformer() {
+            self.value = transformer.importValue(dictionaryValue)
         }
     }
 
     open override func writeUnseenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String, explicitNull: Bool = false) {
-        dictionary[key] = self.valueTransformer().exportValue(self.value, explicitNull: explicitNull)
+        if let transformer = self.valueTransformer() {
+            dictionary[key] = transformer.exportValue(self.value, explicitNull: explicitNull)
+        }
     }
 
     open override func writeSeenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String) {
