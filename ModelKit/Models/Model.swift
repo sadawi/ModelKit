@@ -66,7 +66,7 @@ open class Model: NSObject, Routable, NSCopying {
      */
     open class func from(dictionaryValue:AttributeDictionary, useRegistry:Bool = true, configure:((Model,Bool) -> Void)?=nil) -> Self? {
         var instance = (self.instanceClass(for: dictionaryValue) ?? self).init()
-        (instance as Model).setDictionaryValue(dictionaryValue)
+        (instance as Model).readDictionaryValue(dictionaryValue)
         
         var isNew = true
         
@@ -76,7 +76,7 @@ open class Model: NSObject, Routable, NSCopying {
                 if let canonical = registry.canonicalModel(for: instance) {
                     isNew = false
                     instance = canonical
-                    (instance as Model).setDictionaryValue(dictionaryValue)
+                    (instance as Model).readDictionaryValue(dictionaryValue)
                 } else {
                     isNew = true
                     registry.didInstantiate(instance)
@@ -386,7 +386,7 @@ open class Model: NSObject, Routable, NSCopying {
      - parameter dictionaryValue: The dictionary representation of this model's new field values.
      - parameter fields: An array of field objects whose values are to be found in the dictionary
      */
-    open func setDictionaryValue(_ dictionaryValue: AttributeDictionary, fields:[FieldType]?=nil) {
+    open func readDictionaryValue(_ dictionaryValue: AttributeDictionary, fields:[FieldType]?=nil) {
         let fields = (fields ?? self.defaultFieldsForDictionaryValue())
         for (_, field) in self.fields {
             if fields.contains(where: { $0 === field }) {

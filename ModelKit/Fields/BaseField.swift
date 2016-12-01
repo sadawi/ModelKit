@@ -274,4 +274,11 @@ open class BaseField<T>: FieldType, Observer, Observable {
         // Implement in subclass
     }
     
+    // MARK: - Transformers
+    
+    open var defaultValueTransformerContext: ValueTransformerContext {
+        return DefaultValueTransformerContext()
+    }
+
+    
 }

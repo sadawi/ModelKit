@@ -182,7 +182,7 @@ class FieldTests: XCTestCase {
         let a = Entity()
         a.size.value = 100
         
-        _ = a.size.transform(
+        a.size.transform(
             importValue: { $0 as? Int },
             exportValue: { $0 == nil ? nil : (String(describing: $0) as AnyObject) },
             name: "stringify"
@@ -191,8 +191,8 @@ class FieldTests: XCTestCase {
         
         a.size.write(to: &dict)
         XCTAssertNil(dict["size"] as? String)
-
-        /** 
+        
+        /**
         
         //        a.size.writeToDictionary(&dict, name: "size", valueTransformer: "stringify")
         //        XCTAssertEqual(dict["size"] as? String, "100")
