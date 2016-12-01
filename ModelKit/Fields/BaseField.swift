@@ -196,9 +196,10 @@ open class BaseField<T>: FieldType, Observer, Observable {
     
     open func validateIfNeeded() -> ValidationState {
         if self.validationState == .unknown {
-            self.validate()
+            return self.validate()
+        } else {
+            return self.validationState
         }
-        return self.validationState
     }
     
     open func resetValidationState() {
@@ -220,7 +221,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
      
      - parameter message: A message explaining why validation failed, in the form of a partial sentence (e.g., "must be zonzero")
      - parameter allowNil: Whether nil values should be considered valid
-     - parameter rule: A closure containing validation logic for an unwrapped field value
+     - parameter test: A closure containing validation logic for an unwrapped field value
      */
     @discardableResult open func require(message:String?=nil, allowNil:Bool=true, test:@escaping ((T) -> Bool)) -> Self {
         let rule = ValidationRule<T>(test: test, message:message, allowNil: allowNil)

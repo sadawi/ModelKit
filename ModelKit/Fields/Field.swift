@@ -16,22 +16,23 @@ open class Field<T:Equatable>: BaseField<T>, Equatable {
     }
     
     /**
-     Sets a ValueTransformer for this field.  An identifier can be provided to distinguish different transformers.
+     Sets a ValueTransformer for this field.
      
      - parameter transformer: The ValueTransformer to set
-     - parameter name: An identifier for the transformer.
+     - parameter in: A ValueTransformerContext used to identify this transformer. If omitted, will be the default context.
      */
-    @discardableResult open func transform(_ transformer:ValueTransformer<T>, in context:ValueTransformerContext=ValueTransformerContext.defaultContext) -> Self {
+    @discardableResult open func transform(_ transformer:ValueTransformer<T>,
+                                           in context:ValueTransformerContext=ValueTransformerContext.defaultContext) -> Self {
         self.valueTransformers[context.name] = transformer
         return self
     }
     
     /**
-     Adds a value transformer (with optional name) for this field.
+     Adds a value transformer (with optional context) for this field.
      
-     - parameter name: A string used to identify this transformer. If omitted, will be the default transformer.
      - parameter importValue: A closure mapping an external value (e.g., a string) to a value for this field.
      - parameter exportValue: A closure mapping a field value to an external value
+     - parameter in: A ValueTransformerContext used to identify this transformer. If omitted, will be the default context.
      */
     @discardableResult open func transform(importValue:@escaping ((AnyObject?) -> T?), exportValue:@escaping ((T?) -> AnyObject?), in context: ValueTransformerContext = ValueTransformerContext.defaultContext) -> Self {
         
