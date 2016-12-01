@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0F64BB7DAC6C88B2D1E5700C /* Pods_ModelKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF3D7C49766F998A4C8D8E99 /* Pods_ModelKit.framework */; };
+		220EF8B71DF0992200B702CC /* APIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8B11DF0992200B702CC /* APIKitTests.swift */; };
+		220EF8B81DF0992200B702CC /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8B21DF0992200B702CC /* ModelTests.swift */; };
+		220EF8B91DF0992200B702CC /* ArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8B31DF0992200B702CC /* ArrayTests.swift */; };
+		220EF8BA1DF0992200B702CC /* RemoteRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8B41DF0992200B702CC /* RemoteRequestTests.swift */; };
+		220EF8BB1DF0992200B702CC /* ArchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8B51DF0992200B702CC /* ArchiveTests.swift */; };
+		220EF8BC1DF0992200B702CC /* TypeDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8B61DF0992200B702CC /* TypeDictionaryTests.swift */; };
 		224F97F91DF095A5001E851F /* ModelKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224F97EF1DF095A5001E851F /* ModelKit.framework */; };
 		224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F97FD1DF095A5001E851F /* ModelKitTests.swift */; };
 		224F98001DF095A5001E851F /* ModelKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 224F97F21DF095A5001E851F /* ModelKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -57,6 +63,12 @@
 
 /* Begin PBXFileReference section */
 		090DEBA661399D9997A81C45 /* Pods_ModelKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ModelKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		220EF8B11DF0992200B702CC /* APIKitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKitTests.swift; sourceTree = "<group>"; };
+		220EF8B21DF0992200B702CC /* ModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
+		220EF8B31DF0992200B702CC /* ArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayTests.swift; sourceTree = "<group>"; };
+		220EF8B41DF0992200B702CC /* RemoteRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteRequestTests.swift; sourceTree = "<group>"; };
+		220EF8B51DF0992200B702CC /* ArchiveTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveTests.swift; sourceTree = "<group>"; };
+		220EF8B61DF0992200B702CC /* TypeDictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeDictionaryTests.swift; sourceTree = "<group>"; };
 		224F97EF1DF095A5001E851F /* ModelKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModelKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		224F97F21DF095A5001E851F /* ModelKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelKit.h; sourceTree = "<group>"; };
 		224F97F31DF095A5001E851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -273,6 +285,12 @@
 			isa = PBXGroup;
 			children = (
 				224F97FD1DF095A5001E851F /* ModelKitTests.swift */,
+				220EF8B11DF0992200B702CC /* APIKitTests.swift */,
+				220EF8B21DF0992200B702CC /* ModelTests.swift */,
+				220EF8B31DF0992200B702CC /* ArrayTests.swift */,
+				220EF8B41DF0992200B702CC /* RemoteRequestTests.swift */,
+				220EF8B51DF0992200B702CC /* ArchiveTests.swift */,
+				220EF8B61DF0992200B702CC /* TypeDictionaryTests.swift */,
 				224F97FF1DF095A5001E851F /* Info.plist */,
 			);
 			path = ModelKitTests;
@@ -557,7 +575,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				220EF8B81DF0992200B702CC /* ModelTests.swift in Sources */,
+				220EF8B91DF0992200B702CC /* ArrayTests.swift in Sources */,
+				220EF8BC1DF0992200B702CC /* TypeDictionaryTests.swift in Sources */,
 				224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */,
+				220EF8BA1DF0992200B702CC /* RemoteRequestTests.swift in Sources */,
+				220EF8BB1DF0992200B702CC /* ArchiveTests.swift in Sources */,
+				220EF8B71DF0992200B702CC /* APIKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
