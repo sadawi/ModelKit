@@ -6,9 +6,9 @@ target 'ModelKit' do
   use_frameworks!
 
   # Pods for ModelKit
-  pod 'Alamofire'
-  pod 'PromiseKit'
-  pod 'SwiftyJSON'
+  pod 'Alamofire', '~> 4.2.0'
+  pod 'PromiseKit', '~> 4.0.5'
+  pod 'SwiftyJSON', '~> 3.1.3'
 
   target 'ModelKitTests' do
     inherit! :search_paths
