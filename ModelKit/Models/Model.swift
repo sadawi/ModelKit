@@ -11,46 +11,6 @@ import Foundation
 public typealias AttributeDictionary = [String:AnyObject]
 public typealias Identifier = String
 
-/**
- An object that keeps track of canonical model instances, presumably indexed by identifier.
-*/
-public protocol ModelRegistry {
-    /// Registers a new model in the registry.
-    func didInstantiate<T:Model>(_ model:T)
-    
-    /// Tries to find a registered canonical instance matching the provided model.  Should return nil if no such object has been registered.
-    func canonicalModel<T:Model>(for model:T) -> T?
-}
-
-/**
- A very simple ModelRegistry adapter for a MemoryDataStore
-*/
-public struct MemoryRegistry: ModelRegistry {
-    var memory: MemoryDataStore
-    
-    public init() {
-        self.memory = MemoryDataStore.sharedInstance
-    }
-    
-    public init(dataStore: MemoryDataStore) {
-        self.memory = dataStore
-    }
-    
-    public func didInstantiate<T:Model>(_ model: T) {
-        if model.identifier != nil {
-            self.memory.updateImmediately(model)
-        }
-    }
-    
-    public func canonicalModel<T:Model>(for model: T) -> T? {
-        if let identifier = model.identifier {
-            return self.memory.lookupImmediately(T.self, identifier: identifier)
-        } else {
-            return nil
-        }
-    }
-}
-
 open class Model: NSObject, Routable, NSCopying {
     /**
      An object that is responsible for keeping track of canonical instances
