@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MagneticFields
 
 public typealias AttributeDictionary = [String:AnyObject]
 public typealias Identifier = String

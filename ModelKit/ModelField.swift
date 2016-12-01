@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MagneticFields
 
 public enum DeleteBehavior {
     case nullify
@@ -37,7 +36,7 @@ open class ModelField<T: Model>: Field<T>, ModelFieldType {
         self._inverse = inverse
     }
     
-    open override func defaultValueTransformer() -> MagneticFields.ValueTransformer<T> {
+    open override func defaultValueTransformer() -> ValueTransformer<T> {
         return self.foreignKey ? ModelForeignKeyValueTransformer<T>.sharedInstance : ModelValueTransformer<T>.sharedInstance
     }
     

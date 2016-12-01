@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import MagneticFields
 
-open class ModelValueTransformer<T: Model>: MagneticFields.ValueTransformer<T> {
+open class ModelValueTransformer<T: Model>: ValueTransformer<T> {
     
     public required init() {
         super.init()
@@ -39,7 +38,7 @@ open class ModelValueTransformer<T: Model>: MagneticFields.ValueTransformer<T> {
     }
 }
 
-open class ModelForeignKeyValueTransformer<T: Model>: MagneticFields.ValueTransformer<T> {
+open class ModelForeignKeyValueTransformer<T: Model>: ValueTransformer<T> {
     public required init() {
         super.init(importAction: { value in
             

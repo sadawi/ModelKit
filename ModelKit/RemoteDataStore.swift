@@ -8,7 +8,6 @@
 
 import Alamofire
 import PromiseKit
-import MagneticFields
 
 public enum RemoteDataStoreError: Error {
     case unknownError(message: String)

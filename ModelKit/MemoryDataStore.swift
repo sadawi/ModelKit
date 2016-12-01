@@ -17,7 +17,6 @@ Notes:
 
 import Foundation
 import PromiseKit
-import MagneticFields
 
 open class MemoryDataStore: DataStore, ListableDataStore, ClearableDataStore {
     open static let sharedInstance = MemoryDataStore()

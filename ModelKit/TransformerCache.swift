@@ -8,15 +8,13 @@
 
 import Foundation
 
-import MagneticFields
-
 private struct TransformerCache {
     static var transformers = TypeDictionary<ValueTransformerType>()
 }
 
-extension MagneticFields.ValueTransformer {
-    class var sharedInstance: MagneticFields.ValueTransformer<T> {
-        if let existing = TransformerCache.transformers[self] as? MagneticFields.ValueTransformer<T> {
+extension ValueTransformer {
+    class var sharedInstance: ValueTransformer<T> {
+        if let existing = TransformerCache.transformers[self] as? ValueTransformer<T> {
             return existing
         } else {
             let newInstance = self.init()

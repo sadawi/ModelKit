@@ -8,7 +8,6 @@
 
 import Foundation
 import PromiseKit
-import MagneticFields
 
 enum Operation {
     case any

@@ -15,7 +15,6 @@
 		224F98151DF095F6001E851F /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F980E1DF095F6001E851F /* DataStore.swift */; };
 		224F98161DF095F6001E851F /* MemoryDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F980F1DF095F6001E851F /* MemoryDataStore.swift */; };
 		224F98171DF095F6001E851F /* RemoteDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F98101DF095F6001E851F /* RemoteDataStore.swift */; };
-		224F98181DF095F6001E851F /* CompoundDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F98111DF095F6001E851F /* CompoundDataStore.swift */; };
 		224F98191DF095F6001E851F /* DataStoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F98121DF095F6001E851F /* DataStoreDelegate.swift */; };
 		224F981A1DF095F6001E851F /* RequestEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F98131DF095F6001E851F /* RequestEncoder.swift */; };
 		224F98221DF095FD001E851F /* Mirror+Super.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F981B1DF095FD001E851F /* Mirror+Super.swift */; };
@@ -40,6 +39,9 @@
 		224F98431DF09626001E851F /* ValueTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F98371DF09626001E851F /* ValueTransformable.swift */; };
 		224F98441DF09626001E851F /* ValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F98381DF09626001E851F /* ValueTransformer.swift */; };
 		224F98461DF09642001E851F /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 224F98451DF09642001E851F /* Podfile */; };
+		224F984B1DF096A8001E851F /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F98481DF096A8001E851F /* ModelManager.swift */; };
+		224F984C1DF096A8001E851F /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F98491DF096A8001E851F /* Routable.swift */; };
+		224F984D1DF096A8001E851F /* DictionarySerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F984A1DF096A8001E851F /* DictionarySerializable.swift */; };
 		902751C3FA18C7E0AF33260D /* Pods_ModelKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090DEBA661399D9997A81C45 /* Pods_ModelKitTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +67,6 @@
 		224F980E1DF095F6001E851F /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		224F980F1DF095F6001E851F /* MemoryDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryDataStore.swift; sourceTree = "<group>"; };
 		224F98101DF095F6001E851F /* RemoteDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDataStore.swift; sourceTree = "<group>"; };
-		224F98111DF095F6001E851F /* CompoundDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompoundDataStore.swift; sourceTree = "<group>"; };
 		224F98121DF095F6001E851F /* DataStoreDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreDelegate.swift; sourceTree = "<group>"; };
 		224F98131DF095F6001E851F /* RequestEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestEncoder.swift; sourceTree = "<group>"; };
 		224F981B1DF095FD001E851F /* Mirror+Super.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Mirror+Super.swift"; sourceTree = "<group>"; };
@@ -90,6 +91,9 @@
 		224F98371DF09626001E851F /* ValueTransformable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueTransformable.swift; sourceTree = "<group>"; };
 		224F98381DF09626001E851F /* ValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueTransformer.swift; sourceTree = "<group>"; };
 		224F98451DF09642001E851F /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = Podfile; sourceTree = "<group>"; };
+		224F98481DF096A8001E851F /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
+		224F98491DF096A8001E851F /* Routable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
+		224F984A1DF096A8001E851F /* DictionarySerializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionarySerializable.swift; sourceTree = "<group>"; };
 		38A05B7372D948352D30FCD1 /* Pods-ModelKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.release.xcconfig"; sourceTree = "<group>"; };
 		B2EB45E0B156254A6D7C8539 /* Pods-ModelKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.debug.xcconfig"; sourceTree = "<group>"; };
 		DC22183A5F54223695D5D378 /* Pods-ModelKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKitTests/Pods-ModelKitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +166,9 @@
 		224F97F11DF095A5001E851F /* ModelKit */ = {
 			isa = PBXGroup;
 			children = (
+				224F98481DF096A8001E851F /* ModelManager.swift */,
+				224F98491DF096A8001E851F /* Routable.swift */,
+				224F984A1DF096A8001E851F /* DictionarySerializable.swift */,
 				224F980C1DF095DF001E851F /* extensions */,
 				224F980B1DF095D5001E851F /* fields */,
 				224F980A1DF095D0001E851F /* data store */,
@@ -202,7 +209,6 @@
 				224F980E1DF095F6001E851F /* DataStore.swift */,
 				224F980F1DF095F6001E851F /* MemoryDataStore.swift */,
 				224F98101DF095F6001E851F /* RemoteDataStore.swift */,
-				224F98111DF095F6001E851F /* CompoundDataStore.swift */,
 				224F98121DF095F6001E851F /* DataStoreDelegate.swift */,
 				224F98131DF095F6001E851F /* RequestEncoder.swift */,
 			);
@@ -439,6 +445,7 @@
 				224F98271DF095FD001E851F /* TypeDictionary.swift in Sources */,
 				224F983A1DF09626001E851F /* BaseField.swift in Sources */,
 				224F983B1DF09626001E851F /* DateTransformer.swift in Sources */,
+				224F984B1DF096A8001E851F /* ModelManager.swift in Sources */,
 				224F983F1DF09626001E851F /* Observation.swift in Sources */,
 				224F98141DF095F6001E851F /* ArchiveDataStore.swift in Sources */,
 				224F98161DF095F6001E851F /* MemoryDataStore.swift in Sources */,
@@ -452,11 +459,12 @@
 				224F98191DF095F6001E851F /* DataStoreDelegate.swift in Sources */,
 				224F98411DF09626001E851F /* operators.swift in Sources */,
 				224F98241DF095FD001E851F /* Model.swift in Sources */,
+				224F984C1DF096A8001E851F /* Routable.swift in Sources */,
 				224F98151DF095F6001E851F /* DataStore.swift in Sources */,
+				224F984D1DF096A8001E851F /* DictionarySerializable.swift in Sources */,
 				224F98251DF095FD001E851F /* Response.swift in Sources */,
 				224F98261DF095FD001E851F /* ModelField.swift in Sources */,
 				224F98391DF09626001E851F /* ArrayField.swift in Sources */,
-				224F98181DF095F6001E851F /* CompoundDataStore.swift in Sources */,
 				224F982B1DF09604001E851F /* DictionaryExtension.swift in Sources */,
 				224F981A1DF095F6001E851F /* RequestEncoder.swift in Sources */,
 				224F98441DF09626001E851F /* ValueTransformer.swift in Sources */,
