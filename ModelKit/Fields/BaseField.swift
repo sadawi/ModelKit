@@ -32,6 +32,7 @@ public enum ValidationState:Equatable {
         return self == .valid
     }
 }
+
 public func ==(lhs:ValidationState, rhs:ValidationState) -> Bool {
     switch (lhs, rhs) {
     case (.unknown, .unknown): return true
@@ -51,12 +52,17 @@ public protocol FieldType:AnyObject {
     var validationState:ValidationState { get }
     var loadState:LoadState { get }
     
+    var changedAt:Date? { get }
+    var updatedAt:Date? { get }
+    
     func addValidationError(_ message:String)
     func resetValidationState()
     func validate() -> ValidationState
 
     func read(from dictionary:[String:AnyObject])
     func write(to dictionary:inout [String:AnyObject], seenFields:inout [FieldType], explicitNull: Bool)
+    
+    func merge(from field: FieldType)
 }
 
 public extension FieldType {
@@ -279,6 +285,59 @@ open class BaseField<T>: FieldType, Observer, Observable {
     
     open var defaultValueTransformerContext: ValueTransformerContext {
         return ValueTransformerContext.defaultContext
+    }
+    
+    // MARK: - Merge
+    
+    // TODO: throw?
+    public func copyValue(from field: FieldType, copyTimestamps: Bool = false) {
+        guard let field = field as? BaseField<ValueType> else { return }
+        self.copyValue(from: field, copyTimestamps: copyTimestamps)
+    }
+
+    public func copyValue(from field: BaseField<T>, copyTimestamps: Bool = false) {
+        self.value = field.value
+        if copyTimestamps {
+            self.updatedAt = field.updatedAt
+            self.changedAt = field.changedAt
+        }
+    }
+    
+    /**
+     Checks whether this field's value should be considered newer than another field's value.
+     A nil timestamp is always considered old.
+     If neither has a timestamp, returns false.
+     */
+    public func isNewer(than field: FieldType) -> Bool {
+        if let otherUpdatedAt = field.updatedAt {
+            if let selfUpdatedAt = self.updatedAt {
+                // both have timestamps
+                return selfUpdatedAt.compare(otherUpdatedAt) == .orderedDescending
+            } else {
+                // other has timestamp, self does not
+                return true
+            }
+        } else {
+            if self.updatedAt != nil {
+                // self has timestamp, other does not
+                return true
+            } else {
+                // neither has timestamps.
+                return false
+            }
+        }
+    }
+    
+    /**
+     Copies the value from `field` iff it is newer than self. 
+     If neither has a timestamp, nothing will happen.
+     */
+    public func merge(from field: FieldType) {
+        if let field = field as? BaseField<ValueType> {
+            if field.isNewer(than: self) {
+                self.copyValue(from: field)
+            }
+        }
     }
 
     
