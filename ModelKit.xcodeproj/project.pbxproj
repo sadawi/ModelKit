@@ -51,8 +51,8 @@
 		220EF90A1DF09E6D00B702CC /* ModelKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 220EF9091DF09E6D00B702CC /* ModelKit.podspec */; };
 		220EF90E1DF09FF200B702CC /* Array+Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF90D1DF09FF200B702CC /* Array+Difference.swift */; };
 		220EF9101DF0A01F00B702CC /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF90F1DF0A01F00B702CC /* DictionaryExtension.swift */; };
-		220EF9181DF0A12600B702CC /* ModelRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF9171DF0A12600B702CC /* ModelRegistry.swift */; };
-		220EF91A1DF0A12E00B702CC /* MemoryRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF9191DF0A12E00B702CC /* MemoryRegistry.swift */; };
+		220EF91D1DF0A2F700B702CC /* MemoryRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF91B1DF0A2F700B702CC /* MemoryRegistry.swift */; };
+		220EF91E1DF0A2F700B702CC /* ModelRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF91C1DF0A2F700B702CC /* ModelRegistry.swift */; };
 		224F97F91DF095A5001E851F /* ModelKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224F97EF1DF095A5001E851F /* ModelKit.framework */; };
 		224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F97FD1DF095A5001E851F /* ModelKitTests.swift */; };
 		224F98001DF095A5001E851F /* ModelKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 224F97F21DF095A5001E851F /* ModelKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -115,8 +115,8 @@
 		220EF9091DF09E6D00B702CC /* ModelKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = ModelKit.podspec; sourceTree = "<group>"; };
 		220EF90D1DF09FF200B702CC /* Array+Difference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Array+Difference.swift"; path = "Models/Array+Difference.swift"; sourceTree = "<group>"; };
 		220EF90F1DF0A01F00B702CC /* DictionaryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DictionaryExtension.swift; path = DataStore/DictionaryExtension.swift; sourceTree = "<group>"; };
-		220EF9171DF0A12600B702CC /* ModelRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelRegistry.swift; sourceTree = "<group>"; };
-		220EF9191DF0A12E00B702CC /* MemoryRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryRegistry.swift; sourceTree = "<group>"; };
+		220EF91B1DF0A2F700B702CC /* MemoryRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoryRegistry.swift; path = Models/MemoryRegistry.swift; sourceTree = "<group>"; };
+		220EF91C1DF0A2F700B702CC /* ModelRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelRegistry.swift; path = Models/ModelRegistry.swift; sourceTree = "<group>"; };
 		224F97EF1DF095A5001E851F /* ModelKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModelKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		224F97F21DF095A5001E851F /* ModelKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelKit.h; sourceTree = "<group>"; };
 		224F97F31DF095A5001E851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -321,8 +321,8 @@
 		220EF9151DF0A0FF00B702CC /* registry */ = {
 			isa = PBXGroup;
 			children = (
-				220EF9171DF0A12600B702CC /* ModelRegistry.swift */,
-				220EF9191DF0A12E00B702CC /* MemoryRegistry.swift */,
+				220EF91B1DF0A2F700B702CC /* MemoryRegistry.swift */,
+				220EF91C1DF0A2F700B702CC /* ModelRegistry.swift */,
 			);
 			name = registry;
 			sourceTree = "<group>";
@@ -615,6 +615,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				220EF8D71DF09C3800B702CC /* ArrayField.swift in Sources */,
+				220EF91D1DF0A2F700B702CC /* MemoryRegistry.swift in Sources */,
 				220EF9081DF09E3100B702CC /* TypeDictionary.swift in Sources */,
 				220EF9001DF09DEE00B702CC /* ValueTransformer.swift in Sources */,
 				220EF9021DF09DFD00B702CC /* Mirror+Super.swift in Sources */,
@@ -635,15 +636,14 @@
 				220EF8F11DF09CB500B702CC /* ModelManager.swift in Sources */,
 				220EF8FE1DF09DE000B702CC /* ValidationRule.swift in Sources */,
 				220EF8E81DF09C7B00B702CC /* Response.swift in Sources */,
-				220EF91A1DF0A12E00B702CC /* MemoryRegistry.swift in Sources */,
 				220EF8D81DF09C3800B702CC /* BaseField.swift in Sources */,
 				220EF8F61DF09D7700B702CC /* DictionarySerializable.swift in Sources */,
 				220EF8CC1DF09BEE00B702CC /* ArchiveDataStore.swift in Sources */,
-				220EF9181DF0A12600B702CC /* ModelRegistry.swift in Sources */,
 				220EF8DE1DF09C6600B702CC /* MemoryDataStore.swift in Sources */,
 				220EF8D01DF09C1600B702CC /* Model.swift in Sources */,
 				220EF8EC1DF09C9400B702CC /* Observable.swift in Sources */,
 				220EF8E21DF09C7100B702CC /* DataStoreDelegate.swift in Sources */,
+				220EF91E1DF0A2F700B702CC /* ModelRegistry.swift in Sources */,
 				220EF8FC1DF09DC600B702CC /* DateTransformer.swift in Sources */,
 				220EF8E61DF09C7B00B702CC /* RemoteDataStore.swift in Sources */,
 				220EF8D91DF09C3800B702CC /* EnumField.swift in Sources */,

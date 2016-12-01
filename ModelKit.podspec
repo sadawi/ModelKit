@@ -11,6 +11,8 @@ Pod::Spec.new do |s|
     
     s.requires_arc = true
     
+    s.dependency 'PromiseKit/CorePromise', '~> 4.0.5'
+
     s.subspec 'Fields' do |ss|
         ss.source_files = 'ModelKit/Fields/**/*'
     end
@@ -23,5 +25,7 @@ Pod::Spec.new do |s|
     s.subspec 'DataStore' do |ss|
         ss.source_files = 'ModelKit/DataStore/**/*'
         ss.dependency 'ModelKit/Models'
+        ss.dependency 'Alamofire', '~> 4.2.0'
+        ss.dependency 'SwiftyJSON', '~> 3.1.3'
     end
 end
