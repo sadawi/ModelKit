@@ -19,6 +19,7 @@
 		220EF8C51DF099A000B702CC /* ObservationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8C01DF099A000B702CC /* ObservationTests.swift */; };
 		220EF8C61DF099A000B702CC /* TransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8C11DF099A000B702CC /* TransformerTests.swift */; };
 		220EF8C71DF099A000B702CC /* CustomFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8C21DF099A000B702CC /* CustomFieldTests.swift */; };
+		220EF8CA1DF09A9F00B702CC /* ModelArrayField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8C91DF09A9F00B702CC /* ModelArrayField.swift */; };
 		224F97F91DF095A5001E851F /* ModelKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224F97EF1DF095A5001E851F /* ModelKit.framework */; };
 		224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F97FD1DF095A5001E851F /* ModelKitTests.swift */; };
 		224F98001DF095A5001E851F /* ModelKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 224F97F21DF095A5001E851F /* ModelKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -79,6 +80,7 @@
 		220EF8C01DF099A000B702CC /* ObservationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationTests.swift; sourceTree = "<group>"; };
 		220EF8C11DF099A000B702CC /* TransformerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformerTests.swift; sourceTree = "<group>"; };
 		220EF8C21DF099A000B702CC /* CustomFieldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFieldTests.swift; sourceTree = "<group>"; };
+		220EF8C91DF09A9F00B702CC /* ModelArrayField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelArrayField.swift; sourceTree = "<group>"; };
 		224F97EF1DF095A5001E851F /* ModelKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModelKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		224F97F21DF095A5001E851F /* ModelKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelKit.h; sourceTree = "<group>"; };
 		224F97F31DF095A5001E851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				224F981F1DF095FD001E851F /* ModelField.swift */,
 				224F98201DF095FD001E851F /* TypeDictionary.swift */,
 				224F98211DF095FD001E851F /* TransformerCache.swift */,
+				220EF8C91DF09A9F00B702CC /* ModelArrayField.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				224F983E1DF09626001E851F /* Observable.swift in Sources */,
 				224F98401DF09626001E851F /* Observer.swift in Sources */,
 				224F98271DF095FD001E851F /* TypeDictionary.swift in Sources */,
+				220EF8CA1DF09A9F00B702CC /* ModelArrayField.swift in Sources */,
 				224F983A1DF09626001E851F /* BaseField.swift in Sources */,
 				224F983B1DF09626001E851F /* DateTransformer.swift in Sources */,
 				224F984B1DF096A8001E851F /* ModelManager.swift in Sources */,
