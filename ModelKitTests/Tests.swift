@@ -266,9 +266,36 @@ class ValueFieldTests: XCTestCase {
 
 extension ValueTransformerContext {
     static let string = ValueTransformerContext(name: "string")
+    static let constant = ValueTransformerContext(name: "constant")
 }
 
 extension FieldTests {
+    
+    func testReadingCustomTransformers() {
+        let customTransformer = ModelKit.ValueTransformer<Int>(
+            importAction: { (value: AnyObject?) -> Int? in
+                return 1000
+            },
+            exportAction: { (value: Int?) -> AnyObject? in
+                return 5 as AnyObject
+        } )
+        
+        let size = Field<Int>(key: "size").transform(with: customTransformer, in: .constant)
+        let raw: AttributeDictionary = ["size": 2 as AnyObject]
+        
+        size.read(from: raw)
+        XCTAssertEqual(size.value, 2)
+
+        size.read(from: raw, in: .constant)
+        XCTAssertEqual(size.value, 1000)
+        
+        var output: AttributeDictionary = [:]
+        size.write(to: &output)
+        XCTAssertEqual(output["size"] as? Int, 1000)
+//
+//        size.write(to: &output, in: .constant)
+//        XCTAssertEqual(output["size"] as? Int, 5)
+}
     
     func testCustomTransformers() {
         let size = Field<Int>(key: "size")

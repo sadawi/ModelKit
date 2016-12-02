@@ -56,5 +56,31 @@ class ArrayFieldTests: XCTestCase {
         fido.commands.removeFirst("lie down")
         XCTAssertEqual(fido.commands.value?.count, 0)
     }
+    
+    func testDefaultTransformers() {
+        let raw: AttributeDictionary = ["ages": [1,2,3] as AnyObject]
+        let ages = Field<Int>(key: "ages")*
+        ages.read(from: raw)
+        XCTAssertEqual([1,2,3], ages.value!)
+    }
+
+//    func testCustomTransformers() {
+//        let raw: AttributeDictionary = ["ages": [0: 1, 1: 2, 2: 3] as AnyObject]
+//        
+//        let customTransformer = ModelKit.ValueTransformer<[Int]>(
+//            importAction: { (value: AnyObject?) -> [Int]? in
+//                if let dictionary = value as? [Int: Int] {
+//                    return Array(dictionary.values)
+//                }
+//                return nil
+//            },
+//            exportAction: { (value: [Int]?) -> AnyObject? in
+//                return nil
+//            } )
+//        
+//        let ages = Field<Int>(key: "ages")*.transform(with: customTransformer)
+//        ages.read(from: raw)
+//        XCTAssertEqual([1,2,3], ages.value!)
+//    }
 
 }
