@@ -62,6 +62,19 @@ class ArrayFieldTests: XCTestCase {
         let ages = Field<Int>(key: "ages")*
         ages.read(from: raw)
         XCTAssertEqual([1,2,3], ages.value!)
+        
+        var output: AttributeDictionary = [:]
+        ages.write(to: &output)
+        
+        if let outputAges = output["ages"] {
+            if let outputAges = outputAges as? [Int] {
+                XCTAssertEqual([1,2,3], outputAges)
+            } else {
+                XCTFail()
+            }
+        } else {
+            XCTFail()
+        }
     }
 
 //    func testCustomTransformers() {

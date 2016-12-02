@@ -32,7 +32,11 @@ open class ArrayValueTransformer<T>: ValueTransformer<[T]> {
     }
     
     open override func exportValue(_ value: [T]?, explicitNull: Bool) -> AnyObject? {
-        return value as AnyObject?
+        if let value = value {
+            return value.map { self.innerTransformer.exportValue($0) }.flatMap { $0 } as AnyObject?
+        } else {
+            return nil
+        }
     }
     
     /**
@@ -116,14 +120,6 @@ open class ArrayField<T:Equatable>: BaseField<[T]> {
         }
         return transformer
     }
-    
-    open override func writeUnseenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String, explicitNull: Bool = false, in context: ValueTransformerContext) {
-        if let key = self.key, let value = self.value, let transformer = self.field.valueTransformer(in: context) {
-            let newValue = value.map { transformer.exportValue($0) }.flatMap { $0 }
-            dictionary[key] = newValue as AnyObject
-        }
-    }
-
     
     open func valueRemoved(_ value: T) {
     }
