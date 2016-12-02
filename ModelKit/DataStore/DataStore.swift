@@ -19,7 +19,14 @@ enum Operation {
 
 let DataStoreErrorDomain = "DataStore"
 
-public protocol DataStore {
+public protocol ListableDataStore {
+    /**
+     Retrieves a list of all models of the specified type.
+     */
+    func list<T: Model>(_ modelClass:T.Type) -> Promise<[T]>
+}
+
+public protocol DataStore: ListableDataStore {
     /**
      Inserts a record.  May give the object an identifier.
      // TODO: Decide on strict id semantics.  Do we leave an existing identifier alone, or replace it with a new one?
@@ -43,13 +50,6 @@ public protocol DataStore {
     func lookup<T: Model>(_ modelClass:T.Type, identifier:String) -> Promise<T>
     
     var delegate:DataStoreDelegate? { get set }
-}
-
-public protocol ListableDataStore {
-    /**
-     Retrieves a list of all models of the specified type.
-     */
-    func list<T: Model>(_ modelClass:T.Type) -> Promise<[T]>
 }
 
 public protocol ClearableDataStore {
