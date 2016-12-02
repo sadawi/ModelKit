@@ -292,9 +292,9 @@ extension FieldTests {
         var output: AttributeDictionary = [:]
         size.write(to: &output)
         XCTAssertEqual(output["size"] as? Int, 1000)
-//
-//        size.write(to: &output, in: .constant)
-//        XCTAssertEqual(output["size"] as? Int, 5)
+
+        size.write(to: &output, in: .constant)
+        XCTAssertEqual(output["size"] as? Int, 5)
 }
     
     func testCustomTransformers() {

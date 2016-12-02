@@ -60,7 +60,7 @@ public protocol FieldType:AnyObject {
     func validate() -> ValidationState
 
     func read(from dictionary:[String:AnyObject], in context: ValueTransformerContext)
-    func write(to dictionary:inout [String:AnyObject], seenFields:inout [FieldType], explicitNull: Bool)
+    func write(to dictionary:inout [String:AnyObject], seenFields:inout [FieldType], explicitNull: Bool, in context: ValueTransformerContext)
     
     func merge(from field: FieldType)
 }
@@ -70,9 +70,9 @@ public extension FieldType {
         self.read(from: dictionary, in: ValueTransformerContext.defaultContext)
     }
     
-    public func write(to dictionary:inout [String:AnyObject], explicitNull: Bool = false) {
+    public func write(to dictionary:inout [String:AnyObject], explicitNull: Bool = false, in context: ValueTransformerContext=ValueTransformerContext.defaultContext) {
         var seenFields:[FieldType] = []
-        self.write(to: &dictionary, seenFields: &seenFields, explicitNull: explicitNull)
+        self.write(to: &dictionary, seenFields: &seenFields, explicitNull: explicitNull, in: context)
     }
 }
 
@@ -320,25 +320,25 @@ open class BaseField<T>: FieldType, Observer, Observable {
         }
     }
     
-    open func write(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], explicitNull: Bool = false) {
+    open func write(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext) {
         if let key = self.key {
             if seenFields.contains(where: {$0 === self}) {
-                self.writeSeenValue(to: &dictionary, seenFields: &seenFields, key: key)
+                self.writeSeenValue(to: &dictionary, seenFields: &seenFields, key: key, in: context)
             } else {
                 seenFields.append(self)
-                self.writeUnseenValue(to: &dictionary, seenFields: &seenFields, key: key, explicitNull: explicitNull)
+                self.writeUnseenValue(to: &dictionary, seenFields: &seenFields, key: key, explicitNull: explicitNull, in: context)
             }
         }
     }
     
-    open func writeUnseenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String, explicitNull: Bool = false) {
-        if let transformer = self.valueTransformer() {
+    open func writeUnseenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String, explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext) {
+        if let transformer = self.valueTransformer(in: context) {
             dictionary[key] = transformer.exportValue(self.value, explicitNull: explicitNull)
         }
     }
     
-    open func writeSeenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String) {
-        self.writeUnseenValue(to: &dictionary, seenFields: &seenFields, key: key)
+    open func writeSeenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String, in context: ValueTransformerContext = .defaultContext) {
+        self.writeUnseenValue(to: &dictionary, seenFields: &seenFields, key: key, in: context)
     }
     
     // MARK: - Transformers

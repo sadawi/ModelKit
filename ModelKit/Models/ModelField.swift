@@ -82,17 +82,17 @@ open class ModelField<T: Model>: Field<T>, ModelFieldType {
     }
     
     
-    open override func writeUnseenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String, explicitNull: Bool = false) {
+    open override func writeUnseenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String, explicitNull: Bool = false, in context: ValueTransformerContext) {
         if let modelValueTransformer = self.valueTransformer() as? ModelValueTransformer<T> {
             dictionary[key] = modelValueTransformer.exportValue(self.value, seenFields: &seenFields, explicitNull: explicitNull)
         } else { 
-            super.writeUnseenValue(to: &dictionary, seenFields: &seenFields, key: key, explicitNull: explicitNull)
+            super.writeUnseenValue(to: &dictionary, seenFields: &seenFields, key: key, explicitNull: explicitNull, in: context)
         }
     }
     
-    open override func writeSeenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String) {
+    open override func writeSeenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String, in context: ValueTransformerContext) {
         // Only writes the identifier field, if it exists
-        if let identifierField = self.value?.identifierField, let modelValueTransformer = self.valueTransformer() as? ModelValueTransformer<T> {
+        if let identifierField = self.value?.identifierField, let modelValueTransformer = self.valueTransformer(in: context) as? ModelValueTransformer<T> {
             dictionary[key] = modelValueTransformer.exportValue(self.value, fields: [identifierField], seenFields: &seenFields)
         }
     }

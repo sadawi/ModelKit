@@ -16,7 +16,7 @@ private class TestField<T: Equatable>: Field<T> {
         super.init(value: value, name: name, priority: priority, key: key)
     }
     
-    private override func writeSeenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String) {
+    private override func writeSeenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String, in context: ValueTransformerContext) {
         dictionary[key] = kSeen as AnyObject?
     }
 }
