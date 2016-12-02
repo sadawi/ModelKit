@@ -215,7 +215,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
     /**
      Initialize a new field.
      */
-    init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
+    public init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
         if let value = value {
             self.value = value
             

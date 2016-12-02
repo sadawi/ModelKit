@@ -48,7 +48,7 @@ public postfix func *<T>(right:Field<T>) -> ArrayField<T> {
  then the equivalent ArrayField declaration could be any of these:
  let tags = ArrayField(Field<String>(), name: "Tags")
  let tags = ArrayField(Field<String>(name: "Tags"))
- let tags = *Field<String>(name: "Tags")
+ let tags = Field<String>(name: "Tags")*
  
  */
 open class ArrayField<T:Equatable>: BaseField<[T]> {
