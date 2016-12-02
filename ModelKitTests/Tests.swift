@@ -80,9 +80,8 @@ class FieldTests: XCTestCase {
         let entity = Entity()
         entity.name.value = "Bob"
         XCTAssertEqual(entity.name.value, "Bob")
-        XCTAssertTrue(entity.name == "Bob")
-        XCTAssertFalse(entity.name == "Bobb")
-        XCTAssertTrue("Bob" == entity.name)
+        XCTAssertTrue(entity.name.value == "Bob")
+        XCTAssertFalse(entity.name.value == "Bobb")
     }
     
     

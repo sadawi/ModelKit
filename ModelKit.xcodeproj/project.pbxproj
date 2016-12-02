@@ -45,7 +45,6 @@
 		220EF8FE1DF09DE000B702CC /* ValidationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8FD1DF09DE000B702CC /* ValidationRule.swift */; };
 		220EF9001DF09DEE00B702CC /* ValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8FF1DF09DEE00B702CC /* ValueTransformer.swift */; };
 		220EF9021DF09DFD00B702CC /* Mirror+Super.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF9011DF09DFD00B702CC /* Mirror+Super.swift */; };
-		220EF9041DF09E1500B702CC /* operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF9031DF09E1500B702CC /* operators.swift */; };
 		220EF9071DF09E3100B702CC /* TransformerCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF9051DF09E3100B702CC /* TransformerCache.swift */; };
 		220EF9081DF09E3100B702CC /* TypeDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF9061DF09E3100B702CC /* TypeDictionary.swift */; };
 		220EF90A1DF09E6D00B702CC /* ModelKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 220EF9091DF09E6D00B702CC /* ModelKit.podspec */; };
@@ -110,7 +109,6 @@
 		220EF8FD1DF09DE000B702CC /* ValidationRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidationRule.swift; path = Fields/ValidationRule.swift; sourceTree = "<group>"; };
 		220EF8FF1DF09DEE00B702CC /* ValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueTransformer.swift; path = Fields/ValueTransformer.swift; sourceTree = "<group>"; };
 		220EF9011DF09DFD00B702CC /* Mirror+Super.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Mirror+Super.swift"; path = "Models/Mirror+Super.swift"; sourceTree = "<group>"; };
-		220EF9031DF09E1500B702CC /* operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = operators.swift; path = Fields/operators.swift; sourceTree = "<group>"; };
 		220EF9051DF09E3100B702CC /* TransformerCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransformerCache.swift; path = Models/TransformerCache.swift; sourceTree = "<group>"; };
 		220EF9061DF09E3100B702CC /* TypeDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TypeDictionary.swift; path = Models/TypeDictionary.swift; sourceTree = "<group>"; };
 		220EF9091DF09E6D00B702CC /* ModelKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = ModelKit.podspec; sourceTree = "<group>"; };
@@ -212,14 +210,6 @@
 				220EF91F1DF0A58100B702CC /* ValueTransformerContext.swift */,
 			);
 			name = transformers;
-			sourceTree = "<group>";
-		};
-		220EF8AB1DF0978000B702CC /* operators */ = {
-			isa = PBXGroup;
-			children = (
-				220EF9031DF09E1500B702CC /* operators.swift */,
-			);
-			name = operators;
 			sourceTree = "<group>";
 		};
 		220EF8AC1DF0978C00B702CC /* local */ = {
@@ -410,7 +400,6 @@
 		224F980B1DF095D5001E851F /* Fields */ = {
 			isa = PBXGroup;
 			children = (
-				220EF8AB1DF0978000B702CC /* operators */,
 				220EF8AA1DF0976300B702CC /* transformers */,
 				220EF8A91DF0975200B702CC /* observation */,
 				220EF8A81DF0974D00B702CC /* validation */,
@@ -629,7 +618,6 @@
 				220EF8DC1DF09C4400B702CC /* ValueTransformable.swift in Sources */,
 				220EF9071DF09E3100B702CC /* TransformerCache.swift in Sources */,
 				220EF8ED1DF09C9400B702CC /* Observation.swift in Sources */,
-				220EF9041DF09E1500B702CC /* operators.swift in Sources */,
 				220EF8DA1DF09C3800B702CC /* Field.swift in Sources */,
 				220EF8D21DF09C1600B702CC /* ModelField.swift in Sources */,
 				220EF8E11DF09C7100B702CC /* DataStore.swift in Sources */,
