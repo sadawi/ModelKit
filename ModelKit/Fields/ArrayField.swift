@@ -88,12 +88,6 @@ open class ArrayField<T:Equatable>: BaseField<[T]> {
      */
     open var field:Field<T>
     
-    open override var value:[T]? {
-        didSet {
-            self.valueUpdated(oldValue: oldValue, newValue: self.value)
-        }
-    }
-    
     public init(_ field:Field<T>, value:[T]?=[], name:String?=nil, priority:Int?=nil, key:String?=nil) {
         self.field = field
         super.init(name: name ?? field.name, priority: priority ?? field.priority, key:key ?? field.key)
