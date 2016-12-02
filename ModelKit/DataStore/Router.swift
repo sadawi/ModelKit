@@ -10,10 +10,24 @@ import Foundation
 import StringInflections
 
 public protocol ModelRouter {
+    /**
+     Generates the path to a model.
+     */
     func path(for model: Model) -> String?
+    
+    /**
+     Generates the path to a collection.
+     */
     func path(for modelClass: Model.Type) -> String?
     
+    /**
+     Generates the path to a collection owned by another model through a field.
+     */
     func path<T: Model, U: Model>(for model: T, field: ModelArrayField<U>) -> String?
+
+    /**
+     Generates the path to a member of a collection owned by another model through a field.
+     */
     func path<T: Model, U: Model>(for model: T, field: ModelArrayField<U>, child: U) -> String?
 }
 
