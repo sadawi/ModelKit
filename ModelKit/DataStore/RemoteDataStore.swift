@@ -38,7 +38,7 @@ public enum RemoteDataStoreError: Error {
 open class RemoteDataStore: DataStore, ListableDataStore {
     open var baseURL:URL
     open var delegate:DataStoreDelegate?
-    open var router: Router = Router.defaultRouter
+    open var router: ModelRouter = RESTRouter()
     
     public init(baseURL:URL) {
         self.baseURL = baseURL

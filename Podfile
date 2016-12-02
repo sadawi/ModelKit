@@ -9,6 +9,7 @@ target 'ModelKit' do
   pod 'Alamofire', '~> 4.2.0'
   pod 'PromiseKit', '~> 4.0.5'
   pod 'SwiftyJSON', '~> 3.1.3'
+  pod 'StringInflections'
 
   target 'ModelKitTests' do
     inherit! :search_paths
