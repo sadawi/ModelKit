@@ -19,8 +19,8 @@ private func ==(left:Thing, right:Thing) -> Bool {
 
 private class Pet {
     let name        = Field<String>()
-    let commands    = *Field<String>()
-    let things      = *Field<Thing>()
+    let commands    = Field<String>()*
+    let things      = Field<Thing>()*
 }
 
 class ArrayFieldTests: XCTestCase {

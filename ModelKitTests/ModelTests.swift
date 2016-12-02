@@ -31,7 +31,7 @@ class ModelTests: XCTestCase {
         let name = Field<String>()
         let size = Field<Int>()
         let parentCompany = ModelField<Company>()
-        let employees:ModelArrayField<Person> = *ModelField<Person>(inverse: { person in return person.company })
+        let employees:ModelArrayField<Person> = ModelField<Person>(inverse: { person in return person.company })*
         
         override var identifierField: FieldType? {
             return id
@@ -46,7 +46,7 @@ class ModelTests: XCTestCase {
     
     fileprivate class Club: Model {
         let name = Field<String>()
-        let members = *ModelField<Person>()
+        let members = ModelField<Person>()*
     }
     
     func testFieldModel() {

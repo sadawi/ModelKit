@@ -8,7 +8,21 @@
 
 import Foundation
 
-prefix operator *
+open class ArrayValueTransformer<T>: ValueTransformer<[T]> {
+    public required init() {
+        super.init()
+    }
+    
+    open override func importValue(_ value: AnyObject?) -> [T]? {
+        return value as? [T]
+    }
+    
+    open override func exportValue(_ value: [T]?, explicitNull: Bool) -> AnyObject? {
+        return value as AnyObject?
+    }
+}
+
+postfix operator *
 
 /**
  Convenience prefix operator for declaring an ArrayField: just put a * in front of the declaration for the equivalent single-valued field.
@@ -17,7 +31,7 @@ prefix operator *
  
  let tags = (*Field<String>()).require(...)
  */
-public prefix func *<T>(right:Field<T>) -> ArrayField<T> {
+public postfix func *<T>(right:Field<T>) -> ArrayField<T> {
     return ArrayField(right)
 }
 

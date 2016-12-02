@@ -29,8 +29,8 @@ private class Product:BaseModel {
 
 private class Company:BaseModel {
     let name        = Field<String>()
-    let products    = *ModelField<Product>()
-    let widgets     = *ModelField<Product>(key: "widgetIDs", foreignKey: true)
+    let products    = ModelField<Product>()*
+    let widgets     = ModelField<Product>(key: "widgetIDs", foreignKey: true)*
 }
 
 private class Person:BaseModel {

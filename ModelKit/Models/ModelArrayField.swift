@@ -69,6 +69,6 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelFieldType {
     
 }
 
-public prefix func *<T:Model>(right:ModelField<T>) -> ModelArrayField<T> {
+public postfix func *<T:Model>(right:ModelField<T>) -> ModelArrayField<T> {
     return ModelArrayField<T>(right)
 }
