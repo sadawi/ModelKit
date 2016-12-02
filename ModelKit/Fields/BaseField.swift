@@ -315,7 +315,9 @@ open class BaseField<T>: FieldType, Observer, Observable {
     // MARK: - Dictionary values
     
     open func read(from dictionary:[String:AnyObject], in context: ValueTransformerContext) {
-        // Implement in subclass
+        if let key = self.key, let dictionaryValue = dictionary[key], let transformer = self.valueTransformer(in: context) {
+            self.value = transformer.importValue(dictionaryValue)
+        }
     }
     
     open func write(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], explicitNull: Bool = false) {
@@ -330,11 +332,13 @@ open class BaseField<T>: FieldType, Observer, Observable {
     }
     
     open func writeUnseenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String, explicitNull: Bool = false) {
-        // Implement in subclass
+        if let transformer = self.valueTransformer() {
+            dictionary[key] = transformer.exportValue(self.value, explicitNull: explicitNull)
+        }
     }
     
     open func writeSeenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String) {
-        // Implement in subclass
+        self.writeUnseenValue(to: &dictionary, seenFields: &seenFields, key: key)
     }
     
     // MARK: - Transformers
