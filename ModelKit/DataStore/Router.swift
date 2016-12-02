@@ -12,6 +12,9 @@ import StringInflections
 public protocol ModelRouter {
     func path(for model: Model) -> String?
     func path(for modelClass: Model.Type) -> String?
+    
+    func path<T: Model, U: Model>(for model: T, field: ModelArrayField<U>) -> String?
+    func path<T: Model, U: Model>(for model: T, field: ModelArrayField<U>, child: U) -> String?
 }
 
 enum CaseConvention {
@@ -24,8 +27,14 @@ open class RESTRouter: ModelRouter {
     var collectionNames = TypeDictionary<String>()
     var pluralizesCollections = true
     
+    let pathSeparator = "/"
+    
     public func route(_ modelClass: Model.Type, to path: String) {
         self.collectionNames[modelClass] = path
+    }
+
+    public func unroute(_ modelClass: Model.Type) {
+        self.collectionNames.remove(modelClass)
     }
     
     open func path(for model: Model) -> String? {
@@ -34,6 +43,19 @@ open class RESTRouter: ModelRouter {
         } else {
             return nil
         }
+    }
+
+    open func path<T: Model, U: Model>(for model: T, field: ModelArrayField<U>) -> String? {
+        guard let path      = self.path(for: model) else { return nil }
+        guard let fieldKey  = field.key else { return nil }
+        return [path, fieldKey].joined(separator: pathSeparator)
+    }
+
+    public func path<T: Model, U: Model>(for model: T, field: ModelArrayField<U>, child: U) -> String? {
+        guard let prefix = self.path(for: model, field: field) else { return nil }
+        guard let id = child.identifier else { return nil }
+        
+        return [prefix, id].joined(separator: pathSeparator)
     }
     
     open func path(for modelClass: Model.Type) -> String? {

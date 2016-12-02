@@ -18,6 +18,10 @@ public struct TypeDictionary<T>: Sequence {
         return self.dictionary.count
     }
     
+    public mutating func remove(_ type: Any.Type) {
+        self.dictionary[TypeWrapper(type)] = nil
+    }
+    
     public subscript(type: Any.Type) -> T? {
         get {
             return self.dictionary[TypeWrapper(type)]

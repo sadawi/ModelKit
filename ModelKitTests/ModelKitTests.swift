@@ -10,7 +10,7 @@ import XCTest
 @testable import ModelKit
 
 fileprivate class Entity: Model {
-    let id = Field<Identifier>()
+    let id          = Field<Identifier>()
     
     override var identifierField: FieldType? {
         return self.id
@@ -18,7 +18,8 @@ fileprivate class Entity: Model {
 }
 
 fileprivate class Thing: Model {
-    let id = Field<Identifier>()
+    let id          = Field<Identifier>()
+    let entities    = ModelField<Entity>(key: "relatives")*
     
     override var identifierField: FieldType? {
         return self.id
@@ -52,6 +53,20 @@ class ModelKitTests: XCTestCase {
         
         XCTAssertEqual(router.path(for: Thing.self), "objects")
         XCTAssertEqual(router.path(for: thing), "objects/1")
+        
+        router.unroute(Thing.self)
+        
+        XCTAssertEqual(router.path(for: Thing.self), "things")
+        
+        // Nested paths
+        
+        let entity = Entity()
+        entity.id.value = "e1"
+        
+        thing.entities.value = [entity]
+        
+        XCTAssertEqual(router.path(for: thing, field: thing.entities, child: entity), "things/1/relatives/e1")
+
     }
     
 }
