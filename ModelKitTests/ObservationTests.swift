@@ -91,11 +91,11 @@ class ObservationTests: XCTestCase {
         
         a.name.value = "John"
         b.name.value = "John"
-        XCTAssertTrue(a.name == b.name)
+        XCTAssertTrue(a.name.value == b.name.value)
         
         b.name.value = "Bob"
         
-        XCTAssertFalse(a.name == b.name)
+        XCTAssertFalse(a.name.value == b.name.value)
         
         XCTAssertNotEqual(a.name.value, b.name.value)
         
