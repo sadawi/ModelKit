@@ -11,7 +11,7 @@ import Foundation
 public typealias AttributeDictionary = [String:AnyObject]
 public typealias Identifier = String
 
-open class Model: NSObject, Routable, NSCopying {
+open class Model: NSObject, NSCopying {
     /**
      An object that is responsible for keeping track of canonical instances
      */
@@ -38,21 +38,6 @@ open class Model: NSObject, Routable, NSCopying {
             let prototype = type.init()
             prototypes[type] = prototype
             return prototype
-        }
-    }
-    
-    /**
-     Generates a RESTful path component for a single model using its identifier.
-     
-     Example: "users/42"
-     */
-    open var path:String? {
-        get {
-            if let id = self.identifier, let collectionPath = type(of: self).collectionPath {
-                return "\(collectionPath)/\(id)"
-            } else {
-                return nil
-            }
         }
     }
     
@@ -169,14 +154,6 @@ open class Model: NSObject, Routable, NSCopying {
             } else {
                 return "Unknown"
             }
-        }
-    }
-    
-    // MARK: Routable
-    
-    open class var collectionPath: String? {
-        get {
-            return nil
         }
     }
     

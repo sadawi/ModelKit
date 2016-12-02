@@ -39,7 +39,6 @@
 		220EF8EE1DF09C9400B702CC /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8EB1DF09C9400B702CC /* Observer.swift */; };
 		220EF8F11DF09CB500B702CC /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8EF1DF09CB500B702CC /* ModelManager.swift */; };
 		220EF8F21DF09CB500B702CC /* ModelValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8F01DF09CB500B702CC /* ModelValueTransformer.swift */; };
-		220EF8F41DF09D4E00B702CC /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8F31DF09D4E00B702CC /* Routable.swift */; };
 		220EF8F61DF09D7700B702CC /* DictionarySerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8F51DF09D7700B702CC /* DictionarySerializable.swift */; };
 		220EF8FC1DF09DC600B702CC /* DateTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8FB1DF09DC600B702CC /* DateTransformer.swift */; };
 		220EF8FE1DF09DE000B702CC /* ValidationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8FD1DF09DE000B702CC /* ValidationRule.swift */; };
@@ -57,6 +56,7 @@
 		224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F97FD1DF095A5001E851F /* ModelKitTests.swift */; };
 		224F98001DF095A5001E851F /* ModelKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 224F97F21DF095A5001E851F /* ModelKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		224F98461DF09642001E851F /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 224F98451DF09642001E851F /* Podfile */; };
+		228512CC1DF201E3009BF22A /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228512CB1DF201E3009BF22A /* Router.swift */; };
 		902751C3FA18C7E0AF33260D /* Pods_ModelKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090DEBA661399D9997A81C45 /* Pods_ModelKitTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -103,7 +103,6 @@
 		220EF8EB1DF09C9400B702CC /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observer.swift; path = Fields/Observer.swift; sourceTree = "<group>"; };
 		220EF8EF1DF09CB500B702CC /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelManager.swift; path = Models/ModelManager.swift; sourceTree = "<group>"; };
 		220EF8F01DF09CB500B702CC /* ModelValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelValueTransformer.swift; path = Models/ModelValueTransformer.swift; sourceTree = "<group>"; };
-		220EF8F31DF09D4E00B702CC /* Routable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Routable.swift; path = DataStore/Routable.swift; sourceTree = "<group>"; };
 		220EF8F51DF09D7700B702CC /* DictionarySerializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DictionarySerializable.swift; path = Models/DictionarySerializable.swift; sourceTree = "<group>"; };
 		220EF8FB1DF09DC600B702CC /* DateTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateTransformer.swift; path = Fields/DateTransformer.swift; sourceTree = "<group>"; };
 		220EF8FD1DF09DE000B702CC /* ValidationRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidationRule.swift; path = Fields/ValidationRule.swift; sourceTree = "<group>"; };
@@ -124,6 +123,7 @@
 		224F97FD1DF095A5001E851F /* ModelKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelKitTests.swift; sourceTree = "<group>"; };
 		224F97FF1DF095A5001E851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		224F98451DF09642001E851F /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = Podfile; sourceTree = "<group>"; };
+		228512CB1DF201E3009BF22A /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Router.swift; path = DataStore/Router.swift; sourceTree = "<group>"; };
 		38A05B7372D948352D30FCD1 /* Pods-ModelKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.release.xcconfig"; sourceTree = "<group>"; };
 		B2EB45E0B156254A6D7C8539 /* Pods-ModelKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.debug.xcconfig"; sourceTree = "<group>"; };
 		DC22183A5F54223695D5D378 /* Pods-ModelKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKitTests/Pods-ModelKitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -224,10 +224,10 @@
 		220EF8AD1DF0978F00B702CC /* remote */ = {
 			isa = PBXGroup;
 			children = (
-				220EF8F31DF09D4E00B702CC /* Routable.swift */,
 				220EF8E31DF09C7B00B702CC /* RemoteDataStore.swift */,
 				220EF8E41DF09C7B00B702CC /* RequestEncoder.swift */,
 				220EF8E51DF09C7B00B702CC /* Response.swift */,
+				228512CB1DF201E3009BF22A /* Router.swift */,
 			);
 			name = remote;
 			sourceTree = "<group>";
@@ -623,12 +623,12 @@
 				220EF8E11DF09C7100B702CC /* DataStore.swift in Sources */,
 				220EF8F21DF09CB500B702CC /* ModelValueTransformer.swift in Sources */,
 				220EF8E71DF09C7B00B702CC /* RequestEncoder.swift in Sources */,
-				220EF8F41DF09D4E00B702CC /* Routable.swift in Sources */,
 				220EF8F11DF09CB500B702CC /* ModelManager.swift in Sources */,
 				220EF8FE1DF09DE000B702CC /* ValidationRule.swift in Sources */,
 				220EF8E81DF09C7B00B702CC /* Response.swift in Sources */,
 				220EF8D81DF09C3800B702CC /* BaseField.swift in Sources */,
 				220EF8F61DF09D7700B702CC /* DictionarySerializable.swift in Sources */,
+				228512CC1DF201E3009BF22A /* Router.swift in Sources */,
 				220EF8CC1DF09BEE00B702CC /* ArchiveDataStore.swift in Sources */,
 				220EF9201DF0A58100B702CC /* ValueTransformerContext.swift in Sources */,
 				220EF8DE1DF09C6600B702CC /* MemoryDataStore.swift in Sources */,
