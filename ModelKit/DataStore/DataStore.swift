@@ -9,14 +9,6 @@
 import Foundation
 import PromiseKit
 
-enum Operation {
-    case any
-    case create
-    case read
-    case update
-    case delete
-}
-
 let DataStoreErrorDomain = "DataStore"
 
 public protocol ListableDataStore {
