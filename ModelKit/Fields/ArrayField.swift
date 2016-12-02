@@ -76,7 +76,7 @@ open class ArrayField<T:Equatable>: BaseField<[T]> {
     
     // MARK: - Dictionary values
     
-    open override func read(from dictionary:[String:AnyObject]) {
+    open override func read(from dictionary:[String:AnyObject], in context: ValueTransformerContext) {
         if let key = self.key, let dictionaryValues = dictionary[key] as? [AnyObject], let transformer = self.field.valueTransformer() {
             self.value = dictionaryValues.map { transformer.importValue($0) }.flatMap{$0}
         }

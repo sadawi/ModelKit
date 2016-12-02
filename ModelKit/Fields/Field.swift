@@ -70,8 +70,8 @@ open class Field<T:Equatable>: BaseField<T>, Equatable {
     
     // MARK: - Dictionary values
     
-    open override func read(from dictionary:[String:AnyObject]) {
-        if let key = self.key, let dictionaryValue = dictionary[key], let transformer = self.valueTransformer() {
+    open override func read(from dictionary:[String:AnyObject], in context: ValueTransformerContext) {
+        if let key = self.key, let dictionaryValue = dictionary[key], let transformer = self.valueTransformer(in: context) {
             self.value = transformer.importValue(dictionaryValue)
         }
     }

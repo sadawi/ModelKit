@@ -64,9 +64,9 @@ open class Model: NSObject, Routable, NSCopying {
      - parameter useRegistry: Whether we should attempt to canonicalize models and register new ones
      - parameter configure: A closure to configure a deserialized model, taking a Bool flag indicating whether it was newly instantiated (vs. reused from registry)
      */
-    open class func from(dictionaryValue:AttributeDictionary, useRegistry:Bool = true, configure:((Model,Bool) -> Void)?=nil) -> Self? {
+    open class func from(dictionaryValue:AttributeDictionary, useRegistry:Bool = true, in context: ValueTransformerContext = ValueTransformerContext.defaultContext, configure:((Model,Bool) -> Void)?=nil) -> Self? {
         var instance = (self.instanceClass(for: dictionaryValue) ?? self).init()
-        (instance as Model).readDictionaryValue(dictionaryValue)
+        (instance as Model).readDictionaryValue(dictionaryValue, in: context)
         
         var isNew = true
         
@@ -76,7 +76,7 @@ open class Model: NSObject, Routable, NSCopying {
                 if let canonical = registry.canonicalModel(for: instance) {
                     isNew = false
                     instance = canonical
-                    (instance as Model).readDictionaryValue(dictionaryValue)
+                    (instance as Model).readDictionaryValue(dictionaryValue, in: context)
                 } else {
                     isNew = true
                     registry.didInstantiate(instance)
@@ -386,11 +386,11 @@ open class Model: NSObject, Routable, NSCopying {
      - parameter dictionaryValue: The dictionary representation of this model's new field values.
      - parameter fields: An array of field objects whose values are to be found in the dictionary
      */
-    open func readDictionaryValue(_ dictionaryValue: AttributeDictionary, fields:[FieldType]?=nil) {
+    open func readDictionaryValue(_ dictionaryValue: AttributeDictionary, fields:[FieldType]?=nil, in context: ValueTransformerContext=ValueTransformerContext.defaultContext) {
         let fields = (fields ?? self.defaultFieldsForDictionaryValue())
         for (_, field) in self.fields {
             if fields.contains(where: { $0 === field }) {
-                field.read(from: dictionaryValue)
+                field.read(from: dictionaryValue, in: context)
             }
         }
     }

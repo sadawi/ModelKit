@@ -59,14 +59,17 @@ public protocol FieldType:AnyObject {
     func resetValidationState()
     func validate() -> ValidationState
 
-    func read(from dictionary:[String:AnyObject])
+    func read(from dictionary:[String:AnyObject], in context: ValueTransformerContext)
     func write(to dictionary:inout [String:AnyObject], seenFields:inout [FieldType], explicitNull: Bool)
     
     func merge(from field: FieldType)
 }
 
 public extension FieldType {
-    /// A version of writeToDictionary with optional params, since that's not possible with just the protocol.
+    func read(from dictionary:[String:AnyObject]) {
+        self.read(from: dictionary, in: ValueTransformerContext.defaultContext)
+    }
+    
     public func write(to dictionary:inout [String:AnyObject], explicitNull: Bool = false) {
         var seenFields:[FieldType] = []
         self.write(to: &dictionary, seenFields: &seenFields, explicitNull: explicitNull)
@@ -261,7 +264,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
     
     // MARK: - Dictionary values
     
-    open func read(from dictionary:[String:AnyObject]) {
+    open func read(from dictionary:[String:AnyObject], in context: ValueTransformerContext) {
         // Implement in subclass
     }
     
