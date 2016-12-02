@@ -23,12 +23,12 @@ public protocol ModelRouter {
     /**
      Generates the path to a collection owned by another model through a field.
      */
-    func path<T: Model, U: Model>(for model: T, field: ModelArrayField<U>) -> String?
+    func path<T: Model>(for field: ModelArrayField<T>) -> String?
 
     /**
      Generates the path to a member of a collection owned by another model through a field.
      */
-    func path<T: Model, U: Model>(for model: T, field: ModelArrayField<U>, child: U) -> String?
+    func path<T: Model>(for child: T, in field: ModelArrayField<T>) -> String?
 }
 
 enum CaseConvention {
@@ -59,14 +59,15 @@ open class RESTRouter: ModelRouter {
         }
     }
 
-    open func path<T: Model, U: Model>(for model: T, field: ModelArrayField<U>) -> String? {
-        guard let path      = self.path(for: model) else { return nil }
+    public func path<T: Model>(for field: ModelArrayField<T>) -> String? {
+        guard let owner     = field.model else { return nil }
+        guard let path      = self.path(for: owner) else { return nil }
         guard let fieldKey  = field.key else { return nil }
         return [path, fieldKey].joined(separator: pathSeparator)
     }
 
-    public func path<T: Model, U: Model>(for model: T, field: ModelArrayField<U>, child: U) -> String? {
-        guard let prefix = self.path(for: model, field: field) else { return nil }
+    public func path<T: Model>(for child: T, in field: ModelArrayField<T>) -> String? {
+        guard let prefix = self.path(for: field) else { return nil }
         guard let id = child.identifier else { return nil }
         
         return [prefix, id].joined(separator: pathSeparator)

@@ -65,8 +65,8 @@ class ModelKitTests: XCTestCase {
         
         thing.entities.value = [entity]
         
-        XCTAssertEqual(router.path(for: thing, field: thing.entities, child: entity), "things/1/relatives/e1")
-
+        XCTAssertEqual(router.path(for: entity, in: thing.entities), "things/1/relatives/e1")
+        XCTAssertEqual(router.path(for: thing.entities), "things/1/relatives")
     }
     
 }
