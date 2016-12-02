@@ -49,7 +49,7 @@ open class ArrayField<T:Equatable>: BaseField<[T]> {
         }
     }
     
-    public init(_ field:Field<T>, value:[T]?=[], name:String?=nil, priority:Int=0, key:String?=nil) {
+    public init(_ field:Field<T>, value:[T]?=[], name:String?=nil, priority:Int?=nil, key:String?=nil) {
         self.field = field
         super.init(name: name ?? field.name, priority: priority ?? field.priority, key:key ?? field.key)
         self.value = value
