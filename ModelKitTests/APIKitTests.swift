@@ -147,7 +147,7 @@ class APIKitTests: XCTestCase {
         
         let phil = Person.from(dictionaryValue: ["name": "Phil" as AnyObject, "age": 44 as AnyObject, "company": "testID" as AnyObject])!
         
-        ModelManager.sharedInstance.dataStore.save(phil).then { model -> Void in
+        _ = ModelManager.sharedInstance.dataStore.save(phil).then { model -> Void in
             // Fails because 555 is not a valid owner id (should be string)
             let grazi0 = Pet.from(dictionaryValue: ["name": "Grazi" as AnyObject, "owner": 555 as AnyObject])
             XCTAssertNil(grazi0?.owner.value?.id.value)
@@ -180,7 +180,7 @@ class APIKitTests: XCTestCase {
         let a = Person(name: "Kevin", age: 33)
         XCTAssertNil(a.identifier)
         
-        ModelManager.sharedInstance.dataStore.save(a).then { model -> Promise<Person> in
+        _ = ModelManager.sharedInstance.dataStore.save(a).then { model -> Promise<Person> in
             XCTAssertNotNil(model.identifier)
             didSave.fulfill()
             let id = model.identifier!
@@ -254,14 +254,14 @@ class APIKitTests: XCTestCase {
         let store = MemoryDataStore()
         let a = Person()
         a.identifier = "12324"
-        store.save(a).then { _ -> () in
+        _ = store.save(a).then { _ -> () in
             didSave.fulfill()
-            store.list(Person.self).then { people -> () in
+            _ = store.list(Person.self).then { people -> () in
                 XCTAssertEqual(people.count, 1)
                 didList.fulfill()
 
-                store.deleteAll(Person.self).then { () -> () in
-                    store.list(Person.self).then { people -> () in
+                _ = store.deleteAll(Person.self).then { () -> () in
+                    _ = store.list(Person.self).then { people -> () in
                         XCTAssertEqual(people.count, 0)
                         didDelete.fulfill()
                     }

@@ -96,7 +96,7 @@ class ArchiveTests: XCTestCase {
                 
                 didLoad.fulfill()
                 
-                archive.deleteAll(Person.self).then {
+                _ = archive.deleteAll(Person.self).then {
                     archive.list(Person.self).then { people -> () in
                         XCTAssertEqual(people.count, 0)
                         didDelete.fulfill()
@@ -120,9 +120,9 @@ class ArchiveTests: XCTestCase {
         
         let didDelete = expectation(description: "delete")
         
-        archive.saveList(Person.self, models: [person1]).then { () -> () in
-            archive.deleteAll(Person.self).then {
-                archive.list(Person.self).then { people -> () in
+        _ = archive.saveList(Person.self, models: [person1]).then { () -> () in
+            _ = archive.deleteAll(Person.self).then {
+                _ = archive.list(Person.self).then { people -> () in
                     XCTAssertEqual(people.count, 0)
                     didDelete.fulfill()
                 }
