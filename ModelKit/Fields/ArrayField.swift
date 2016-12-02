@@ -25,11 +25,9 @@ open class ArrayValueTransformer<T>: ValueTransformer<[T]> {
 postfix operator *
 
 /**
- Convenience prefix operator for declaring an ArrayField: just put a * in front of the declaration for the equivalent single-valued field.
+ Convenient postfix operator for declaring an ArrayField: just put a * after the declaration for the equivalent single-valued field.
  
- Note: this will be lower precedence than method calls, so if you want to call methods on the ArrayField, be sure to put parentheses around the whole expression first:
- 
- let tags = (*Field<String>()).require(...)
+ let tags = Field<String>()*.require(...)
  */
 public postfix func *<T>(right:Field<T>) -> ArrayField<T> {
     return ArrayField(right)
