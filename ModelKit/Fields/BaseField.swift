@@ -261,7 +261,10 @@ open class BaseField<T>: FieldType, Observer, Observable {
     
     // MARK: - Dictionary values
     
-    open func read(from dictionary:[String:AnyObject]) { }
+    open func read(from dictionary:[String:AnyObject]) {
+        // Implement in subclass
+    }
+    
     open func write(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], explicitNull: Bool = false) {
         if let key = self.key {
             if seenFields.contains(where: {$0 === self}) {
