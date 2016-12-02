@@ -21,7 +21,7 @@ open class Field<T:Equatable>: BaseField<T>, Equatable {
      - parameter transformer: The ValueTransformer to set
      - parameter in: A ValueTransformerContext used to identify this transformer. If omitted, will be the default context.
      */
-    @discardableResult open func transform(_ transformer:ValueTransformer<T>,
+    @discardableResult open func transform(with transformer:ValueTransformer<T>,
                                            in context:ValueTransformerContext=ValueTransformerContext.defaultContext) -> Self {
         self.valueTransformers[context.name] = transformer
         return self
