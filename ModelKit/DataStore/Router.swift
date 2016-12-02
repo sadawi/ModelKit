@@ -44,7 +44,6 @@ open class RESTRouter: ModelRouter {
         }
     }
     
-    // TODO: should cache results
     open func stringify(_ modelClass: Model.Type) -> String? {
         var string = String(describing: modelClass)
         string = string.replacingOccurrences(of: "(", with: "")
