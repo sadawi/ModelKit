@@ -30,7 +30,7 @@ postfix operator *
  let tags = Field<String>()*.require(...)
  */
 public postfix func *<T>(right:Field<T>) -> ArrayField<T> {
-    return ArrayField(right)
+    return right.arrayField()
 }
 
 /**

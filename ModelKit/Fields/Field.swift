@@ -19,4 +19,8 @@ open class Field<T:Equatable>: BaseField<T> {
             self.valueChanged()
         }
     }
+    
+    open func arrayField() -> ArrayField<T> {
+        return ArrayField(self)
+    }
 }
