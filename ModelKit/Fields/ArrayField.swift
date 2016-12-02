@@ -8,17 +8,38 @@
 
 import Foundation
 
+/**
+ A transformer that reads and writes an array of values.
+ */
 open class ArrayValueTransformer<T>: ValueTransformer<[T]> {
+    public var innerTransformer: ValueTransformer<T> = SimpleValueTransformer()
+    
+    public convenience init(innerTransformer: ValueTransformer<T>) {
+        self.init()
+        self.innerTransformer = innerTransformer
+    }
+    
     public required init() {
         super.init()
     }
     
     open override func importValue(_ value: AnyObject?) -> [T]? {
-        return value as? [T]
+        if let arrayValue = self.arrayValue(value) {
+            return arrayValue.map { self.innerTransformer.importValue($0) }.flatMap{$0}
+        } else {
+            return nil
+        }
     }
     
     open override func exportValue(_ value: [T]?, explicitNull: Bool) -> AnyObject? {
         return value as AnyObject?
+    }
+    
+    /**
+     Attempts to convert a raw value to an array. This implementation just performs a cast, but you could override to do something else (e.g., split a string, take values from a dictionary, etc.)
+     */
+    open func arrayValue(_ value: AnyObject?) -> [AnyObject]? {
+        return value as? [AnyObject]
     }
 }
 
@@ -88,10 +109,12 @@ open class ArrayField<T:Equatable>: BaseField<[T]> {
     
     // MARK: - Dictionary values
     
-    open override func read(from dictionary:[String:AnyObject], in context: ValueTransformerContext) {
-        if let key = self.key, let dictionaryValues = dictionary[key] as? [AnyObject], let transformer = self.field.valueTransformer(in: context) {
-            self.value = dictionaryValues.map { transformer.importValue($0) }.flatMap{$0}
+    open override func defaultValueTransformer(in context: ValueTransformerContext) -> ValueTransformer<[T]> {
+        let transformer = ArrayValueTransformer<T>()
+        if let innerTransformer = self.field.valueTransformer(in: context) {
+            transformer.innerTransformer = innerTransformer
         }
+        return transformer
     }
     
     open override func writeUnseenValue(to dictionary: inout [String : AnyObject], seenFields: inout [FieldType], key: String, explicitNull: Bool = false, in context: ValueTransformerContext) {

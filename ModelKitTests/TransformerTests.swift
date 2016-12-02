@@ -72,7 +72,7 @@ class TransformerTests: XCTestCase {
         XCTAssertEqual(2.0, floatField.value)
         
         let priceField = AutomaticField<Price>(key: "price")
-        let transformer = priceField.defaultValueTransformer()
+        let transformer = priceField.valueTransformer()!
         let imported = transformer.importValue(0.2 as AnyObject?)
         XCTAssertEqual(imported, Price(value: 0.2))
 

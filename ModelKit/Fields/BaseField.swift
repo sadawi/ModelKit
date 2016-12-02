@@ -78,7 +78,6 @@ public extension FieldType {
 
 
 let DefaultObserverKey:NSString = "____"
-let DefaultValueTransformerKey = "default"
 
 open class BaseField<T>: FieldType, Observer, Observable {
     public typealias ValueType = T
@@ -116,7 +115,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
         return T.self
     }
     
-    open func defaultValueTransformer() -> ValueTransformer<T> {
+    open func defaultValueTransformer(in context: ValueTransformerContext) -> ValueTransformer<T> {
         return SimpleValueTransformer<T>()
     }
 
@@ -131,7 +130,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
         if let transformer = self.valueTransformers[context.name] {
             return transformer
         } else {
-            return self.defaultValueTransformer()
+            return self.defaultValueTransformer(in: context)
         }
     }
     

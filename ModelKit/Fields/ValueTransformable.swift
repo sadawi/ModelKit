@@ -24,7 +24,7 @@ open class AutomaticField<T>: Field<T> where T:ValueTransformable, T:Equatable {
         super.init(value: value, name: name, priority: priority, key: key)
     }
 
-    open override func defaultValueTransformer() -> ValueTransformer<T> {
+    open override func defaultValueTransformer(in context: ValueTransformerContext) -> ValueTransformer<T> {
         return T.valueTransformer
     }
 

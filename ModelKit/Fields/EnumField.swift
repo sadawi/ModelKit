@@ -40,7 +40,7 @@ open class EnumField<T>: Field<T> where T:RawRepresentable, T:Equatable {
         super.init(value: value, name: name, priority: priority, key: key)
     }
     
-    open override func defaultValueTransformer() -> ValueTransformer<T> {
+    open override func defaultValueTransformer(in context: ValueTransformerContext) -> ValueTransformer<T> {
         return EnumValueTransformer<T>()
     }
 }
