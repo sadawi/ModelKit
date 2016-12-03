@@ -35,7 +35,7 @@ class RemoteRequestTests: XCTestCase {
     }
     
     func testNils() {
-        let parameters:[String:AnyObject] = ["age": NSNull()]
+        let parameters:[String: AnyObject] = ["age": NSNull()]
         let encoder = ParameterEncoder()
         XCTAssertEqual(encoder.encodeParameters(parameters as AnyObject), "")
         encoder.includeNullValues = true

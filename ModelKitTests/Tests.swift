@@ -54,7 +54,7 @@ class FieldTests: XCTestCase {
         let entity = Entity()
         entity.color.value = .Blue
 
-        var dict:[String:AnyObject] = [:]
+        var dict:[String: AnyObject] = [:]
         
         entity.color.write(to: &dict)
         XCTAssertEqual(dict["color"] as? String, "blue")
@@ -167,7 +167,7 @@ class FieldTests: XCTestCase {
         let a = Entity()
         a.name.value = "Bob"
 
-        var dict:[String:AnyObject] = [:]
+        var dict:[String: AnyObject] = [:]
         a.name.write(to: &dict)
         
         XCTAssertEqual(dict["name"] as? String, "Bob")
@@ -207,7 +207,7 @@ class FieldTests: XCTestCase {
 
     func testNulls() {
         let field = Field<String>(key: "name")
-        var dictionary: [String:AnyObject] = [:]
+        var dictionary: [String: AnyObject] = [:]
         
         field.write(to: &dictionary)
         XCTAssert(dictionary["name"] == nil)
@@ -307,7 +307,7 @@ extension FieldTests {
             in: ValueTransformerContext.string
         )
 
-        var dict:[String:AnyObject] = [:]
+        var dict:[String: AnyObject] = [:]
         
         size.write(to: &dict)
         XCTAssertNil(dict["size"] as? String)
