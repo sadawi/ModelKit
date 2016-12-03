@@ -10,7 +10,7 @@ import Foundation
 
 open class ModelArrayField<T: Model>: ArrayField<T>, ModelFieldType {
     open weak var model: Model?
-    open var inverse: ((T)->ModelFieldType)?
+    open var findInverse: ((T)->ModelFieldType)?
     open var foreignKey: Bool = false
     open var cascadeDelete: Bool = true
     
@@ -34,19 +34,19 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelFieldType {
     public init(_ field:ModelField<T>, value:[T]?=[], name:String?=nil, priority:Int=0, key:String?=nil, inverse: ((T)->ModelFieldType)?=nil) {
         super.init(field, value: value, name: name, priority: priority, key: key)
         self.foreignKey = field.foreignKey
-        self.inverse = inverse ?? field.inverse
+        self.findInverse = inverse ?? field.findInverse
     }
     
     open override func valueRemoved(_ value: T) {
-        self.inverse(of: value)?.inverseValueRemoved(self.model)
+        self.inverse(on: value)?.inverseValueRemoved(self.model)
     }
     
     open override func valueAdded(_ value: T) {
-        self.inverse(of: value)?.inverseValueAdded(self.model)
+        self.inverse(on: value)?.inverseValueAdded(self.model)
     }
     
-    open func inverse(of model:T) -> ModelFieldType? {
-        return self.inverse?(model)
+    open func inverse(on model:T) -> ModelFieldType? {
+        return self.findInverse?(model)
     }
     
     // MARK: - ModelFieldType

@@ -9,8 +9,22 @@
 import XCTest
 @testable import ModelKit
 
+fileprivate class Possession: Model, HasOwnerField {
+    let id          = Field<Identifier>()
+    let entity      = ModelField<Entity>(inverse: { $0.possessions })
+    
+    override var identifierField: FieldType? {
+        return self.id
+    }
+    
+    var ownerField: ModelFieldType? {
+        return self.entity
+    }
+}
+
 fileprivate class Entity: Model {
     let id          = Field<Identifier>()
+    let possessions = ModelField<Possession>()*
     
     override var identifierField: FieldType? {
         return self.id
@@ -67,6 +81,20 @@ class ModelKitTests: XCTestCase {
         
         XCTAssertEqual(router.path(for: entity, in: thing.entities), "things/1/relatives/e1")
         XCTAssertEqual(router.path(for: thing.entities), "things/1/relatives")
+    }
+    
+    func testOwnerRouting() {
+        let router = RESTRouter()
+
+        let entity = Entity()
+        entity.id.value = "e1"
+        
+        let hat = Possession()
+        hat.identifier = "p1"
+        hat.entity.value = entity
+        
+        XCTAssertEqual(router.collectionPath(for: hat), "entities/e1/possessions")
+        XCTAssertEqual(router.instancePath(for: hat), "entities/e1/possessions/p1")
     }
     
 }

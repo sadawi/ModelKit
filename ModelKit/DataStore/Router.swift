@@ -9,35 +9,7 @@
 import Foundation
 import StringInflections
 
-public protocol ModelRouter {
-    /**
-     Generates the path to a model.
-     */
-    func path(for model: Model) -> String?
-    
-    /**
-     Generates the path to a collection.
-     */
-    func path(for modelClass: Model.Type) -> String?
-    
-    /**
-     Generates the path to a collection owned by another model through a field.
-     */
-    func path<T: Model>(for field: ModelArrayField<T>) -> String?
-
-    /**
-     Generates the path to a member of a collection owned by another model through a field.
-     */
-    func path<T: Model>(for child: T, in field: ModelArrayField<T>) -> String?
-}
-
-enum CaseConvention {
-    case upperCamel
-    case lowerCamel
-    case snake
-}
-
-open class RESTRouter: ModelRouter {
+open class RESTRouter {
     var collectionNames = TypeDictionary<String>()
     var pluralizesCollections = true
     
@@ -51,8 +23,16 @@ open class RESTRouter: ModelRouter {
         self.collectionNames.remove(modelClass)
     }
     
-    open func path(for model: Model) -> String? {
-        if let id = model.identifier, let collectionPath = self.path(for: type(of: model)) {
+    public func path(for model: Model) -> String? {
+        if let collectionPath = self.path(for: type(of: model)) {
+            return self.path(for: model, in: collectionPath)
+        } else {
+            return nil
+        }
+    }
+    
+    public func path(for model: Model, in collectionPath: String) -> String? {
+        if let id = model.identifier {
             return "\(collectionPath)/\(id)"
         } else {
             return nil
@@ -80,6 +60,31 @@ open class RESTRouter: ModelRouter {
             return self.stringify(modelClass)
         }
     }
+    
+    /**
+     Generates the path to the collection containing a model. If the model conforms to `HasOwnerField` and has a non-nil owner field,
+     that field will be used to generate the path (e.g., "companies/4/employees/1")
+     */
+    func collectionPath<T: Model>(for model: T) -> String? {
+        if let ownedModel = model as? HasOwnerField,
+            let ownerField = ownedModel.ownerField as? InvertibleModelFieldType,
+            let inverseField = ownerField.inverse() as? ModelArrayField<T>
+        {
+            return self.path(for: inverseField)
+        } else {
+            return self.path(for: T.self)
+        }
+    }
+    
+    func instancePath<T: Model>(for model: T) -> String? {
+        if let collectionPath = self.collectionPath(for: model) {
+            return self.path(for: model, in: collectionPath)
+        } else {
+            return nil
+        }
+    }
+    
+    // MARK: - Utilities
     
     open func stringify(_ modelClass: Model.Type) -> String? {
         var string = String(describing: modelClass)

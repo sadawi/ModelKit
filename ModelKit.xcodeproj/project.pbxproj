@@ -52,6 +52,7 @@
 		220EF91D1DF0A2F700B702CC /* MemoryRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF91B1DF0A2F700B702CC /* MemoryRegistry.swift */; };
 		220EF91E1DF0A2F700B702CC /* ModelRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF91C1DF0A2F700B702CC /* ModelRegistry.swift */; };
 		220EF9201DF0A58100B702CC /* ValueTransformerContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF91F1DF0A58100B702CC /* ValueTransformerContext.swift */; };
+		2249CC411DF23A4500FD3ABD /* HasOwnerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249CC401DF23A4500FD3ABD /* HasOwnerField.swift */; };
 		224F97F91DF095A5001E851F /* ModelKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224F97EF1DF095A5001E851F /* ModelKit.framework */; };
 		224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F97FD1DF095A5001E851F /* ModelKitTests.swift */; };
 		224F98001DF095A5001E851F /* ModelKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 224F97F21DF095A5001E851F /* ModelKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -116,6 +117,7 @@
 		220EF91B1DF0A2F700B702CC /* MemoryRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoryRegistry.swift; path = Models/MemoryRegistry.swift; sourceTree = "<group>"; };
 		220EF91C1DF0A2F700B702CC /* ModelRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelRegistry.swift; path = Models/ModelRegistry.swift; sourceTree = "<group>"; };
 		220EF91F1DF0A58100B702CC /* ValueTransformerContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueTransformerContext.swift; path = Fields/ValueTransformerContext.swift; sourceTree = "<group>"; };
+		2249CC401DF23A4500FD3ABD /* HasOwnerField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HasOwnerField.swift; path = Models/HasOwnerField.swift; sourceTree = "<group>"; };
 		224F97EF1DF095A5001E851F /* ModelKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModelKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		224F97F21DF095A5001E851F /* ModelKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelKit.h; sourceTree = "<group>"; };
 		224F97F31DF095A5001E851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 			children = (
 				220EF8F51DF09D7700B702CC /* DictionarySerializable.swift */,
 				220EF8CD1DF09C1600B702CC /* Model.swift */,
+				2249CC401DF23A4500FD3ABD /* HasOwnerField.swift */,
 			);
 			name = core;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 				220EF8D21DF09C1600B702CC /* ModelField.swift in Sources */,
 				220EF8E11DF09C7100B702CC /* DataStore.swift in Sources */,
 				220EF8F21DF09CB500B702CC /* ModelValueTransformer.swift in Sources */,
+				2249CC411DF23A4500FD3ABD /* HasOwnerField.swift in Sources */,
 				220EF8E71DF09C7B00B702CC /* RequestEncoder.swift in Sources */,
 				220EF8F11DF09CB500B702CC /* ModelManager.swift in Sources */,
 				220EF8FE1DF09DE000B702CC /* ValidationRule.swift in Sources */,
