@@ -99,7 +99,7 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
         // TODO: would rather use value transformer here instead, but T is Model instead of modelClass and it doesn't get deserialized properly
         //        return ModelValueTransformer<T>().importValue(parameters)
         let model = modelClass.from(dictionaryValue: parameters)
-        model?.shell = false
+        model?.loadState = .loaded
         return model
     }
     

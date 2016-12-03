@@ -148,8 +148,7 @@ open class Model: NSObject, NSCopying {
     // TODO: permissions
     open var editable:Bool = true
     
-    /// A flag indicating whether this instance is a shell (i.e., just an identifier)
-    open var shell:Bool = false
+    open var loadState: LoadState = .loaded
     
     open var persisted:Bool {
         get {
@@ -388,7 +387,7 @@ open class Model: NSObject, NSCopying {
     open func shells(recursive:Bool = false) -> [Model] {
         var results:[Model] = []
         self.visitAllFieldValues(recursive: recursive) { value in
-            if let model = value as? Model , model.shell == true {
+            if let model = value as? Model , model.loadState == .notLoaded {
                 results.append(model)
             }
         }
