@@ -66,8 +66,11 @@ open class RESTRouter {
     }
     
     /**
-     Generates the path to the collection containing a model. If the model conforms to `HasOwnerField` and has a non-nil owner field,
-     that field will be used to generate the path (e.g., "companies/4/employees/1")
+     Generates the path to the collection containing a model. 
+     
+     If the model conforms to `HasOwnerField` and has a non-nil owner field, that field will be used to generate the path (e.g., "companies/4/employees/1").
+     
+     Warning: the generic type parameter is not covariant. The inverse field's type must match the model type exactly (not a superclass), or the owner path won't be used.
      */
     public func collectionPath<T: Model>(for model: T) -> String? {
         if let ownedModel = model as? HasOwnerField,
