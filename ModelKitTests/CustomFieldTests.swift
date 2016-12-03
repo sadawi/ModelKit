@@ -16,7 +16,7 @@ private class TestField<T: Equatable>: Field<T> {
         super.init(value: value, name: name, priority: priority, key: key)
     }
     
-    private override func writeSeenValue(to dictionary: inout [String: AnyObject], seenFields: inout [FieldType], key: String, in context: ValueTransformerContext) {
+    private override func writeSeenValue(to dictionary: inout AttributeDictionary, seenFields: inout [FieldType], key: String, in context: ValueTransformerContext) {
         dictionary[key] = kSeen as AnyObject?
     }
 }
@@ -32,7 +32,7 @@ class CustomFieldTests: XCTestCase {
         let thing = Thing()
         thing.name.value = "Thing 1"
         
-        var dictionary:[String: AnyObject] = [:]
+        var dictionary:AttributeDictionary = [:]
         thing.name.write(to: &dictionary, seenFields: &seenFields)
         
         XCTAssertEqual(dictionary["name"] as? String, "Thing 1")

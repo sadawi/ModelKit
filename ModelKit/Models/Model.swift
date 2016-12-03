@@ -8,7 +8,6 @@
 
 import Foundation
 
-public typealias AttributeDictionary = [String: AnyObject]
 public typealias Identifier = String
 
 open class Model: NSObject, NSCopying {
