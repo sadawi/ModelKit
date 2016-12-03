@@ -148,6 +148,7 @@ open class Model: NSObject, NSCopying {
     // TODO: permissions
     open var editable:Bool = true
     
+    /// A flag indicating whether this instance is a shell (i.e., just an identifier)
     open var shell:Bool = false
     
     open var persisted:Bool {
