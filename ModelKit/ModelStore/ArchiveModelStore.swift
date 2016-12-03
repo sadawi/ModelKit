@@ -137,7 +137,7 @@ open class ArchiveModelStore: ListableModelStore, ClearableModelStore {
                 if let dictionaries = unarchived as? [AttributeDictionary] {
                     let models = dictionaries.map { modelClass.from(dictionaryValue: $0) }.flatMap { $0 }
                     for model in models {
-                        for shell in model.shells() {
+                        for shell in model.incompleteChildModels() {
                             self.unarchive(type(of: shell), suffix: suffix, keysToIgnore: keysToIgnore)
                         }
                     }

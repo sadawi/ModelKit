@@ -138,7 +138,7 @@ class APIKitTests: XCTestCase {
     
     func testArrayShells() {
         let company = Company.from(dictionaryValue: ["widgetIDs": ["44", "55"] as AnyObject])
-        let shells = company?.shells(recursive: true)
+        let shells = company?.incompleteChildModels(recursive: true)
         XCTAssertEqual(shells?.count, 2)
     }
 
@@ -155,14 +155,14 @@ class APIKitTests: XCTestCase {
             let grazi1 = Pet.from(dictionaryValue: ["name": "Grazi" as AnyObject, "owner": phil.id.value! as AnyObject])
             XCTAssertEqual(grazi1?.owner.value?.id.value, phil.id.value)
             
-            let shells = grazi1!.shells()
+            let shells = grazi1!.incompleteChildModels()
             XCTAssertEqual(1, shells.count)
             let shell = shells.first as? Person
             XCTAssertEqual(shell?.identifier, phil.identifier)
             
             let grazi2 = Pet()
             grazi2.owner.value = phil
-            let shells2 = grazi2.shells(recursive: true)
+            let shells2 = grazi2.incompleteChildModels(recursive: true)
             XCTAssertEqual(1, shells2.count)
             let shell2 = shells2.first as? Company
             XCTAssertNotNil(shell2)

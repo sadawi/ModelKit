@@ -382,12 +382,12 @@ open class Model: NSObject, NSCopying {
     }
     
     /**
-     Finds all values that are shells (i.e., a model instantiated from just a foreign key)
+     Finds all values that are incompletely loaded (i.e., a model instantiated from just a foreign key)
      */
-    open func shells(recursive:Bool = false) -> [Model] {
+    open func incompleteChildModels(recursive:Bool = false) -> [Model] {
         var results:[Model] = []
         self.visitAllFieldValues(recursive: recursive) { value in
-            if let model = value as? Model , model.loadState == .incomplete {
+            if let model = value as? Model, model.loadState == .incomplete {
                 results.append(model)
             }
         }
