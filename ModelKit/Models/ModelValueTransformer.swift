@@ -52,7 +52,7 @@ open class ModelForeignKeyValueTransformer<T: Model>: ValueTransformer<T> {
                     let model = T.from(dictionaryValue: attributes) { model, isNew in
                         // We only know it's definitely a shell if it wasn't reused from an existing model
                         if isNew {
-                            model.loadState = .notLoaded
+                            model.loadState = .incomplete
                         }
                     }
                     return model

@@ -11,6 +11,7 @@ import Foundation
 
 public enum LoadState {
     case notLoaded
+    case incomplete
     case loaded
     case loading
     case error

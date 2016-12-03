@@ -387,7 +387,7 @@ open class Model: NSObject, NSCopying {
     open func shells(recursive:Bool = false) -> [Model] {
         var results:[Model] = []
         self.visitAllFieldValues(recursive: recursive) { value in
-            if let model = value as? Model , model.loadState == .notLoaded {
+            if let model = value as? Model , model.loadState == .incomplete {
                 results.append(model)
             }
         }
