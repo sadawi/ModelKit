@@ -171,12 +171,6 @@ open class Model: NSObject, NSCopying {
         self.loadState = .incomplete
     }
     
-    open var persisted:Bool {
-        get {
-            return self.identifier != nil
-        }
-    }
-    
     open class var name:String {
         get {
             if let name = NSStringFromClass(self).components(separatedBy: ".").last {
