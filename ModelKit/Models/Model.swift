@@ -18,7 +18,7 @@ open class Model: NSObject, NSCopying {
     open static var registry:ModelRegistry? = MemoryRegistry()
     
     /**
-     The class to instantiate, based on a dictionary value.
+     The class to instantiate, based on a dictionary value.  For example, your dictionary might include a "type" string.
      
      Whatever class you attempt to return must be cast to T.Type, which is inferred to be Self.
      
@@ -73,6 +73,9 @@ open class Model: NSObject, NSCopying {
         
     }
     
+    /**
+     Returns a unique instance of this class for an identifier. If a matching instance is already registered, returns that. Otherwise, returns a new instance.
+     */
     open class func with(identifier: Identifier) -> Self {
         let instance = self.init()
         instance.identifier = identifier
@@ -84,10 +87,16 @@ open class Model: NSObject, NSCopying {
         }
     }
     
+    /**
+     Informs the registry that a new instance has been created.
+     */
     open func registerInstance() {
         type(of: self).registry?.didInstantiate(self)
     }
     
+    /**
+     Returns a canonical instance corresponding to this instance.
+     */
     open func canonicalInstance() -> Self {
         return type(of: self).registry?.canonicalModel(for: self) ?? self
     }
