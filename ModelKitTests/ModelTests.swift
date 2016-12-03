@@ -247,9 +247,9 @@ class ModelTests: XCTestCase {
     }
     
 //    func testCascadeDelete() {
-//        let memory = MemoryDataStore()
+//        let memory = MemoryModelStore()
 //
-////        Model.registry = MemoryRegistry(dataStore: memory)
+////        Model.registry = MemoryRegistry(modelStore: memory)
 //        let didSave = expectationWithDescription("save")
 //        let didDelete = expectationWithDescription("delete")
 //        let object = Object()
