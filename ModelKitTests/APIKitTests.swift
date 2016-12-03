@@ -75,9 +75,9 @@ class APIKitTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        let store = MemoryDataStore()
+        let store = MemoryModelStore()
 
-        ModelManager.sharedInstance.dataStore = store
+        ModelManager.sharedInstance.modelStore = store
     }
     
     override func tearDown() {
@@ -147,7 +147,7 @@ class APIKitTests: XCTestCase {
         
         let phil = Person.from(dictionaryValue: ["name": "Phil" as AnyObject, "age": 44 as AnyObject, "company": "testID" as AnyObject])!
         
-        _ = ModelManager.sharedInstance.dataStore.save(phil).then { model -> Void in
+        _ = ModelManager.sharedInstance.modelStore.save(phil).then { model -> Void in
             // Fails because 555 is not a valid owner id (should be string)
             let grazi0 = Pet.from(dictionaryValue: ["name": "Grazi" as AnyObject, "owner": 555 as AnyObject])
             XCTAssertNil(grazi0?.owner.value?.id.value)
@@ -180,11 +180,11 @@ class APIKitTests: XCTestCase {
         let a = Person(name: "Kevin", age: 33)
         XCTAssertNil(a.identifier)
         
-        _ = ModelManager.sharedInstance.dataStore.save(a).then { model -> Promise<Person> in
+        _ = ModelManager.sharedInstance.modelStore.save(a).then { model -> Promise<Person> in
             XCTAssertNotNil(model.identifier)
             didSave.fulfill()
             let id = model.identifier!
-            return ModelManager.sharedInstance.dataStore.lookup(type(of: a), identifier: id)
+            return ModelManager.sharedInstance.modelStore.lookup(type(of: a), identifier: id)
             }.then { model -> () in
                 XCTAssertNotNil(model)
                 XCTAssert(model === a)
@@ -251,7 +251,7 @@ class APIKitTests: XCTestCase {
         let didList = expectation(description: "list")
         let didDelete = expectation(description: "delete")
         
-        let store = MemoryDataStore()
+        let store = MemoryModelStore()
         let a = Person()
         a.identifier = "12324"
         _ = store.save(a).then { _ -> () in
@@ -277,7 +277,7 @@ class APIKitTests: XCTestCase {
 //        let didDeleteB = expectationWithDescription("deleteB")
 //        let didDeleteA = expectationWithDescription("deleteA")
 //        
-//        let store = MemoryDataStore()
+//        let store = MemoryModelStore()
 //        
 //        let a = Person()
 //        a.identifier = "123244"

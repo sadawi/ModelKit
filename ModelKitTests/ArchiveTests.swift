@@ -39,7 +39,7 @@ class ArchiveTests: XCTestCase {
     func testArchiveRelated() {
         Model.registry = MemoryRegistry()
         
-        let archive = ArchiveDataStore.sharedInstance
+        let archive = ArchiveModelStore.sharedInstance
         let alice = Person.with(identifier: "1234")
         XCTAssertEqual(alice.id.value, "1234")
         
@@ -77,7 +77,7 @@ class ArchiveTests: XCTestCase {
     }
 
     func testArchive() {
-        let archive = ArchiveDataStore.sharedInstance
+        let archive = ArchiveModelStore.sharedInstance
         let person1 = Person()
         person1.name.value = "Alice"
         
@@ -114,7 +114,7 @@ class ArchiveTests: XCTestCase {
     }
     
     func testArchiveDeleteAll() {
-        let archive = ArchiveDataStore.sharedInstance
+        let archive = ArchiveModelStore.sharedInstance
         let person1 = Person()
         person1.name.value = "Alice"
         

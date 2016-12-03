@@ -15,6 +15,10 @@ open class RESTRouter {
     
     let pathSeparator = "/"
     
+    public init() {
+        
+    }
+    
     public func route(_ modelClass: Model.Type, to path: String) {
         self.collectionNames[modelClass] = path
     }
@@ -65,7 +69,7 @@ open class RESTRouter {
      Generates the path to the collection containing a model. If the model conforms to `HasOwnerField` and has a non-nil owner field,
      that field will be used to generate the path (e.g., "companies/4/employees/1")
      */
-    func collectionPath<T: Model>(for model: T) -> String? {
+    public func collectionPath<T: Model>(for model: T) -> String? {
         if let ownedModel = model as? HasOwnerField,
             let ownerField = ownedModel.ownerField as? InvertibleModelFieldType,
             let inverseField = ownerField.inverse() as? ModelArrayField<T>
@@ -76,7 +80,7 @@ open class RESTRouter {
         }
     }
     
-    func instancePath<T: Model>(for model: T) -> String? {
+    public func instancePath<T: Model>(for model: T) -> String? {
         if let collectionPath = self.collectionPath(for: model) {
             return self.path(to: model, in: collectionPath)
         } else {

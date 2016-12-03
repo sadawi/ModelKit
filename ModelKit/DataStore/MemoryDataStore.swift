@@ -18,12 +18,12 @@ Notes:
 import Foundation
 import PromiseKit
 
-open class MemoryDataStore: DataStore, ListableDataStore, ClearableDataStore {
-    open static let sharedInstance = MemoryDataStore()
+open class MemoryModelStore: ModelStore, ListableModelStore, ClearableModelStore {
+    open static let sharedInstance = MemoryModelStore()
     
     // of the form [class name: [id: Model]]
     fileprivate var data: NSMutableDictionary = NSMutableDictionary()
-    open var delegate:DataStoreDelegate?
+    open var delegate:ModelStoreDelegate?
     
     fileprivate func keyForClass<T: Model>(_ modelClass: T.Type) -> String {
         return String(describing: modelClass)
@@ -110,7 +110,7 @@ open class MemoryDataStore: DataStore, ListableDataStore, ClearableDataStore {
             if let result = self.lookupImmediately(modelClass, identifier: identifier) {
                 fulfill(result)
             } else {
-                reject(NSError(domain: DataStoreErrorDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Model not found with id \(identifier)"]))
+                reject(NSError(domain: ModelStoreErrorDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Model not found with id \(identifier)"]))
             }
         }
     }

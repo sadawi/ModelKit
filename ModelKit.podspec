@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
         ss.dependency 'ModelKit/Fields'
     end
     
-    s.subspec 'DataStore' do |ss|
+    s.subspec 'ModelStore' do |ss|
         ss.source_files = 'ModelKit/DataStore/**/*'
         ss.dependency 'ModelKit/Models'
         ss.dependency 'Alamofire', '~> 4.2.0'

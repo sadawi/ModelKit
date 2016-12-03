@@ -1,5 +1,5 @@
 //
-//  ArchiveDataStore.swift
+//  ArchiveModelStore.swift
 //  Pods
 //
 //  Created by Sam Williams on 2/13/16.
@@ -18,8 +18,8 @@ enum ArchiveError: Error {
 
 private let kDefaultGroup = ""
 
-open class ArchiveDataStore: ListableDataStore, ClearableDataStore {
-    open static let sharedInstance = ArchiveDataStore()
+open class ArchiveModelStore: ListableModelStore, ClearableModelStore {
+    open static let sharedInstance = ArchiveModelStore()
 
     
     /**

@@ -9,16 +9,16 @@
 import Foundation
 import PromiseKit
 
-let DataStoreErrorDomain = "DataStore"
+let ModelStoreErrorDomain = "ModelStore"
 
-public protocol ListableDataStore {
+public protocol ListableModelStore {
     /**
      Retrieves a list of all models of the specified type.
      */
     func list<T: Model>(_ modelClass:T.Type) -> Promise<[T]>
 }
 
-public protocol DataStore: ListableDataStore {
+public protocol ModelStore: ListableModelStore {
     /**
      Inserts a record.  May give the object an identifier.
      // TODO: Decide on strict id semantics.  Do we leave an existing identifier alone, or replace it with a new one?
@@ -41,10 +41,10 @@ public protocol DataStore: ListableDataStore {
      */
     func lookup<T: Model>(_ modelClass:T.Type, identifier:String) -> Promise<T>
     
-    var delegate:DataStoreDelegate? { get set }
+    var delegate:ModelStoreDelegate? { get set }
 }
 
-public protocol ClearableDataStore {
+public protocol ClearableModelStore {
     /**
      Removes all stored instances of a model class, without fetching them.
      */
@@ -52,12 +52,12 @@ public protocol ClearableDataStore {
     func deleteAll() -> Promise<Void>
 }
 
-public extension DataStore {
+public extension ModelStore {
     /**
      Determines whether a model has been persisted to this data store.
      
      This version is very dumb and just checks for the presence of an identifier.
-     But the signature is Promise-based, so a DataStore implementation might actually do something asynchronous here.
+     But the signature is Promise-based, so a ModelStore implementation might actually do something asynchronous here.
      */
     public func containsModel(_ model:Model) -> Promise<Bool> {
         return Promise(value: model.identifier != nil)
@@ -86,7 +86,7 @@ public extension DataStore {
     }
 }
 
-func <<(left:DataStore, right:Model) -> Promise<Model> {
+func <<(left:ModelStore, right:Model) -> Promise<Model> {
     return left.save(right)
 }
 
