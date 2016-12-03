@@ -187,7 +187,7 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
                 // Compute headers *after* the session has been restored.
                 let headers = self.defaultHeaders() + headers
                 
-                // Manually recreating what Alamofire.request does so we have access to the NSURLRequest object:
+                // Manually recreating what Alamofire.request does so we have access to the URLRequest object:
                 var mutableRequest = URLRequest(url: url)
                 for (field, value) in headers {
                     mutableRequest.setValue(value, forHTTPHeaderField: field)
@@ -308,10 +308,17 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
         let model = modelClass.init() as T
         model.identifier = identifier
         if let path = self.router.instancePath(for: model) {
-            return self.request(.get, path: path, parameters: parameters).then(on: .global(), execute: self.instantiateModel(modelClass))
+            return self.read(modelClass, path: path)
         } else {
             return Promise(error: RemoteModelStoreError.noModelPath(model: model))
         }
+    }
+    
+    /**
+     Reads a single model from the specified path.
+     */
+    open func read<T: Model>(_ modelClass: T.Type, path: String, parameters: [String:AnyObject]?=nil) -> Promise<T> {
+        return self.request(.get, path: path, parameters: parameters).then(on: .global(), execute: self.instantiateModel(modelClass))
     }
     
     open func refresh<T:Model>(_ model:T, parameters:[String:AnyObject]?=nil) -> Promise<T> {
