@@ -14,6 +14,8 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelFieldType {
     open var foreignKey: Bool = false
     open var cascadeDelete: Bool = true
     
+    private var modelLookup: [Identifier: T] = [:]
+    
     open override var value:[T]? {
         didSet {
             let oldValues = oldValue ?? []
@@ -37,11 +39,27 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelFieldType {
         self.findInverse = inverse ?? field.findInverse
     }
     
+    public func contains(_ value: T) -> Bool {
+        if let identifier = value.identifier {
+            return self.modelLookup[identifier] != nil
+        } else {
+            return false
+        }
+    }
+    
     open override func valueRemoved(_ value: T) {
+        if let identifier = value.identifier {
+            self.modelLookup.removeValue(forKey: identifier)
+        }
+        
         self.inverse(on: value)?.inverseValueRemoved(self.model)
     }
     
     open override func valueAdded(_ value: T) {
+        if let identifier = value.identifier {
+            self.modelLookup[identifier] = value
+        }
+        
         self.inverse(on: value)?.inverseValueAdded(self.model)
     }
     
@@ -52,13 +70,13 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelFieldType {
     // MARK: - ModelFieldType
     
     open func inverseValueAdded(_ value: Model?) {
-        if let value = value as? T {
+        if let value = value as? T, !self.contains(value){
             self.append(value)
         }
     }
     
     open func inverseValueRemoved(_ value: Model?) {
-        if let value = value as? T {
+        if let value = value as? T, self.contains(value) {
             self.removeFirst(value)
         }
     }
