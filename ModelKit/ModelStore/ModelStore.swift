@@ -75,8 +75,8 @@ public extension ModelStore {
     /**
      Upsert.  Creates a new record or updates an existing one, depending on whether we think it's been persisted.
      */
-    public func save(_ model:Model, fields:[FieldType]?=nil) -> Promise<Model> {
-        return self.containsModel(model).then(on: .global()) { (result:Bool) -> Promise<Model> in
+    public func save<T: Model>(_ model:T, fields:[FieldType]?=nil) -> Promise<T> {
+        return self.containsModel(model).then(on: .global()) { (result:Bool) -> Promise<T> in
             if result {
                 return self.update(model, fields: fields)
             } else {
