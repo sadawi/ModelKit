@@ -338,6 +338,10 @@ extension FieldTests {
         XCTAssertFalse(size2.isNewer(than: size))
         
         size.value = 100
+        
+        XCTAssert(size.isNewer(than: size2))
+        XCTAssertFalse(size2.isNewer(than: size))
+        
         size2.value = 200
         
         XCTAssert(size2.isNewer(than: size))

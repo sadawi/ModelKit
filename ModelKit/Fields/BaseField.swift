@@ -373,8 +373,8 @@ open class BaseField<T>: FieldType, Observer, Observable {
                 // both have timestamps
                 return selfUpdatedAt.compare(otherUpdatedAt) == .orderedDescending
             } else {
-                // other has timestamp, self does not
-                return true
+                // self does not have timestamp, other has timestamp
+                return false
             }
         } else {
             if self.updatedAt != nil {
