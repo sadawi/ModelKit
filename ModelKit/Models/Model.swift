@@ -161,6 +161,16 @@ open class Model: NSObject, NSCopying {
     
     open var loadState: LoadState = .loaded
     
+    /**
+     Removes all data from this instance except its identifier, and sets the loadState to .incomplete.
+     */
+    open func unload() {
+        for (_, field) in self.fields where field.key != self.identifierField?.key {
+            field.anyValue = nil
+        }
+        self.loadState = .incomplete
+    }
+    
     open var persisted:Bool {
         get {
             return self.identifier != nil

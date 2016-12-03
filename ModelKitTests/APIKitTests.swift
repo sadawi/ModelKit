@@ -173,6 +173,24 @@ class APIKitTests: XCTestCase {
         self.waitForExpectations(timeout: 1, handler:nil)
     }
     
+    func testUnloading() {
+        let product = Product()
+        product.productName.value = "iPhone"
+        
+        let company = Company()
+        company.identifier = "1111"
+        company.name.value = "Apple"
+        company.products.value = [product]
+        
+        XCTAssertNotNil(company.name.value)
+        XCTAssertNotNil(company.products.value)
+        
+        company.unload()
+        XCTAssertNil(company.name.value)
+        XCTAssertNil(company.products.value)
+        XCTAssertNotNil(company.identifier)
+    }
+    
     func testResource() {
         let didSave = expectation(description: "save")
         let didLookup = expectation(description: "lookup")

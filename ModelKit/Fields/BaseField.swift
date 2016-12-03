@@ -45,7 +45,7 @@ public func ==(lhs:ValidationState, rhs:ValidationState) -> Bool {
 
 public protocol FieldType:AnyObject {
     var anyObjectValue: AnyObject? { get set }
-    var anyValue: Any? { get }
+    var anyValue: Any? { get set }
     var valueType:Any.Type { get }
     var name: String? { get set }
     var priority: Int { get set }
@@ -187,6 +187,9 @@ open class BaseField<T>: FieldType, Observer, Observable {
             // It's important to cast to `Any?` rather than `Any`.
             // Casting to `Any` seems to hide the optional in a way that's hard to unwrap.
             return self.value as Any?
+        }
+        set {
+            self.value = nil
         }
     }
     
