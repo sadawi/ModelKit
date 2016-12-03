@@ -10,5 +10,5 @@ import UIKit
 
 class ModelManager {
     static let sharedInstance = ModelManager()
-    var dataStore:DataStore!
+    var modelStore:ModelStore!
 }

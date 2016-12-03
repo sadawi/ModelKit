@@ -22,10 +22,11 @@ Pod::Spec.new do |s|
         ss.dependency 'ModelKit/Fields'
     end
     
-    s.subspec 'DataStore' do |ss|
-        ss.source_files = 'ModelKit/DataStore/**/*'
+    s.subspec 'ModelStore' do |ss|
+        ss.source_files = 'ModelKit/ModelStore/**/*'
         ss.dependency 'ModelKit/Models'
         ss.dependency 'Alamofire', '~> 4.2.0'
         ss.dependency 'SwiftyJSON', '~> 3.1.3'
+        ss.dependency 'StringInflections'
     end
 end

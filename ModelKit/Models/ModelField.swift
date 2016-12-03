@@ -13,6 +13,7 @@ public enum DeleteBehavior {
     case delete
 }
 
+
 public protocol ModelFieldType: FieldType {
     var model: Model? { get set }
     var foreignKey:Bool { get set }
@@ -22,26 +23,42 @@ public protocol ModelFieldType: FieldType {
     func inverseValueAdded(_ value: Model?)
 }
 
-open class ModelField<T: Model>: Field<T>, ModelFieldType {
+public protocol InvertibleModelFieldType: ModelFieldType {
+    func inverse() -> ModelFieldType?
+}
+
+open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
     open var foreignKey:Bool = false
     open weak var model: Model?
     
     open var cascadeDelete: Bool = true
     
-    open var inverse: ((T)->ModelFieldType)?
+    public var findInverse: ((T)->ModelFieldType)?
     
     public init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil, foreignKey:Bool=false, inverse: ((T)->ModelFieldType)?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
         self.foreignKey = foreignKey
-        self.inverse = inverse
+        self.findInverse = inverse
     }
     
     open override func defaultValueTransformer(in context: ValueTransformerContext) -> ValueTransformer<T> {
         return self.foreignKey ? ModelForeignKeyValueTransformer<T>.sharedInstance : ModelValueTransformer<T>.sharedInstance
     }
     
-    open func inverse(of model:T) -> ModelFieldType? {
-        return self.inverse?(model)
+    /**
+     Attempts to find the inverse field on a model value, as defined by the `inverse` closure parameter specified in `init`.
+     For example, when looking at a `employee.company`, this might point to a company's `employees` field.
+     */
+    open func inverse(on model:T) -> ModelFieldType? {
+        return self.findInverse?(model)
+    }
+    
+    open func inverse() -> ModelFieldType? {
+        if let value = self.value {
+            return self.inverse(on: value)
+        } else {
+            return nil
+        }
     }
     
     open override func valueUpdated(oldValue:T?, newValue: T?) {
@@ -49,11 +66,11 @@ open class ModelField<T: Model>: Field<T>, ModelFieldType {
         
         if oldValue != newValue {
             if let value = oldValue {
-                let inverseField = self.inverse(of: value)
+                let inverseField = self.inverse(on: value)
                 inverseField?.inverseValueRemoved(self.model)
             }
             if let value = newValue {
-                let inverseField = self.inverse(of: value)
+                let inverseField = self.inverse(on: value)
                 inverseField?.inverseValueAdded(self.model)
             }
         }

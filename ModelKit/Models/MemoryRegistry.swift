@@ -9,17 +9,17 @@
 import Foundation
 
 /**
- A very simple ModelRegistry adapter for a MemoryDataStore
+ A very simple ModelRegistry adapter for a MemoryModelStore
  */
 public struct MemoryRegistry: ModelRegistry {
-    var memory: MemoryDataStore
+    var memory: MemoryModelStore
     
     public init() {
-        self.memory = MemoryDataStore.sharedInstance
+        self.memory = MemoryModelStore.sharedInstance
     }
     
-    public init(dataStore: MemoryDataStore) {
-        self.memory = dataStore
+    public init(modelStore: MemoryModelStore) {
+        self.memory = modelStore
     }
     
     public func didInstantiate<T:Model>(_ model: T) {

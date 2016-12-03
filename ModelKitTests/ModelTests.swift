@@ -247,9 +247,9 @@ class ModelTests: XCTestCase {
     }
     
 //    func testCascadeDelete() {
-//        let memory = MemoryDataStore()
+//        let memory = MemoryModelStore()
 //
-////        Model.registry = MemoryRegistry(dataStore: memory)
+////        Model.registry = MemoryRegistry(modelStore: memory)
 //        let didSave = expectationWithDescription("save")
 //        let didDelete = expectationWithDescription("delete")
 //        let object = Object()
@@ -279,14 +279,14 @@ class ModelTests: XCTestCase {
 //    }
 
     fileprivate class PathModel: Model {
-        override var path: String? {
-            return "testPath"
-        }
+//        override var path: String? {
+//            return "testPath"
+//        }
     }
     
     func testCustomPath() {
         let pathModel = PathModel()
-        XCTAssertEqual(pathModel.path, "testPath")
+//        XCTAssertEqual(pathModel.path, "testPath")
     }
     
     func testExplicitNulls() {

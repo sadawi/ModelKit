@@ -10,9 +10,11 @@ import Foundation
 
 open class ModelArrayField<T: Model>: ArrayField<T>, ModelFieldType {
     open weak var model: Model?
-    open var inverse: ((T)->ModelFieldType)?
+    open var findInverse: ((T)->ModelFieldType)?
     open var foreignKey: Bool = false
     open var cascadeDelete: Bool = true
+    
+    private var modelLookup: [Identifier: T] = [:]
     
     open override var value:[T]? {
         didSet {
@@ -34,31 +36,47 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelFieldType {
     public init(_ field:ModelField<T>, value:[T]?=[], name:String?=nil, priority:Int=0, key:String?=nil, inverse: ((T)->ModelFieldType)?=nil) {
         super.init(field, value: value, name: name, priority: priority, key: key)
         self.foreignKey = field.foreignKey
-        self.inverse = inverse ?? field.inverse
+        self.findInverse = inverse ?? field.findInverse
+    }
+    
+    public func contains(_ value: T) -> Bool {
+        if let identifier = value.identifier {
+            return self.modelLookup[identifier] != nil
+        } else {
+            return false
+        }
     }
     
     open override func valueRemoved(_ value: T) {
-        self.inverse(of: value)?.inverseValueRemoved(self.model)
+        if let identifier = value.identifier {
+            self.modelLookup.removeValue(forKey: identifier)
+        }
+        
+        self.inverse(on: value)?.inverseValueRemoved(self.model)
     }
     
     open override func valueAdded(_ value: T) {
-        self.inverse(of: value)?.inverseValueAdded(self.model)
+        if let identifier = value.identifier {
+            self.modelLookup[identifier] = value
+        }
+        
+        self.inverse(on: value)?.inverseValueAdded(self.model)
     }
     
-    open func inverse(of model:T) -> ModelFieldType? {
-        return self.inverse?(model)
+    open func inverse(on model:T) -> ModelFieldType? {
+        return self.findInverse?(model)
     }
     
     // MARK: - ModelFieldType
     
     open func inverseValueAdded(_ value: Model?) {
-        if let value = value as? T {
+        if let value = value as? T, !self.contains(value){
             self.append(value)
         }
     }
     
     open func inverseValueRemoved(_ value: Model?) {
-        if let value = value as? T {
+        if let value = value as? T, self.contains(value) {
             self.removeFirst(value)
         }
     }
