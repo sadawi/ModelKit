@@ -346,10 +346,11 @@ open class Model: NSObject, NSCopying {
     
     /**
      Converts this object to its dictionary representation, optionally limited to a subset of its fields.  By default, it will 
-     export all fields in `defaultFieldsForDictionaryValue`, which itself defaults to all fields.
+     export all fields in `defaultFieldsForDictionaryValue` (which itself defaults to all fields) that have been loaded.
      
      - parameter fields: An array of field objects (belonging to this model) to be included in the dictionary value.
      - parameter explicitNull: Whether nil values should be serialized as NSNull. Note that if this is false, dictionary.keys will not include those with nil values.
+     - parameter in: A value transformer context, used to obtain the correct value transformer for each field.
      - parameter includeField: A closure determining whether a field should be included in the result.  By default, it will be included iff its state is .Set (i.e., it has been explicitly set since it was loaded)
      */
     open func dictionaryValue(fields:[FieldType]?=nil, explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext, includeField: ((FieldType) -> Bool)?=nil) -> AttributeDictionary {
@@ -378,8 +379,9 @@ open class Model: NSObject, NSCopying {
      Read field values from a dictionary representation.  If a field's key is missing from the dictionary,
      but the field is included in the fields to be imported, its value will be set to nil.
      
-     - parameter dictionaryValue: The dictionary representation of this model's new field values.
+     - parameter dictionaryValue: The dictionary representation of this model's new field values
      - parameter fields: An array of field objects whose values are to be found in the dictionary
+     - parameter in: A value transformer context, used to obtain the correct value transformer for each field
      */
     open func readDictionaryValue(_ dictionaryValue: AttributeDictionary, fields:[FieldType]?=nil, in context: ValueTransformerContext=ValueTransformerContext.defaultContext) {
         let fields = (fields ?? self.defaultFieldsForDictionaryValue())
