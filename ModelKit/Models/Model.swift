@@ -73,6 +73,17 @@ open class Model: NSObject, NSCopying {
         
     }
     
+    public required override init() {
+        super.init()
+        self.processFields()
+        self.afterInit()
+    }
+    
+    open func afterInit()     { }
+    open func afterCreate()   { }
+    open func beforeSave()    { }
+    open func afterDelete()   { }
+
     /**
      Returns a unique instance of this class for an identifier. If a matching instance is already registered, returns that. Otherwise, returns a new instance.
      */
@@ -166,11 +177,6 @@ open class Model: NSObject, NSCopying {
         }
     }
     
-    open func afterInit()     { }
-    open func afterCreate()   { }
-    open func beforeSave()    { }
-    open func afterDelete()   { }
-    
     open func cascadeDelete(_ cascade: ((Model)->Void), seenModels: inout Set<Model>) {
         self.visitAllFields(action: { field in
             if let modelField = field as? ModelFieldType , modelField.cascadeDelete {
@@ -185,9 +191,10 @@ open class Model: NSObject, NSCopying {
         }, seenModels: &seenModels)
     }
     
-    // MARK: FieldModel
-    
-    open func fieldForKeyPath(_ components:[String]) -> FieldType? {
+    /**
+     Finds a field (possibly belonging to a child model) for a key path, specified as a list of strings.
+     */
+    open func field(forKeyPath components:[String]) -> FieldType? {
         guard components.count > 0 else { return nil }
         
         let fields = self.fields
@@ -198,14 +205,18 @@ open class Model: NSObject, NSCopying {
                 return firstField
             } else if let firstValue = firstField.anyValue as? Model {
                 // There are more components remaining, and we can keep traversing key paths
-                return firstValue.fieldForKeyPath(remainingComponents)
+                return firstValue.field(forKeyPath: remainingComponents)
             }
         }
         return nil
     }
     
-    open func fieldForKeyPath(_ path:String) -> FieldType? {
-        return fieldForKeyPath(self.componentsForKeyPath(path))
+    /**
+     Finds a field (possibly belonging to a child model) for a key path, specified as a single string.
+     The string will be split using `componentsForKeyPath(_:)`.
+     */
+    open func field(forKeyPath path:String) -> FieldType? {
+        return field(forKeyPath: self.keyPathComponents(path))
     }
     
     /**
@@ -214,7 +225,7 @@ open class Model: NSObject, NSCopying {
      
      To change the default behavior, you'll probably want to subclass.
      */
-    open func componentsForKeyPath(_ path:String) -> [String] {
+    open func keyPathComponents(_ path:String) -> [String] {
         return path.components(separatedBy: ".")
     }
     
@@ -267,12 +278,6 @@ open class Model: NSObject, NSCopying {
      Performs any model-level field initialization your class may need, before any field values are set.
      */
     open func initializeField(_ field:FieldType) {
-    }
-    
-    public required override init() {
-        super.init()
-        self.processFields()
-        self.afterInit()
     }
     
     open func visitAllFields(recursive:Bool = true, action:((FieldType) -> Void)) {
@@ -416,8 +421,14 @@ open class Model: NSObject, NSCopying {
     
     // MARK: Validation
     
-    open func addError(keyPath path:String, message:String) {
-        if let field = self.fieldForKeyPath(path) {
+    /**
+     Adds a validation error message to a field identified by a key path.
+     
+     - parameter keyPath: The path to the field (possibly belonging to a child model) that has an error.
+     - parameter message: A description of what's wrong.
+     */
+    open func addError(forKeyPath path:String, message:String) {
+        if let field = self.field(forKeyPath: path) {
             field.addValidationError(message)
         }
     }

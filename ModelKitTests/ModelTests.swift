@@ -277,17 +277,6 @@ class ModelTests: XCTestCase {
 //        
 //        self.waitForExpectationsWithTimeout(1, handler: nil)
 //    }
-
-    fileprivate class PathModel: Model {
-//        override var path: String? {
-//            return "testPath"
-//        }
-    }
-    
-    func testCustomPath() {
-        let pathModel = PathModel()
-//        XCTAssertEqual(pathModel.path, "testPath")
-    }
     
     func testExplicitNulls() {
         let model = Company()
