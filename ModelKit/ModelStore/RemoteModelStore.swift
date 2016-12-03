@@ -9,6 +9,8 @@
 import Alamofire
 import PromiseKit
 
+public typealias Parameters = [String: AnyObject]
+
 public enum RemoteModelStoreError: Error {
     case unknownError(message: String)
     case deserializationFailure
@@ -129,7 +131,7 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
     
     // TODO: update for Alamofire 4 ParameterEncoding protocol
 //    open func nestedParameterEncoding(method:Alamofire.HTTPMethod) -> ParameterEncoding {
-//        return ParameterEncoding.custom({ (request:URLRequestConvertible, parameters:[String: AnyObject]?) -> (NSMutableURLRequest, NSError?) in
+//        return ParameterEncoding.custom({ (request:URLRequestConvertible, parameters:Parameters?) -> (NSMutableURLRequest, NSError?) in
 //            let request = request as? NSMutableURLRequest ?? NSMutableURLRequest()
 //            if let parameters = parameters, let url = request.URL {
 //                if method == .GET {
@@ -240,7 +242,7 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
         return self.create(model, fields: fields, parameters: nil)
     }
     
-    open func create<T:Model>(_ model: T, fields: [FieldType]?, parameters: [String: AnyObject]?) -> Promise<T> {
+    open func create<T:Model>(_ model: T, fields: [FieldType]?, parameters: Parameters?) -> Promise<T> {
         model.resetValidationState()
         model.beforeSave()
         
@@ -268,7 +270,7 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
         return self.update(model, fields: fields, parameters: nil)
     }
     
-    open func update<T:Model>(_ model: T, fields: [FieldType]?, parameters: [String: AnyObject]?) -> Promise<T> {
+    open func update<T:Model>(_ model: T, fields: [FieldType]?, parameters: Parameters?) -> Promise<T> {
         model.resetValidationState()
         model.beforeSave()
         
@@ -304,7 +306,7 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
         return self.lookup(modelClass, identifier: identifier, parameters: nil)
     }
     
-    open func lookup<T: Model>(_ modelClass:T.Type, identifier:String, parameters: [String: AnyObject]?) -> Promise<T> {
+    open func lookup<T: Model>(_ modelClass:T.Type, identifier:String, parameters: Parameters?) -> Promise<T> {
         let model = modelClass.init() as T
         model.identifier = identifier
         if let path = self.router.instancePath(for: model) {
@@ -317,11 +319,11 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
     /**
      Reads a single model from the specified path.
      */
-    open func read<T: Model>(_ modelClass: T.Type, path: String, parameters: [String: AnyObject]?=nil) -> Promise<T> {
+    open func read<T: Model>(_ modelClass: T.Type, path: String, parameters: Parameters?=nil) -> Promise<T> {
         return self.request(.get, path: path, parameters: parameters).then(on: .global(), execute: self.instantiateModel(modelClass))
     }
     
-    open func refresh<T:Model>(_ model:T, parameters:[String: AnyObject]?=nil) -> Promise<T> {
+    open func refresh<T:Model>(_ model:T, parameters:Parameters?=nil) -> Promise<T> {
         if let identifier = model.identifier {
             return self.lookup(T.self, identifier: identifier, parameters: parameters)
         } else {
@@ -340,7 +342,7 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
      - parameter path: An optional path.  Defaults to modelClass.path
      - parameter parameters: Request parameters to pass along in the request.
      */
-    open func list<T: Model>(_ modelClass:T.Type, path:String?=nil, parameters:[String: AnyObject]?) -> Promise<[T]> {
+    open func list<T: Model>(_ modelClass:T.Type, path:String?=nil, parameters:Parameters?) -> Promise<[T]> {
         if let collectionPath = path ?? self.router.path(to: modelClass) {
             return self.request(.get, path: collectionPath, parameters: parameters).then(on: .global(), execute: self.instantiateModels(modelClass))
         } else {

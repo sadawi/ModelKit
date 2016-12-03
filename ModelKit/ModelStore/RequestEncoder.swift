@@ -20,7 +20,7 @@ open class ParameterEncoder {
     }
     
     open func encodeParameters(_ object: AnyObject, prefix: String? = nil) -> String {
-        if let dictionary = object as? [String: AnyObject] {
+        if let dictionary = object as? Parameters {
             var results:[String] = []
             
             for (key, value) in dictionary {
