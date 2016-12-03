@@ -14,7 +14,7 @@ open class ModelValueTransformer<T: Model>: ValueTransformer<T> {
         super.init()
     }
 
-    open override func importValue(_ value: AnyObject?) -> T? {
+    open override func importValue(_ value: Any?) -> T? {
         // TODO: conditionally casting to AttributeDictionary might be slowish
         if let value = value as? AttributeDictionary {
             return T.from(dictionaryValue: value)
@@ -23,15 +23,15 @@ open class ModelValueTransformer<T: Model>: ValueTransformer<T> {
         }
     }
     
-    open override func exportValue(_ value: T?, explicitNull: Bool = false) -> AnyObject? {
+    open override func exportValue(_ value: T?, explicitNull: Bool = false) -> Any? {
         var seenFields: [FieldType] = []
         return self.exportValue(value, seenFields: &seenFields, explicitNull: explicitNull)
     }
 
-    open func exportValue(_ value: T?, fields: [FieldType]?=nil, seenFields: inout [FieldType], explicitNull: Bool = false) -> AnyObject? {
+    open func exportValue(_ value: T?, fields: [FieldType]?=nil, seenFields: inout [FieldType], explicitNull: Bool = false) -> Any? {
         // Why do I have to cast it to Model?  T is already a Model.
         if let value = value as? Model {
-            return value.dictionaryValue(fields: fields, seenFields: &seenFields, explicitNull: explicitNull) as AnyObject
+            return value.dictionaryValue(fields: fields, seenFields: &seenFields, explicitNull: explicitNull) as Any
         } else {
             return type(of: self).nullValue(explicit: explicitNull)
         }

@@ -59,11 +59,11 @@ class FieldTests: XCTestCase {
         entity.color.write(to: &dict)
         XCTAssertEqual(dict["color"] as? String, "blue")
         
-        dict["color"] = "blue" as AnyObject
+        dict["color"] = "blue"
         entity.color.read(from: dict)
         XCTAssertEqual(entity.color.value, Color.Blue)
 
-        dict["color"] = "yellow" as AnyObject
+        dict["color"] = "yellow"
         entity.color.read(from: dict)
         XCTAssertNil(entity.color.value)
     }
@@ -172,7 +172,7 @@ class FieldTests: XCTestCase {
         
         XCTAssertEqual(dict["name"] as? String, "Bob")
         
-        dict["size"] = 100 as AnyObject
+        dict["size"] = 100
         a.size.read(from: dict)
         XCTAssertEqual(a.size.value, 100)
     }
@@ -272,15 +272,15 @@ extension FieldTests {
     
     func testReadingCustomTransformers() {
         let customTransformer = ModelKit.ValueTransformer<Int>(
-            importAction: { (value: AnyObject?) -> Int? in
+            importAction: { (value: Any?) -> Int? in
                 return 1000
             },
-            exportAction: { (value: Int?) -> AnyObject? in
-                return 5 as AnyObject
+            exportAction: { (value: Int?) -> Any? in
+                return 5
         } )
         
         let size = Field<Int>(key: "size").transform(with: customTransformer, in: .constant)
-        let raw: AttributeDictionary = ["size": 2 as AnyObject]
+        let raw: AttributeDictionary = ["size": 2]
         
         size.read(from: raw)
         XCTAssertEqual(size.value, 2)
@@ -303,7 +303,7 @@ extension FieldTests {
         // Specify custom import/export logic for this field only, scoped to a particular context
         size.transform(
             importValue: { $0 as? Int },
-            exportValue: { $0 == nil ? nil : (String(describing: $0) as AnyObject) },
+            exportValue: { $0 == nil ? nil : (String(describing: $0)) },
             in: ValueTransformerContext.string
         )
 
