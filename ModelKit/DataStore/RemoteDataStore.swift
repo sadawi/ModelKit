@@ -334,7 +334,7 @@ open class RemoteDataStore: DataStore, ListableDataStore {
      - parameter parameters: Request parameters to pass along in the request.
      */
     open func list<T: Model>(_ modelClass:T.Type, path:String?=nil, parameters:[String:AnyObject]?) -> Promise<[T]> {
-        if let collectionPath = path ?? self.router.path(for: modelClass) {
+        if let collectionPath = path ?? self.router.path(to: modelClass) {
             return self.request(.get, path: collectionPath, parameters: parameters).then(on: .global(), execute: self.instantiateModels(modelClass))
         } else {
             return Promise(error: RemoteDataStoreError.noModelCollectionPath(modelClass: modelClass))

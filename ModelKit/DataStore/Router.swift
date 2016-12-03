@@ -23,15 +23,15 @@ open class RESTRouter {
         self.collectionNames.remove(modelClass)
     }
     
-    public func path(for model: Model) -> String? {
-        if let collectionPath = self.path(for: type(of: model)) {
-            return self.path(for: model, in: collectionPath)
+    public func path(to model: Model) -> String? {
+        if let collectionPath = self.path(to: type(of: model)) {
+            return self.path(to: model, in: collectionPath)
         } else {
             return nil
         }
     }
     
-    public func path(for model: Model, in collectionPath: String) -> String? {
+    public func path(to model: Model, in collectionPath: String) -> String? {
         if let id = model.identifier {
             return "\(collectionPath)/\(id)"
         } else {
@@ -39,21 +39,21 @@ open class RESTRouter {
         }
     }
 
-    public func path<T: Model>(for field: ModelArrayField<T>) -> String? {
+    public func path<T: Model>(to field: ModelArrayField<T>) -> String? {
         guard let owner     = field.model else { return nil }
-        guard let path      = self.path(for: owner) else { return nil }
+        guard let path      = self.path(to: owner) else { return nil }
         guard let fieldKey  = field.key else { return nil }
         return [path, fieldKey].joined(separator: pathSeparator)
     }
 
-    public func path<T: Model>(for child: T, in field: ModelArrayField<T>) -> String? {
-        guard let prefix = self.path(for: field) else { return nil }
+    public func path<T: Model>(to child: T, in field: ModelArrayField<T>) -> String? {
+        guard let prefix = self.path(to: field) else { return nil }
         guard let id = child.identifier else { return nil }
         
         return [prefix, id].joined(separator: pathSeparator)
     }
     
-    open func path(for modelClass: Model.Type) -> String? {
+    open func path(to modelClass: Model.Type) -> String? {
         if let mapped = self.collectionNames[modelClass] {
             return mapped
         } else {
@@ -70,15 +70,15 @@ open class RESTRouter {
             let ownerField = ownedModel.ownerField as? InvertibleModelFieldType,
             let inverseField = ownerField.inverse() as? ModelArrayField<T>
         {
-            return self.path(for: inverseField)
+            return self.path(to: inverseField)
         } else {
-            return self.path(for: T.self)
+            return self.path(to: T.self)
         }
     }
     
     func instancePath<T: Model>(for model: T) -> String? {
         if let collectionPath = self.collectionPath(for: model) {
-            return self.path(for: model, in: collectionPath)
+            return self.path(to: model, in: collectionPath)
         } else {
             return nil
         }

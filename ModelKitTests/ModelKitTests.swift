@@ -56,21 +56,21 @@ class ModelKitTests: XCTestCase {
         let router = RESTRouter()
         
         let thing = Thing()
-        XCTAssertNil(router.path(for: thing))
+        XCTAssertNil(router.path(to: thing))
 
         thing.id.value = "1"
         
-        XCTAssertEqual(router.path(for: Thing.self), "things")
-        XCTAssertEqual(router.path(for: thing), "things/1")
+        XCTAssertEqual(router.path(to: Thing.self), "things")
+        XCTAssertEqual(router.path(to: thing), "things/1")
         
         router.route(Thing.self, to: "objects")
         
-        XCTAssertEqual(router.path(for: Thing.self), "objects")
-        XCTAssertEqual(router.path(for: thing), "objects/1")
+        XCTAssertEqual(router.path(to: Thing.self), "objects")
+        XCTAssertEqual(router.path(to: thing), "objects/1")
         
         router.unroute(Thing.self)
         
-        XCTAssertEqual(router.path(for: Thing.self), "things")
+        XCTAssertEqual(router.path(to: Thing.self), "things")
         
         // Nested paths
         
@@ -79,8 +79,8 @@ class ModelKitTests: XCTestCase {
         
         thing.entities.value = [entity]
         
-        XCTAssertEqual(router.path(for: entity, in: thing.entities), "things/1/relatives/e1")
-        XCTAssertEqual(router.path(for: thing.entities), "things/1/relatives")
+        XCTAssertEqual(router.path(to: entity, in: thing.entities), "things/1/relatives/e1")
+        XCTAssertEqual(router.path(to: thing.entities), "things/1/relatives")
     }
     
     func testOwnerRouting() {
