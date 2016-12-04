@@ -15,14 +15,7 @@ struct Price: Equatable, ModelKit.ValueTransformable {
     static var valueTransformer: ModelKit.ValueTransformer<Price> {
         return ModelKit.ValueTransformer<Price>(
             importAction: { value in
-                var importableValue: Float? = nil
-                if let floatValue = value as? Float {
-                    importableValue = floatValue
-                } else if let intValue = value as? Int {
-                    importableValue = Float(intValue)
-                }
-                
-                if let importableValue = importableValue {
+                if let importableValue = (value as AnyObject?) as? Float {
                     return Price(value: importableValue)
                 } else {
                     return nil
@@ -63,8 +56,8 @@ class TransformerTests: XCTestCase {
     func testDefaultTransformers() {
         let floatField = Field<Float>(key: "number")
         
-        let floatDict = ["number": 3.0]
-        floatField.read(from: floatDict as AttributeDictionary)
+        let floatDict:AttributeDictionary = ["number": 3.0]
+        floatField.read(from: floatDict)
         XCTAssertEqual(3.0, floatField.value)
         
         let intDict = ["number": 2]
