@@ -17,7 +17,7 @@ private class TestField<T: Equatable>: Field<T> {
     }
     
     private override func writeSeenValue(to dictionary: inout AttributeDictionary, seenFields: inout [FieldType], key: String, in context: ValueTransformerContext) {
-        dictionary[key] = kSeen as AnyObject?
+        dictionary[key] = kSeen
     }
 }
 

@@ -86,7 +86,7 @@ class APIKitTests: XCTestCase {
     }
     
     func testArrayVisit() {
-        let company = Company.from(dictionaryValue: ["products": [["id":"100", "productName": "iPhone"]] as AnyObject])
+        let company = Company.from(dictionaryValue: ["products": [["id":"100", "productName": "iPhone"]]])
         XCTAssertEqual(company?.products.value?.count, 1)
         var iphone = false
         company?.visitAllFieldValues(recursive: true) { value in
@@ -137,7 +137,7 @@ class APIKitTests: XCTestCase {
     }
     
     func testArrayShells() {
-        let company = Company.from(dictionaryValue: ["widgetIDs": ["44", "55"] as AnyObject])
+        let company = Company.from(dictionaryValue: ["widgetIDs": ["44", "55"]])
         let shells = company?.incompleteChildModels(recursive: true)
         XCTAssertEqual(shells?.count, 2)
     }
@@ -145,14 +145,14 @@ class APIKitTests: XCTestCase {
     func testShells() {
         let didSave = expectation(description: "save")
         
-        let phil = Person.from(dictionaryValue: ["name": "Phil" as AnyObject, "age": 44 as AnyObject, "company": "testID" as AnyObject])!
+        let phil = Person.from(dictionaryValue: ["name": "Phil", "age": 44, "company": "testID"])!
         
         _ = ModelManager.sharedInstance.modelStore.save(phil).then { model -> Void in
             // Fails because 555 is not a valid owner id (should be string)
-            let grazi0 = Pet.from(dictionaryValue: ["name": "Grazi" as AnyObject, "owner": 555 as AnyObject])
+            let grazi0 = Pet.from(dictionaryValue: ["name": "Grazi", "owner": 555])
             XCTAssertNil(grazi0?.owner.value?.id.value)
 
-            let grazi1 = Pet.from(dictionaryValue: ["name": "Grazi" as AnyObject, "owner": phil.id.value! as AnyObject])
+            let grazi1 = Pet.from(dictionaryValue: ["name": "Grazi", "owner": phil.id.value!])
             XCTAssertEqual(grazi1?.owner.value?.id.value, phil.id.value)
             
             let shells = grazi1!.incompleteChildModels()

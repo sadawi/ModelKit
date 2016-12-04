@@ -49,7 +49,7 @@ class TransformerTests: XCTestCase {
         XCTAssertEqual("1969-12-31", string)
         
         let string2 = "2015-03-03"
-        let date2 = transformer.importValue(string2 as AnyObject?)
+        let date2 = transformer.importValue(string2)
         XCTAssertNotNil(date2)
     }
     
@@ -66,7 +66,7 @@ class TransformerTests: XCTestCase {
         
         let priceField = AutomaticField<Price>(key: "price")
         let transformer = priceField.valueTransformer()!
-        let imported = transformer.importValue(0.2 as AnyObject?)
+        let imported = transformer.importValue(0.2)
         XCTAssertEqual(imported, Price(value: 0.2))
 
         let priceDict = ["price": 10.0]
