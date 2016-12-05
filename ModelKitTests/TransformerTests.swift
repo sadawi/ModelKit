@@ -73,4 +73,26 @@ class TransformerTests: XCTestCase {
         priceField.read(from: priceDict as AttributeDictionary)
         XCTAssertEqual(priceField.value?.value, 10.0)
     }
+    
+}
+
+fileprivate class TestContext: ValueTransformerContext {
+    
+}
+
+fileprivate class Person: Model {
+    let name = Field<String>()
+}
+
+extension TransformerTests {
+    func testContexts() {
+        let person = Person()
+        person.name.value = "Bob"
+        
+        let context = TestContext(name: "test")
+        
+        let dict = person.dictionaryValue(in: context)
+        
+        XCTAssertEqual(dict["name"] as? String, "Bob")
+    }
 }
