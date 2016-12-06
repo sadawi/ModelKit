@@ -23,17 +23,17 @@ open class ArrayValueTransformer<T>: ValueTransformer<[T]> {
         super.init()
     }
     
-    open override func importValue(_ value: Any?) -> [T]? {
+    open override func importValue(_ value: Any?, in context: ValueTransformerContext = .defaultContext) -> [T]? {
         if let arrayValue = self.arrayValue(value) {
-            return arrayValue.map { self.innerTransformer.importValue($0) }.flatMap{$0}
+            return arrayValue.map { self.innerTransformer.importValue($0, in: context) }.flatMap{$0}
         } else {
             return nil
         }
     }
     
-    open override func exportValue(_ value: [T]?, explicitNull: Bool) -> Any? {
+    open override func exportValue(_ value: [T]?, explicitNull: Bool, in context: ValueTransformerContext = .defaultContext) -> Any? {
         if let value = value {
-            let arrayValue = value.map { self.innerTransformer.exportValue($0) }.flatMap { $0 }
+            let arrayValue = value.map { self.innerTransformer.exportValue($0, in: context) }.flatMap { $0 }
             return self.objectValue(arrayValue)
         } else {
             return nil
@@ -115,7 +115,7 @@ open class ArrayField<T:Equatable>: BaseField<[T]> {
     
     // MARK: - Dictionary values
     
-    open override func defaultValueTransformer(in context: ValueTransformerContext) -> ValueTransformer<[T]> {
+    open override func defaultValueTransformer(in context: ValueTransformerContext = .defaultContext) -> ValueTransformer<[T]> {
         let transformer = ArrayValueTransformer<T>()
         if let innerTransformer = self.field.valueTransformer(in: context) {
             transformer.innerTransformer = innerTransformer

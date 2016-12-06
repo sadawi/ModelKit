@@ -36,7 +36,7 @@ open class DateTransformer: ValueTransformer<Date> {
         }
     }
     
-    override open func importValue(_ value:Any?) -> Date? {
+    override open func importValue(_ value:Any?, in context: ValueTransformerContext = .defaultContext) -> Date? {
         if let value = value as? String {
             return self.dateFormatter.date(from: value)
         } else {
@@ -44,7 +44,7 @@ open class DateTransformer: ValueTransformer<Date> {
         }
     }
     
-    override open func exportValue(_ value:Date?, explicitNull: Bool = false) -> Any? {
+    override open func exportValue(_ value:Date?, explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext) -> Any? {
         if let value = value {
             return self.dateFormatter.string(from: value) as Any?
         } else {

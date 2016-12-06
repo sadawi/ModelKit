@@ -14,14 +14,14 @@ struct Price: Equatable, ModelKit.ValueTransformable {
     
     static var valueTransformer: ModelKit.ValueTransformer<Price> {
         return ModelKit.ValueTransformer<Price>(
-            importAction: { value in
+            importAction: { value, context in
                 if let importableValue = (value as AnyObject?) as? Float {
                     return Price(value: importableValue)
                 } else {
                     return nil
                 }
             },
-            exportAction: { price in
+            exportAction: { price, context in
                 return price?.value as AnyObject?
         })
     }
@@ -88,14 +88,18 @@ class TestContext: ValueTransformerContext {
     }
 }
 
+fileprivate class Room: Model {
+    let lights = ModelField<Light>()*
+}
+
 fileprivate class Light: Model {
     let lightName       = Field<String>()
     let brightness      = Field<Float>()
-    let powered         = Field<Bool>()
+    let isPowered       = Field<Bool>()
 }
 
 class OnOffTransformer: ModelKit.ValueTransformer<Bool> {
-    override func exportValue(_ value: Bool?, explicitNull: Bool) -> Any? {
+    override func exportValue(_ value: Bool?, explicitNull: Bool, in context: ValueTransformerContext) -> Any? {
         if let value = value {
             return value ? "ON" : "OFF"
         } else {
@@ -108,7 +112,7 @@ extension TransformerTests {
     func testContextKeys() {
         let light = Light()
         
-        light.powered.value = true
+        light.isPowered.value = true
         light.lightName.value = "main"
         
         let context = TestContext(name: "test")
@@ -126,14 +130,29 @@ extension TransformerTests {
     func testContextTransformers() {
         let light = Light()
         
-        light.powered.value = true
+        light.isPowered.value = true
         
         let context = TestContext(name: "test")
         context.transform(Bool.self, with: OnOffTransformer())
         
         let dict = light.dictionaryValue(in: context)
         
-        XCTAssertEqual(dict["powered"] as? String, "ON")
+        XCTAssertEqual(dict["isPowered"] as? String, "ON")
+    }
+    
+    func testNestedContexts() {
+        let room = Room()
+        let light1 = Light()
+        light1.isPowered.value = true
+        room.lights.value = [light1]
         
+        let context = TestContext(name: "test")
+        context.transform(Bool.self, with: OnOffTransformer())
+        context.keyCase = .upperCamel
+        
+        let roomDict = room.dictionaryValue(in: context)
+        let lights = roomDict["Lights"] as! [AttributeDictionary]
+        let firstLight = lights.first!
+        XCTAssertEqual(firstLight["IsPowered"] as? String, "ON")
     }
 }

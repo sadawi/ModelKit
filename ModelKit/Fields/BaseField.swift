@@ -96,7 +96,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
      - parameter exportValue: A closure mapping a field value to an external value
      - parameter in: A ValueTransformerContext used to identify this transformer. If omitted, will be the default context.
      */
-    @discardableResult open func transform(importValue:@escaping ((Any?) -> T?), exportValue:@escaping ((T?) -> Any?), in context: ValueTransformerContext = ValueTransformerContext.defaultContext) -> Self {
+    @discardableResult open func transform(importValue:@escaping ValueTransformer<T>.ImportActionType, exportValue:@escaping ValueTransformer<T>.ExportActionType, in context: ValueTransformerContext = ValueTransformerContext.defaultContext) -> Self {
         
         self.valueTransformers[context.name] = ValueTransformer(importAction: importValue, exportAction: exportValue)
         return self
@@ -335,7 +335,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
     
     open func read(from dictionary:AttributeDictionary, in context: ValueTransformerContext) {
         if let key = self.key(in: context), let dictionaryValue = dictionary[key], let transformer = self.valueTransformer(in: context) {
-            self.value = transformer.importValue(dictionaryValue)
+            self.value = transformer.importValue(dictionaryValue, in: context)
         }
     }
     
@@ -352,7 +352,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
     
     open func writeUnseenValue(to dictionary: inout AttributeDictionary, seenFields: inout [FieldType], key: String, explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext) {
         if let transformer = self.valueTransformer(in: context) {
-            dictionary[key] = transformer.exportValue(self.value, explicitNull: explicitNull)
+            dictionary[key] = transformer.exportValue(self.value, explicitNull: explicitNull, in: context)
         }
     }
     
