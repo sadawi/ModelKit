@@ -155,7 +155,7 @@ class ObservationTests: XCTestCase {
         let a = Entity()
         let b = Entity()
         
-        let observation = (a.name --> b.name)
+        let observation = a.name --> b.name
         a.name.value = "Wayne"
         
         XCTAssertEqual(a.name.value, b.name.value)
@@ -176,7 +176,7 @@ class ObservationTests: XCTestCase {
         let c = Entity()
         let d = Entity()
         
-        ((a.name --> b.name) --> c.name) --> d.name
+        a.name --> b.name --> c.name --> d.name
         a.name.value = "John"
         
         XCTAssertEqual(a.name.value, b.name.value)
@@ -190,7 +190,7 @@ class ObservationTests: XCTestCase {
         
         var output:String? = nil
         
-        (a.name --> b.name) --> { value in
+        a.name --> b.name --> { value in
             output = value
         }
         

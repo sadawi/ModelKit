@@ -94,10 +94,14 @@ public extension Observable {
     }
 }
 
-infix operator <--: AdditionPrecedence
-infix operator -->: AdditionPrecedence
-infix operator -/->: AdditionPrecedence
-infix operator <-->: AdditionPrecedence
+precedencegroup ObservationPrecedence {
+    associativity: left
+}
+
+infix operator <--: ObservationPrecedence
+infix operator -->: ObservationPrecedence
+infix operator -/->: ObservationPrecedence
+infix operator <-->: ObservationPrecedence
 
 public func <--<T:Observable, U:Observer>(observer:U, observedField:T) where U.ValueType == T.ValueType {
     observedField.addObserver(observer)
