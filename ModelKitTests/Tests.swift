@@ -308,9 +308,9 @@ extension FieldTests {
         
         // Specify custom import/export logic for this field only, scoped to a particular context
         size.transform(
+            in: ValueTransformerContext.string,
             importValue: { value, context in value as? Int },
-            exportValue: { value, context in value == nil ? nil : (String(describing: value)) },
-            in: ValueTransformerContext.string
+            exportValue: { value, context in value == nil ? nil : (String(describing: value)) }
         )
 
         var dict:AttributeDictionary = [:]

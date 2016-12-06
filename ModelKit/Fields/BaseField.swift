@@ -96,7 +96,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
      - parameter exportValue: A closure mapping a field value to an external value
      - parameter in: A ValueTransformerContext used to identify this transformer. If omitted, will be the default context.
      */
-    @discardableResult open func transform(importValue:@escaping ValueTransformer<T>.ImportActionType, exportValue:@escaping ValueTransformer<T>.ExportActionType, in context: ValueTransformerContext = ValueTransformerContext.defaultContext) -> Self {
+    @discardableResult open func transform(in context: ValueTransformerContext = ValueTransformerContext.defaultContext, importValue:@escaping ValueTransformer<T>.ImportActionType, exportValue:@escaping ValueTransformer<T>.ExportActionType) -> Self {
         
         self.valueTransformers[context.name] = ValueTransformer(importAction: importValue, exportAction: exportValue)
         return self
