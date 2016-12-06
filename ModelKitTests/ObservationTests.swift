@@ -182,6 +182,10 @@ class ObservationTests: XCTestCase {
         XCTAssertEqual(a.name.value, b.name.value)
         XCTAssertEqual(a.name.value, c.name.value)
         XCTAssertEqual(a.name.value, d.name.value)
+        
+        c.name.value = "Alice"
+        XCTAssertEqual(a.name.value, "John")
+        XCTAssertEqual(d.name.value, "Alice")
     }
     
     func testChainingClosureWithSideEffect() {
