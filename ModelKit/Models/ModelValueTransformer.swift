@@ -23,17 +23,17 @@ open class ModelValueTransformer<T: Model>: ValueTransformer<T> {
         }
     }
     
-    open override func exportValue(_ value: T?, explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext) -> Any? {
+    open override func exportValue(_ value: T?, in context: ValueTransformerContext = .defaultContext) -> Any? {
         var seenFields: [FieldType] = []
-        return self.exportValue(value, seenFields: &seenFields, explicitNull: explicitNull, in: context)
+        return self.exportValue(value, seenFields: &seenFields, in: context)
     }
 
-    open func exportValue(_ value: T?, fields: [FieldType]?=nil, seenFields: inout [FieldType], explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext) -> Any? {
+    open func exportValue(_ value: T?, fields: [FieldType]?=nil, seenFields: inout [FieldType], in context: ValueTransformerContext = .defaultContext) -> Any? {
         // Why do I have to cast it to Model?  T is already a Model.
         if let value = value as? Model {
-            return value.dictionaryValue(fields: fields, seenFields: &seenFields, explicitNull: explicitNull, in: context) as Any
+            return value.dictionaryValue(fields: fields, seenFields: &seenFields, in: context) as Any
         } else {
-            return type(of: self).nullValue(explicit: explicitNull)
+            return type(of: self).nullValue(explicit: context.explicitNull)
         }
     }
 }

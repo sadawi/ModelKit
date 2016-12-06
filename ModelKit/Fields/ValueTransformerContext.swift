@@ -19,6 +19,11 @@ open class ValueTransformerContext {
     // TODO: remove explicit key from fields entirely, configure entirely in context.
     public var keyCase: StringCase? = nil
     
+    /**
+     Whether nil values should be serialized as NSNull. Note that if this is false, dictionary.keys will not include those with nil values.
+     */
+    public var explicitNull = false
+    
     public init(name: String) {
         self.name = name
     }

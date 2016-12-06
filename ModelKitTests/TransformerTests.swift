@@ -99,7 +99,7 @@ fileprivate class Light: Model {
 }
 
 class OnOffTransformer: ModelKit.ValueTransformer<Bool> {
-    override func exportValue(_ value: Bool?, explicitNull: Bool, in context: ValueTransformerContext) -> Any? {
+    override func exportValue(_ value: Bool?, in context: ValueTransformerContext) -> Any? {
         if let value = value {
             return value ? "ON" : "OFF"
         } else {

@@ -282,25 +282,31 @@ class ModelTests: XCTestCase {
         let model = Company()
         let parent = Company()
         
+        let context = ValueTransformerContext(name: "nulls")
+        context.explicitNull = false
+        
         model.parentCompany.value = parent
-        var d0 = model.dictionaryValue()
+        var d0 = model.dictionaryValue(in: context)
+        
         var parentDictionary = d0["parentCompany"] as? AttributeDictionary
         XCTAssertNotNil(parentDictionary)
         XCTAssertNil(parentDictionary?["name"])
-        
-        d0 = model.dictionaryValue(explicitNull: true)
+
+        context.explicitNull = true
+
+        d0 = model.dictionaryValue(in: context)
         parentDictionary = d0["parentCompany"] as? AttributeDictionary
         XCTAssertNotNil(parentDictionary?["name"])
         // TODO
-//        XCTAssertEqual(parentDictionary?["name"], NSNull() as Any)
+//        XCTAssertEqual(parentDictionary?["name"] is NSNull)
 
         // We haven't set any values, so nothing will be serialized anyway
-        let d = model.dictionaryValue(explicitNull: true)
+        let d = model.dictionaryValue(in: context)
         XCTAssert(d["name"] == nil)
 
         // Now, set a value explicitly, and it should appear in the dictionary
         model.name.value = nil
-        let d2 = model.dictionaryValue(explicitNull: true)
+        let d2 = model.dictionaryValue(in: context)
         XCTAssert(d2["name"] is NSNull)
         
         

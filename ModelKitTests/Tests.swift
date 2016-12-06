@@ -209,11 +209,17 @@ class FieldTests: XCTestCase {
         let field = Field<String>(key: "name")
         var dictionary: AttributeDictionary = [:]
         
-        field.write(to: &dictionary)
+        let context = ValueTransformerContext(name: "nulls")
+
+        context.explicitNull = false
+        
+        field.write(to: &dictionary, in: context)
         XCTAssert(dictionary["name"] == nil)
         XCTAssertFalse(dictionary["name"] is NSNull)
-        
-        field.write(to: &dictionary, explicitNull: true)
+
+        context.explicitNull = true
+
+        field.write(to: &dictionary, in: context)
         XCTAssert(dictionary["name"] != nil)
         XCTAssert(dictionary["name"] is NSNull)
     }

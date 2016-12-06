@@ -99,7 +99,7 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
     }
     
     open func serializeModel(_ model:Model, fields:[FieldType]?=nil) -> AttributeDictionary {
-        return model.dictionaryValue(fields: fields, explicitNull: true, in: self.valueTransformerContext)
+        return model.dictionaryValue(fields: fields, in: self.valueTransformerContext)
     }
     
     open func deserializeModel<T:Model>(_ modelClass:T.Type, parameters:AttributeDictionary) -> T? {

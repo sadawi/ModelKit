@@ -31,10 +31,10 @@ open class ArrayValueTransformer<T>: ValueTransformer<[T]> {
         }
     }
     
-    open override func exportValue(_ value: [T]?, explicitNull: Bool, in context: ValueTransformerContext = .defaultContext) -> Any? {
+    open override func exportValue(_ value: [T]?, in context: ValueTransformerContext = .defaultContext) -> Any? {
         if let value = value {
             let arrayValue = value.map { self.innerTransformer.exportValue($0, in: context) }.flatMap { $0 }
-            return self.objectValue(arrayValue)
+            return self.scalarValue(arrayValue)
         } else {
             return nil
         }
@@ -50,7 +50,7 @@ open class ArrayValueTransformer<T>: ValueTransformer<[T]> {
     /**
      Attempts to convert an array to a raw value. This implementation just performs a cast, but you could override to do something else (e.g., join a string, write values to a dictionary, etc.)
      */
-    open func objectValue(_ value: [Any]) -> Any? {
+    open func scalarValue(_ value: [Any]) -> Any? {
         return value as Any?
     }
 }

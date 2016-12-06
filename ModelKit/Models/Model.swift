@@ -348,27 +348,26 @@ open class Model: NSObject, NSCopying {
      export all fields in `defaultFieldsForDictionaryValue` (which itself defaults to all fields) that have been loaded.
      
      - parameter fields: An array of field objects (belonging to this model) to be included in the dictionary value.
-     - parameter explicitNull: Whether nil values should be serialized as NSNull. Note that if this is false, dictionary.keys will not include those with nil values.
      - parameter in: A value transformer context, used to obtain the correct value transformer for each field.
      - parameter includeField: A closure determining whether a field should be included in the result.  By default, it will be included iff its state is .Set (i.e., it has been explicitly set since it was loaded)
      */
-    open func dictionaryValue(fields:[FieldType]?=nil, explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext, includeField: ((FieldType) -> Bool)?=nil) -> AttributeDictionary {
+    open func dictionaryValue(fields:[FieldType]?=nil, in context: ValueTransformerContext = .defaultContext, includeField: ((FieldType) -> Bool)?=nil) -> AttributeDictionary {
         var seenFields:[FieldType] = []
         var includeField = includeField
         if includeField == nil {
             includeField = { (field:FieldType) -> Bool in field.loadState == LoadState.loaded }
         }
-        return self.dictionaryValue(fields: fields, seenFields: &seenFields, explicitNull: explicitNull, in: context, includeField: includeField)
+        return self.dictionaryValue(fields: fields, seenFields: &seenFields, in: context, includeField: includeField)
     }
     
-    internal func dictionaryValue(fields:[FieldType]? = nil, seenFields: inout [FieldType], explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext, includeField: ((FieldType) -> Bool)? = nil) -> AttributeDictionary {
+    internal func dictionaryValue(fields:[FieldType]? = nil, seenFields: inout [FieldType], in context: ValueTransformerContext = .defaultContext, includeField: ((FieldType) -> Bool)? = nil) -> AttributeDictionary {
         let fields = fields ?? self.defaultFieldsForDictionaryValue()
         
         var result:AttributeDictionary = [:]
         let include = fields
         for (_, field) in self.fields {
             if include.contains(where: { $0 === field }) && includeField?(field) != false {
-                field.write(to: &result, seenFields: &seenFields, explicitNull: explicitNull, in: context)
+                field.write(to: &result, seenFields: &seenFields, in: context)
             }
         }
         return result

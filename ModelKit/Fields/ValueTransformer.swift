@@ -40,13 +40,12 @@ open class ValueTransformer<T>: ValueTransformerType {
 
     /**
      Transforms a value into an external form suitable for serialization.
-     - parameter explicitNull: If false, export nil values as nil. If true, export nil values as a special null value (defaulting to NSNull)
      */
-    open func exportValue(_ value:T?, explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext) -> Any? {
+    open func exportValue(_ value:T?, in context: ValueTransformerContext = .defaultContext) -> Any? {
         if let exportAction = self.exportAction, let exportedValue = exportAction(value, context) {
             return exportedValue
         } else {
-            return type(of: self).nullValue(explicit: explicitNull)
+            return type(of: self).nullValue(explicit: context.explicitNull)
         }
     }
     
@@ -82,11 +81,11 @@ open class SimpleValueTransformer<T>: ValueTransformer<T> {
         }
     }
     
-    open override func exportValue(_ value: T?, explicitNull: Bool, in context: ValueTransformerContext = .defaultContext) -> Any? {
+    open override func exportValue(_ value: T?, in context: ValueTransformerContext = .defaultContext) -> Any? {
         if let value = value {
             return value as Any?
         } else {
-            return type(of: self).nullValue(explicit: explicitNull)
+            return type(of: self).nullValue(explicit: context.explicitNull)
         }
     }
 }

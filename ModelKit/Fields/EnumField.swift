@@ -27,8 +27,8 @@ open class EnumValueTransformer<E:RawRepresentable>: ValueTransformer<E> {
         }
     }
     
-    open override func exportValue(_ value:E?, explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext) -> Any? {
-        return (value?.rawValue as Any?) ?? type(of: self).nullValue(explicit: explicitNull)
+    open override func exportValue(_ value:E?, in context: ValueTransformerContext = .defaultContext) -> Any? {
+        return (value?.rawValue as Any?) ?? type(of: self).nullValue(explicit: context.explicitNull)
     }
 }
 

@@ -44,11 +44,11 @@ open class DateTransformer: ValueTransformer<Date> {
         }
     }
     
-    override open func exportValue(_ value:Date?, explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext) -> Any? {
+    override open func exportValue(_ value:Date?, in context: ValueTransformerContext = .defaultContext) -> Any? {
         if let value = value {
             return self.dateFormatter.string(from: value) as Any?
         } else {
-            return type(of: self).nullValue(explicit: explicitNull)
+            return type(of: self).nullValue(explicit: context.explicitNull)
         }
     }
 }
