@@ -49,7 +49,7 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
     /**
      The transformer context to use when (un)serializing models.
      */
-    public var valueTransformerContext: ValueTransformerContext = .defaultContext
+    public var valueTransformerContext: ModelValueTransformerContext = .defaultModelContext
     
     /**
      Creates a closure that deserializes a model and returns a Promise.

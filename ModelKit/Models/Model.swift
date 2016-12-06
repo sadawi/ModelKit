@@ -10,6 +10,17 @@ import Foundation
 
 public typealias Identifier = String
 
+open class ModelValueTransformerContext: ValueTransformerContext {
+    /**
+     An object that is responsible for keeping track of canonical instances
+     */
+    public var registry:ModelRegistry? = MemoryRegistry()
+}
+
+public extension ValueTransformerContext {
+    static let defaultModelContext = ModelValueTransformerContext(name: "model")
+}
+
 open class Model: NSObject, NSCopying {
     /**
      The class to instantiate, based on a dictionary value.  For example, your dictionary might include a "type" string.
@@ -40,21 +51,20 @@ open class Model: NSObject, NSCopying {
      If a registry is set, will attempt to reuse the canonical instance for its identifier
      
      - parameter dictionaryValue: The attributes
-     - parameter useRegistry: Whether we should attempt to canonicalize models and register new ones
      - parameter configure: A closure to configure a deserialized model, taking a Bool flag indicating whether it was newly instantiated (vs. reused from registry)
      */
-    open class func from(dictionaryValue:AttributeDictionary, in context: ValueTransformerContext = ValueTransformerContext.defaultContext, configure:((Model,Bool) -> Void)?=nil) -> Self? {
+    open class func from(dictionaryValue:AttributeDictionary, in context: ValueTransformerContext = .defaultModelContext, configure:((Model,Bool) -> Void)?=nil) -> Self? {
         var instance = (self.instanceClass(for: dictionaryValue) ?? self).init()
         (instance as Model).readDictionaryValue(dictionaryValue, in: context)
         
         var isNew = true
         
-        if let registry = context.registry {
+        if let modelContext = context as? ModelValueTransformerContext, let registry = modelContext.registry {
             // If we have a canonical object for this id, swap it in
             if let canonical = registry.canonicalModel(for: instance) {
                 isNew = false
                 instance = canonical
-                (instance as Model).readDictionaryValue(dictionaryValue, in: context)
+                (instance as Model).readDictionaryValue(dictionaryValue, in: modelContext)
             } else {
                 isNew = true
                 registry.didInstantiate(instance)
@@ -79,7 +89,7 @@ open class Model: NSObject, NSCopying {
     /**
      Returns a unique instance of this class for an identifier. If a matching instance is already registered, returns that. Otherwise, returns a new instance.
      */
-    open class func with(identifier: Identifier, in context: ValueTransformerContext) -> Self {
+    open class func with(identifier: Identifier, in context: ModelValueTransformerContext) -> Self {
         let instance = self.init()
         instance.identifier = identifier
         if let registry = context.registry {
@@ -95,7 +105,7 @@ open class Model: NSObject, NSCopying {
     /**
      Returns a canonical instance corresponding to this instance.
      */
-    open func canonicalInstance(in context: ValueTransformerContext) -> Self {
+    open func canonicalInstance(in context: ModelValueTransformerContext) -> Self {
         return context.registry?.canonicalModel(for: self) ?? self
     }
     

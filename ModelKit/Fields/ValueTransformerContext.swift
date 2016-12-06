@@ -17,11 +17,6 @@ open class ValueTransformerContext {
     public var name: String
     
     /**
-     An object that is responsible for keeping track of canonical instances
-     */
-    public var registry:ModelRegistry? = MemoryRegistry()
-    
-    /**
      The casing style (e.g., camelCase or snake_case) for field keys.
      */
     public var keyCase: StringCase? = nil
@@ -48,8 +43,4 @@ open class ValueTransformerContext {
 
 public extension ValueTransformerContext {
     static let defaultContext = ValueTransformerContext(name: "default")
-}
-
-open class ModelValueTransformerContext: ValueTransformerContext {
-    
 }
