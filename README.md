@@ -57,7 +57,7 @@ let age = Field<Int>().require { $0 > 0 }.require { $0 % 2 == 0 }
 
 By default, `nil` values will be considered valid.  To change that for a given rule, pass `allowNil: false` to `require`.
 
-To validate a field value, either call `field.valid` (returning a `Bool`) or `field.validate()`, which returns a `ValidationState` enum:
+To validate a field value, call `field.validate()`, which returns a `ValidationState` enum:
 
 ```swift
 public enum ValidationState:Equatable {
