@@ -23,7 +23,7 @@ open class ArrayValueTransformer<T>: ValueTransformer<[T]> {
         super.init()
     }
     
-    open override func importValue(_ value: AnyObject?) -> [T]? {
+    open override func importValue(_ value: Any?) -> [T]? {
         if let arrayValue = self.arrayValue(value) {
             return arrayValue.map { self.innerTransformer.importValue($0) }.flatMap{$0}
         } else {
@@ -31,7 +31,7 @@ open class ArrayValueTransformer<T>: ValueTransformer<[T]> {
         }
     }
     
-    open override func exportValue(_ value: [T]?, explicitNull: Bool) -> AnyObject? {
+    open override func exportValue(_ value: [T]?, explicitNull: Bool) -> Any? {
         if let value = value {
             let arrayValue = value.map { self.innerTransformer.exportValue($0) }.flatMap { $0 }
             return self.objectValue(arrayValue)
@@ -43,15 +43,15 @@ open class ArrayValueTransformer<T>: ValueTransformer<[T]> {
     /**
      Attempts to convert a raw value to an array. This implementation just performs a cast, but you could override to do something else (e.g., split a string, take values from a dictionary, etc.)
      */
-    open func arrayValue(_ value: AnyObject?) -> [AnyObject]? {
-        return value as? [AnyObject]
+    open func arrayValue(_ value: Any?) -> [Any]? {
+        return value as? [Any]
     }
     
     /**
      Attempts to convert an array to a raw value. This implementation just performs a cast, but you could override to do something else (e.g., join a string, write values to a dictionary, etc.)
      */
-    open func objectValue(_ value: [AnyObject]) -> AnyObject? {
-        return value as AnyObject?
+    open func objectValue(_ value: [Any]) -> Any? {
+        return value as Any?
     }
 }
 

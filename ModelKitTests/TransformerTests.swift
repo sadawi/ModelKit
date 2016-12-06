@@ -15,14 +15,7 @@ struct Price: Equatable, ModelKit.ValueTransformable {
     static var valueTransformer: ModelKit.ValueTransformer<Price> {
         return ModelKit.ValueTransformer<Price>(
             importAction: { value in
-                var importableValue: Float? = nil
-                if let floatValue = value as? Float {
-                    importableValue = floatValue
-                } else if let intValue = value as? Int {
-                    importableValue = Float(intValue)
-                }
-                
-                if let importableValue = importableValue {
+                if let importableValue = (value as AnyObject?) as? Float {
                     return Price(value: importableValue)
                 } else {
                     return nil
@@ -56,15 +49,15 @@ class TransformerTests: XCTestCase {
         XCTAssertEqual("1969-12-31", string)
         
         let string2 = "2015-03-03"
-        let date2 = transformer.importValue(string2 as AnyObject?)
+        let date2 = transformer.importValue(string2)
         XCTAssertNotNil(date2)
     }
     
     func testDefaultTransformers() {
         let floatField = Field<Float>(key: "number")
         
-        let floatDict = ["number": 3.0]
-        floatField.read(from: floatDict as AttributeDictionary)
+        let floatDict:AttributeDictionary = ["number": 3.0]
+        floatField.read(from: floatDict)
         XCTAssertEqual(3.0, floatField.value)
         
         let intDict = ["number": 2]
@@ -73,7 +66,7 @@ class TransformerTests: XCTestCase {
         
         let priceField = AutomaticField<Price>(key: "price")
         let transformer = priceField.valueTransformer()!
-        let imported = transformer.importValue(0.2 as AnyObject?)
+        let imported = transformer.importValue(0.2)
         XCTAssertEqual(imported, Price(value: 0.2))
 
         let priceDict = ["price": 10.0]
