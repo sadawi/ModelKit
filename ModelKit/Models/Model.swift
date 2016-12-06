@@ -23,9 +23,9 @@ open class Model: NSObject, NSCopying {
         return self as? T.Type
     }
     
-    fileprivate static var prototypes = TypeDictionary<Model>()
+    private static var prototypes = TypeDictionary<Model>()
     
-    internal static func prototype<T: Model>(for type: T.Type) -> T {
+    private static func prototype<T: Model>(for type: T.Type) -> T {
         if let existing = prototypes[type] as? T {
             return existing
         } else {
@@ -466,5 +466,14 @@ open class Model: NSObject, NSCopying {
             }
         }
     }
-
+    
+    // MARK: - 
+    /**
+     A object to be used as a standard prototypical instance of this class, for the purpose of accessing fields, etc.
+     It is reused when possible.
+     */
+    public class func prototype() -> Self {
+        return Model.prototype(for: self)
+    }
+    
 }
