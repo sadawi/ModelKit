@@ -165,8 +165,6 @@ This is intended as a base class for your RESTful server interface.  It includes
 * `handleError`
 * `constructResponse`
 
-## Routing
-
 A `RESTRouter` is responsible for generating paths for resource locations.
 
 ```swift
