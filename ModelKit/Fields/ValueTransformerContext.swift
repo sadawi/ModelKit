@@ -21,7 +21,9 @@ open class ValueTransformerContext {
      */
     public var registry:ModelRegistry? = MemoryRegistry()
     
-    // TODO: remove explicit key from fields entirely, configure entirely in context.
+    /**
+     The casing style (e.g., camelCase or snake_case) for field keys.
+     */
     public var keyCase: StringCase? = nil
     
     /**

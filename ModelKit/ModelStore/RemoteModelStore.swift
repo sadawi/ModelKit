@@ -134,27 +134,8 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
     
     // MARK: - Generic requests
     
-    // TODO: update for Alamofire 4 ParameterEncoding protocol
-//    open func nestedParameterEncoding(method:Alamofire.HTTPMethod) -> ParameterEncoding {
-//        return ParameterEncoding.custom({ (request:URLRequestConvertible, parameters:Parameters?) -> (NSMutableURLRequest, NSError?) in
-//            let request = request as? NSMutableURLRequest ?? NSMutableURLRequest()
-//            if let parameters = parameters, let url = request.URL {
-//                if method == .GET {
-//                    let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
-//                    components?.query = ParameterEncoder().encodeParameters(parameters)
-//                    request.URL = components?.URL
-//                } else {
-//                    request.addValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
-//                    request.HTTPBody = ParameterEncoder(includeNullValues: true).encodeParameters(parameters).dataUsingEncoding(NSUTF8StringEncoding)
-//                }
-//            }
-//            return (request, nil)
-//        })
-//    }
-    
     open func encodingForMethod(_ method: Alamofire.HTTPMethod) -> ParameterEncoding {
         return URLEncoding()
-//        return self.nestedParameterEncoding(method: method)
     }
     
     /**
