@@ -94,14 +94,25 @@ fileprivate class Light: Model {
     let powered         = Field<Bool>()
 }
 
+class OnOffTransformer: ModelKit.ValueTransformer<Bool> {
+    override func exportValue(_ value: Bool?, explicitNull: Bool) -> Any? {
+        if let value = value {
+            return value ? "ON" : "OFF"
+        } else {
+            return nil
+        }
+    }
+}
+
 extension TransformerTests {
-    func testContexts() {
+    func testContextKeys() {
         let light = Light()
         
         light.powered.value = true
         light.lightName.value = "main"
         
         let context = TestContext(name: "test")
+        
         context.keyCase = .upperCamel
         let dict = light.dictionaryValue(in: context)
         XCTAssertEqual(dict["LightName"] as? String, "main")
@@ -109,6 +120,20 @@ extension TransformerTests {
         context.keyCase = .snake
         let dict2 = light.dictionaryValue(in: context)
         XCTAssertEqual(dict2["light_name"] as? String, "main")
+        
+    }
+
+    func testContextTransformers() {
+        let light = Light()
+        
+        light.powered.value = true
+        
+        let context = TestContext(name: "test")
+        context.transform(Bool.self, with: OnOffTransformer())
+        
+        let dict = light.dictionaryValue(in: context)
+        
+        XCTAssertEqual(dict["powered"] as? String, "ON")
         
     }
 }

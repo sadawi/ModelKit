@@ -22,6 +22,16 @@ open class ValueTransformerContext {
     public init(name: String) {
         self.name = name
     }
+    
+    private var valueTransformers = TypeDictionary<ValueTransformerType>()
+    
+    public func transformer<T>(for valueType: T.Type) -> ValueTransformer<T>? {
+        return self.valueTransformers[valueType] as? ValueTransformer<T>
+    }
+    
+    public func transform<T>(_ valueType: T.Type, with transformer: ValueTransformer<T>) {
+        self.valueTransformers[valueType] = transformer
+    }
 }
 
 public extension ValueTransformerContext {

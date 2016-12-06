@@ -132,6 +132,8 @@ open class BaseField<T>: FieldType, Observer, Observable {
     open func valueTransformer(in context: ValueTransformerContext = ValueTransformerContext.defaultContext) -> ValueTransformer<T>? {
         if let transformer = self.valueTransformers[context.name] {
             return transformer
+        } else if let transformer = context.transformer(for: T.self) {
+            return transformer
         } else {
             return self.defaultValueTransformer(in: context)
         }
