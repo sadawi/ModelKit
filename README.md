@@ -173,3 +173,9 @@ instancePath(for: person)
 ```
 
 Nested routes are generated automatically if your model conforms to `HasOwnerField`, which requires it to specify an owning field. If a person's owner field is its `company` field, for example, you might get `"/companies/10/employees/45"` for its instance path.
+
+It also contains a `ValueTransformerContext` var that can be used to customize serialization. For example:
+* `context.keyCase` - specify the casing style of keys (`.snake`, `.upperCamel`, `.lowerCamel`)
+* `context.explicitNull` - decide whether keys for null values should be included
+* Specify custom transformers
+* add custom transformers for 
