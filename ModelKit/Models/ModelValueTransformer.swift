@@ -46,8 +46,7 @@ open class ModelForeignKeyValueTransformer<T: Model>: ValueTransformer<T> {
             if let value = value , !ModelForeignKeyValueTransformer<T>.valueIsNull(value) {
                 
                 // Attempt to initialize an object with just an id value
-                let dummy = Model.prototype(for: T.self)
-                if let idField = dummy.identifierField, let idKey = idField.key {
+                if let idField = T.prototype().identifierField, let idKey = idField.key {
                     let attributes = [idKey: value]
                     let model = T.from(dictionaryValue: attributes, in: context) { model, isNew in
                         // We only know it's definitely a shell if it wasn't reused from an existing model
