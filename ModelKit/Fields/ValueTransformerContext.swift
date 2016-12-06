@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import StringInflections
 
 /**
  An object that identifies a particular system of transformations. For example, there might be one context for writing to a JSON API,
@@ -14,6 +15,7 @@ import Foundation
  */
 open class ValueTransformerContext {
     public var name: String
+    public var keyCase: StringCase = .lowerCamel
     
     public init(name: String) {
         self.name = name

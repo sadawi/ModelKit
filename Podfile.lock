@@ -11,7 +11,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (4.0.5):
     - PromiseKit/CorePromise
-  - StringInflections (0.0.4)
+  - StringInflections (0.0.6)
   - SwiftyJSON (3.1.3)
 
 DEPENDENCIES:
@@ -23,7 +23,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
   PromiseKit: 593b5e24ded6cbb1ebc708bc2c3428a8a5632d91
-  StringInflections: e50f418d3a8325ad8491b118a80174f56a785647
+  StringInflections: 6f190baeb1c2a04f2c74cc8c67ee94bff07ae67c
   SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
 
 PODFILE CHECKSUM: 36e01f8ad44f46fd9c20cfde91676cfc43e02c0d

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import StringInflections
 
 public typealias AttributeDictionary = [String: Any]
 
@@ -318,14 +319,22 @@ open class BaseField<T>: FieldType, Observer, Observable {
     
     // MARK: - Dictionary values
     
+    func key(in context: ValueTransformerContext) -> String? {
+        if let key = self.key {
+            return key.to(case: context.keyCase)
+        } else {
+            return nil
+        }
+    }
+    
     open func read(from dictionary:AttributeDictionary, in context: ValueTransformerContext) {
-        if let key = self.key, let dictionaryValue = dictionary[key], let transformer = self.valueTransformer(in: context) {
+        if let key = self.key(in: context), let dictionaryValue = dictionary[key], let transformer = self.valueTransformer(in: context) {
             self.value = transformer.importValue(dictionaryValue)
         }
     }
     
     open func write(to dictionary: inout AttributeDictionary, seenFields: inout [FieldType], explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext) {
-        if let key = self.key {
+        if let key = self.key(in: context) {
             if seenFields.contains(where: {$0 === self}) {
                 self.writeSeenValue(to: &dictionary, seenFields: &seenFields, key: key, in: context)
             } else {
