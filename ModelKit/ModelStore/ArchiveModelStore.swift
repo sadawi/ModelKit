@@ -21,6 +21,7 @@ private let kDefaultGroup = ""
 open class ArchiveModelStore: ListableModelStore, ClearableModelStore {
     open static let sharedInstance = ArchiveModelStore()
 
+    public var valueTransformerContext: ValueTransformerContext = .defaultContext
     
     /**
      Unarchives the default group of instances of a model class.  This will not include any lists of this model class 

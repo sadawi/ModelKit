@@ -37,16 +37,18 @@ class ArchiveTests: XCTestCase {
     }
 
     func testArchiveRelated() {
-        Model.registry = MemoryRegistry()
-        
         let archive = ArchiveModelStore.sharedInstance
-        let alice = Person.with(identifier: "1234")
+        let context = archive.valueTransformerContext
+        
+        let alice = Person.with(identifier: "1234", in: context)
         XCTAssertEqual(alice.id.value, "1234")
         
-        let alice2 = Person.with(identifier: "1234")
-        XCTAssertEqual(alice2, alice)
+        let alice2 = Person.with(identifier: "1234", in: context)
+        XCTAssert(alice2 === alice)
         
         alice.name.value = "Alice"
+        
+        XCTAssertEqual(alice2.name.value, "Alice")
         
         let pet = Pet()
         pet.name.value = "Fluffy"

@@ -16,6 +16,11 @@ import StringInflections
 open class ValueTransformerContext {
     public var name: String
     
+    /**
+     An object that is responsible for keeping track of canonical instances
+     */
+    public var registry:ModelRegistry? = MemoryRegistry()
+    
     // TODO: remove explicit key from fields entirely, configure entirely in context.
     public var keyCase: StringCase? = nil
     
@@ -41,4 +46,8 @@ open class ValueTransformerContext {
 
 public extension ValueTransformerContext {
     static let defaultContext = ValueTransformerContext(name: "default")
+}
+
+open class ModelValueTransformerContext: ValueTransformerContext {
+    
 }
