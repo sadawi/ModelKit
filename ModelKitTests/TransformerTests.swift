@@ -73,4 +73,42 @@ class TransformerTests: XCTestCase {
         priceField.read(from: priceDict as AttributeDictionary)
         XCTAssertEqual(priceField.value?.value, 10.0)
     }
+    
+}
+
+struct ModelTransformerConfiguration<T:Model> {
+    
+}
+
+class TestContext: ValueTransformerContext {
+    var modelConfigurations = TypeDictionary<Model>()
+    
+    func transform<T>(_ modelClass: T.Type, configuration: ((T)->())) {
+        
+    }
+}
+
+fileprivate class Light: Model {
+    let lightName       = Field<String>()
+    let brightness      = Field<Float>()
+    let powered         = Field<Bool>()
+}
+
+extension TransformerTests {
+    func testContexts() {
+        let light = Light()
+        
+        light.powered.value = true
+        light.lightName.value = "main"
+        
+        let context = TestContext(name: "test")
+        context.keyCase = .upperCamel
+        let dict = light.dictionaryValue(in: context)
+        XCTAssertEqual(dict["LightName"] as? String, "main")
+        
+        context.keyCase = .snake
+        let dict2 = light.dictionaryValue(in: context)
+        XCTAssertEqual(dict2["light_name"] as? String, "main")
+        
+    }
 }
