@@ -45,13 +45,13 @@
 		220EF9001DF09DEE00B702CC /* ValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8FF1DF09DEE00B702CC /* ValueTransformer.swift */; };
 		220EF9021DF09DFD00B702CC /* Mirror+Super.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF9011DF09DFD00B702CC /* Mirror+Super.swift */; };
 		220EF9071DF09E3100B702CC /* TransformerCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF9051DF09E3100B702CC /* TransformerCache.swift */; };
-		220EF9081DF09E3100B702CC /* TypeDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF9061DF09E3100B702CC /* TypeDictionary.swift */; };
 		220EF90A1DF09E6D00B702CC /* ModelKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 220EF9091DF09E6D00B702CC /* ModelKit.podspec */; };
 		220EF90E1DF09FF200B702CC /* Array+Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF90D1DF09FF200B702CC /* Array+Difference.swift */; };
 		220EF9101DF0A01F00B702CC /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF90F1DF0A01F00B702CC /* DictionaryExtension.swift */; };
 		220EF91D1DF0A2F700B702CC /* MemoryRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF91B1DF0A2F700B702CC /* MemoryRegistry.swift */; };
 		220EF91E1DF0A2F700B702CC /* ModelRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF91C1DF0A2F700B702CC /* ModelRegistry.swift */; };
 		220EF9201DF0A58100B702CC /* ValueTransformerContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF91F1DF0A58100B702CC /* ValueTransformerContext.swift */; };
+		22450CFC1DF785E900614CC9 /* TypeDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22450CFB1DF785E900614CC9 /* TypeDictionary.swift */; };
 		2249CC411DF23A4500FD3ABD /* HasOwnerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249CC401DF23A4500FD3ABD /* HasOwnerField.swift */; };
 		224F97F91DF095A5001E851F /* ModelKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224F97EF1DF095A5001E851F /* ModelKit.framework */; };
 		224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F97FD1DF095A5001E851F /* ModelKitTests.swift */; };
@@ -110,13 +110,13 @@
 		220EF8FF1DF09DEE00B702CC /* ValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueTransformer.swift; path = Fields/ValueTransformer.swift; sourceTree = "<group>"; };
 		220EF9011DF09DFD00B702CC /* Mirror+Super.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Mirror+Super.swift"; path = "Models/Mirror+Super.swift"; sourceTree = "<group>"; };
 		220EF9051DF09E3100B702CC /* TransformerCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransformerCache.swift; path = Models/TransformerCache.swift; sourceTree = "<group>"; };
-		220EF9061DF09E3100B702CC /* TypeDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TypeDictionary.swift; path = Models/TypeDictionary.swift; sourceTree = "<group>"; };
 		220EF9091DF09E6D00B702CC /* ModelKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = ModelKit.podspec; sourceTree = "<group>"; };
 		220EF90D1DF09FF200B702CC /* Array+Difference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Array+Difference.swift"; path = "Models/Array+Difference.swift"; sourceTree = "<group>"; };
 		220EF90F1DF0A01F00B702CC /* DictionaryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DictionaryExtension.swift; path = ModelStore/DictionaryExtension.swift; sourceTree = "<group>"; };
 		220EF91B1DF0A2F700B702CC /* MemoryRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoryRegistry.swift; path = Models/MemoryRegistry.swift; sourceTree = "<group>"; };
 		220EF91C1DF0A2F700B702CC /* ModelRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelRegistry.swift; path = Models/ModelRegistry.swift; sourceTree = "<group>"; };
 		220EF91F1DF0A58100B702CC /* ValueTransformerContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueTransformerContext.swift; path = Fields/ValueTransformerContext.swift; sourceTree = "<group>"; };
+		22450CFB1DF785E900614CC9 /* TypeDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TypeDictionary.swift; path = Fields/TypeDictionary.swift; sourceTree = "<group>"; };
 		2249CC401DF23A4500FD3ABD /* HasOwnerField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HasOwnerField.swift; path = Models/HasOwnerField.swift; sourceTree = "<group>"; };
 		224F97EF1DF095A5001E851F /* ModelKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModelKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		224F97F21DF095A5001E851F /* ModelKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelKit.h; sourceTree = "<group>"; };
@@ -291,7 +291,6 @@
 			children = (
 				220EF8EF1DF09CB500B702CC /* ModelManager.swift */,
 				220EF9051DF09E3100B702CC /* TransformerCache.swift */,
-				220EF9061DF09E3100B702CC /* TypeDictionary.swift */,
 			);
 			name = utilities;
 			sourceTree = "<group>";
@@ -403,6 +402,7 @@
 		224F980B1DF095D5001E851F /* Fields */ = {
 			isa = PBXGroup;
 			children = (
+				22450CFB1DF785E900614CC9 /* TypeDictionary.swift */,
 				220EF8AA1DF0976300B702CC /* transformers */,
 				220EF8A91DF0975200B702CC /* observation */,
 				220EF8A81DF0974D00B702CC /* validation */,
@@ -611,7 +611,6 @@
 			files = (
 				220EF8D71DF09C3800B702CC /* ArrayField.swift in Sources */,
 				220EF91D1DF0A2F700B702CC /* MemoryRegistry.swift in Sources */,
-				220EF9081DF09E3100B702CC /* TypeDictionary.swift in Sources */,
 				220EF9001DF09DEE00B702CC /* ValueTransformer.swift in Sources */,
 				220EF9021DF09DFD00B702CC /* Mirror+Super.swift in Sources */,
 				220EF8EE1DF09C9400B702CC /* Observer.swift in Sources */,
@@ -621,6 +620,7 @@
 				220EF8DC1DF09C4400B702CC /* ValueTransformable.swift in Sources */,
 				220EF9071DF09E3100B702CC /* TransformerCache.swift in Sources */,
 				220EF8ED1DF09C9400B702CC /* Observation.swift in Sources */,
+				22450CFC1DF785E900614CC9 /* TypeDictionary.swift in Sources */,
 				220EF8DA1DF09C3800B702CC /* Field.swift in Sources */,
 				220EF8D21DF09C1600B702CC /* ModelField.swift in Sources */,
 				220EF8E11DF09C7100B702CC /* ModelStore.swift in Sources */,
