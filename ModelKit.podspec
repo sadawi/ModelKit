@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
     s.homepage         = 'https://github.com/sadawi/ModelKit'
     s.license          = 'MIT'
     s.author           = { 'Sam Williams' => 'samuel.williams@gmail.com' }
-    s.source           = { :git => 'https://github.com/sadawi/ModelKit', :tag => s.version.to_s }
+    s.source           = { :git => 'https://github.com/sadawi/ModelKit.git', :tag => s.version.to_s }
     
     s.platforms       = { :ios => '9.0' }
     
@@ -15,6 +15,7 @@ Pod::Spec.new do |s|
 
     s.subspec 'Fields' do |ss|
         ss.source_files = 'ModelKit/Fields/**/*'
+        ss.dependency 'StringInflections', '~> 0.0.6'
     end
     
     s.subspec 'Models' do |ss|
@@ -27,6 +28,5 @@ Pod::Spec.new do |s|
         ss.dependency 'ModelKit/Models'
         ss.dependency 'Alamofire', '~> 4.2.0'
         ss.dependency 'SwiftyJSON', '~> 3.1.3'
-        ss.dependency 'StringInflections', '~> 0.0.6'
     end
 end
