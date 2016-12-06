@@ -126,9 +126,52 @@ Since `<--` is called first, both fields will initially have the value of `field
 
 Unregistering observers is done with the `removeObserver` method, or the `-/->` operator.  All observers can be removed with `removeAllObservers()`.
 
-
 ## Models
 
+A `Model` object automatically converts to and from a dictionary representation of its `Field` properties.
 
+```
+person.dictionaryValue()
+// --> ["name": "Bob", "tags": ["red", "blue", "green"]]
+```
+
+If your field's value is a subclass of `Model`, you should use the `ModelField` subclass.
+
+```swift
+let companies = ModelField<Company>()*
+```
 
 ## ModelStore
+
+This library provides a [Promise](https://github.com/mxcl/PromiseKit)-based interface for abstract data stores, specified in the `ModelStore` protocol, as well as several concrete implementations.
+
+```swift
+func create<T: Model>(model:T) -> Promise<T>
+func update<T: Model>(model:T) -> Promise<T>
+func delete<T: Model>(model:T) -> Promise<T>
+func lookup<T: Model>(modelClass:T.Type, identifier:String) -> Promise<T>
+func list<T: Model>(modelClass:T.Type) -> Promise<[T]>
+```
+
+### MemoryModelStore
+
+This stores models in memory.  It adds a `lookupImmediately` method for synchronous identifier-based lookups.
+
+### RemoteModelStore
+
+This is intended as a base class for your RESTful server interface.  It includes a number of overridable hooks that you can customize for your particular needs, like:
+
+* `defaultHeaders`
+* `handleError`
+* `constructResponse`
+
+## Routing
+
+A `RESTRouter` is responsible for generating paths for resource locations.
+
+```swift
+collectionPath(for: Person.self)
+instancePath(for: person)
+```
+
+Nested routes are generated automatically if your model conforms to `HasOwnerField`, which requires it to specify an owning field. If a person's owner field is its `company` field, for example, you might get `"/companies/10/employees/45"` for its instance path.
