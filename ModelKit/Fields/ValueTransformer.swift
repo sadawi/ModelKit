@@ -16,8 +16,8 @@ public protocol ValueTransformerType {
  The default implementation does nothing (i.e., everything is mapped to nil).
  */
 open class ValueTransformer<T>: ValueTransformerType {
-    public typealias ImportActionType = ((Any?) -> T?)
-    public typealias ExportActionType = ((T?) -> Any?)
+    public typealias ImportActionType = ((Any?, ValueTransformerContext) -> T?)
+    public typealias ExportActionType = ((T?, ValueTransformerContext) -> Any?)
     
     var importAction: ImportActionType?
     var exportAction: ExportActionType?
@@ -34,19 +34,18 @@ open class ValueTransformer<T>: ValueTransformerType {
     /**
      Attempts to convert an external value to an internal form.  If that's not possible, or if the external value is nil, returns nil.
      */
-    open func importValue(_ value:Any?) -> T? {
-        return self.importAction?(value)
+    open func importValue(_ value:Any?, in context: ValueTransformerContext = .defaultContext) -> T? {
+        return self.importAction?(value, context)
     }
 
     /**
      Transforms a value into an external form suitable for serialization.
-     - parameter explicitNull: If false, export nil values as nil. If true, export nil values as a special null value (defaulting to NSNull)
      */
-    open func exportValue(_ value:T?, explicitNull: Bool = false) -> Any? {
-        if let exportAction = self.exportAction, let exportedValue = exportAction(value) {
+    open func exportValue(_ value:T?, in context: ValueTransformerContext = .defaultContext) -> Any? {
+        if let exportAction = self.exportAction, let exportedValue = exportAction(value, context) {
             return exportedValue
         } else {
-            return type(of: self).nullValue(explicit: explicitNull)
+            return type(of: self).nullValue(explicit: context.explicitNull)
         }
     }
     
@@ -70,7 +69,7 @@ open class ValueTransformer<T>: ValueTransformerType {
  The simplest working implementation of a transformer: just attempts to cast between T and Any
  */
 open class SimpleValueTransformer<T>: ValueTransformer<T> {
-    open override func importValue(_ value: Any?) -> T? {
+    open override func importValue(_ value: Any?, in context: ValueTransformerContext = .defaultContext) -> T? {
         if let castValue = value as? T {
             return castValue
         } else if let objectCastValue = (value as AnyObject?) as? T {
@@ -82,11 +81,11 @@ open class SimpleValueTransformer<T>: ValueTransformer<T> {
         }
     }
     
-    open override func exportValue(_ value: T?, explicitNull: Bool) -> Any? {
+    open override func exportValue(_ value: T?, in context: ValueTransformerContext = .defaultContext) -> Any? {
         if let value = value {
             return value as Any?
         } else {
-            return type(of: self).nullValue(explicit: explicitNull)
+            return type(of: self).nullValue(explicit: context.explicitNull)
         }
     }
 }

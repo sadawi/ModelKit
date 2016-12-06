@@ -46,6 +46,9 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
         self.baseURL = baseURL
     }
     
+    /**
+     The transformer context to use when (un)serializing models.
+     */
     public var valueTransformerContext: ValueTransformerContext = .defaultContext
     
     /**
@@ -83,7 +86,7 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
     
     // MARK: - Helper methods that subclasses might want to override
     
-    fileprivate func url(path:String) -> URL {
+    private func url(path:String) -> URL {
         return self.baseURL.appendingPathComponent(path)
     }
     
@@ -96,7 +99,7 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
     }
     
     open func serializeModel(_ model:Model, fields:[FieldType]?=nil) -> AttributeDictionary {
-        return model.dictionaryValue(fields: fields, explicitNull: true, in: self.valueTransformerContext)
+        return model.dictionaryValue(fields: fields, in: self.valueTransformerContext)
     }
     
     open func deserializeModel<T:Model>(_ modelClass:T.Type, parameters:AttributeDictionary) -> T? {

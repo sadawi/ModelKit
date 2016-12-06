@@ -209,11 +209,17 @@ class FieldTests: XCTestCase {
         let field = Field<String>(key: "name")
         var dictionary: AttributeDictionary = [:]
         
-        field.write(to: &dictionary)
+        let context = ValueTransformerContext(name: "nulls")
+
+        context.explicitNull = false
+        
+        field.write(to: &dictionary, in: context)
         XCTAssert(dictionary["name"] == nil)
         XCTAssertFalse(dictionary["name"] is NSNull)
-        
-        field.write(to: &dictionary, explicitNull: true)
+
+        context.explicitNull = true
+
+        field.write(to: &dictionary, in: context)
         XCTAssert(dictionary["name"] != nil)
         XCTAssert(dictionary["name"] is NSNull)
     }
@@ -272,10 +278,10 @@ extension FieldTests {
     
     func testReadingCustomTransformers() {
         let customTransformer = ModelKit.ValueTransformer<Int>(
-            importAction: { (value: Any?) -> Int? in
+            importAction: { (value: Any?, context) -> Int? in
                 return 1000
             },
-            exportAction: { (value: Int?) -> Any? in
+            exportAction: { (value: Int?, context) -> Any? in
                 return 5
         } )
         
@@ -302,8 +308,8 @@ extension FieldTests {
         
         // Specify custom import/export logic for this field only, scoped to a particular context
         size.transform(
-            importValue: { $0 as? Int },
-            exportValue: { $0 == nil ? nil : (String(describing: $0)) },
+            importValue: { value, context in value as? Int },
+            exportValue: { value, context in value == nil ? nil : (String(describing: value)) },
             in: ValueTransformerContext.string
         )
 

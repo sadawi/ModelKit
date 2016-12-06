@@ -63,7 +63,7 @@ public protocol FieldType:AnyObject {
     func validate() -> ValidationState
 
     func read(from dictionary:AttributeDictionary, in context: ValueTransformerContext)
-    func write(to dictionary:inout AttributeDictionary, seenFields:inout [FieldType], explicitNull: Bool, in context: ValueTransformerContext)
+    func write(to dictionary:inout AttributeDictionary, seenFields:inout [FieldType], in context: ValueTransformerContext)
     
     func merge(from field: FieldType)
 }
@@ -73,9 +73,9 @@ public extension FieldType {
         self.read(from: dictionary, in: ValueTransformerContext.defaultContext)
     }
     
-    public func write(to dictionary:inout AttributeDictionary, explicitNull: Bool = false, in context: ValueTransformerContext=ValueTransformerContext.defaultContext) {
+    public func write(to dictionary:inout AttributeDictionary, in context: ValueTransformerContext=ValueTransformerContext.defaultContext) {
         var seenFields:[FieldType] = []
-        self.write(to: &dictionary, seenFields: &seenFields, explicitNull: explicitNull, in: context)
+        self.write(to: &dictionary, seenFields: &seenFields, in: context)
     }
 }
 
@@ -96,7 +96,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
      - parameter exportValue: A closure mapping a field value to an external value
      - parameter in: A ValueTransformerContext used to identify this transformer. If omitted, will be the default context.
      */
-    @discardableResult open func transform(importValue:@escaping ((Any?) -> T?), exportValue:@escaping ((T?) -> Any?), in context: ValueTransformerContext = ValueTransformerContext.defaultContext) -> Self {
+    @discardableResult open func transform(importValue:@escaping ValueTransformer<T>.ImportActionType, exportValue:@escaping ValueTransformer<T>.ExportActionType, in context: ValueTransformerContext = ValueTransformerContext.defaultContext) -> Self {
         
         self.valueTransformers[context.name] = ValueTransformer(importAction: importValue, exportAction: exportValue)
         return self
@@ -131,6 +131,8 @@ open class BaseField<T>: FieldType, Observer, Observable {
      */
     open func valueTransformer(in context: ValueTransformerContext = ValueTransformerContext.defaultContext) -> ValueTransformer<T>? {
         if let transformer = self.valueTransformers[context.name] {
+            return transformer
+        } else if let transformer = context.transformer(for: T.self) {
             return transformer
         } else {
             return self.defaultValueTransformer(in: context)
@@ -333,24 +335,24 @@ open class BaseField<T>: FieldType, Observer, Observable {
     
     open func read(from dictionary:AttributeDictionary, in context: ValueTransformerContext) {
         if let key = self.key(in: context), let dictionaryValue = dictionary[key], let transformer = self.valueTransformer(in: context) {
-            self.value = transformer.importValue(dictionaryValue)
+            self.value = transformer.importValue(dictionaryValue, in: context)
         }
     }
     
-    open func write(to dictionary: inout AttributeDictionary, seenFields: inout [FieldType], explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext) {
+    open func write(to dictionary: inout AttributeDictionary, seenFields: inout [FieldType], in context: ValueTransformerContext = .defaultContext) {
         if let key = self.key(in: context) {
             if seenFields.contains(where: {$0 === self}) {
                 self.writeSeenValue(to: &dictionary, seenFields: &seenFields, key: key, in: context)
             } else {
                 seenFields.append(self)
-                self.writeUnseenValue(to: &dictionary, seenFields: &seenFields, key: key, explicitNull: explicitNull, in: context)
+                self.writeUnseenValue(to: &dictionary, seenFields: &seenFields, key: key, in: context)
             }
         }
     }
     
-    open func writeUnseenValue(to dictionary: inout AttributeDictionary, seenFields: inout [FieldType], key: String, explicitNull: Bool = false, in context: ValueTransformerContext = .defaultContext) {
+    open func writeUnseenValue(to dictionary: inout AttributeDictionary, seenFields: inout [FieldType], key: String, in context: ValueTransformerContext = .defaultContext) {
         if let transformer = self.valueTransformer(in: context) {
-            dictionary[key] = transformer.exportValue(self.value, explicitNull: explicitNull)
+            dictionary[key] = transformer.exportValue(self.value, in: context)
         }
     }
     
