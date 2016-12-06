@@ -27,6 +27,6 @@ Pod::Spec.new do |s|
         ss.dependency 'ModelKit/Models'
         ss.dependency 'Alamofire', '~> 4.2.0'
         ss.dependency 'SwiftyJSON', '~> 3.1.3'
-        ss.dependency 'StringInflections'
+        ss.dependency 'StringInflections', '~> 0.0.6'
     end
 end

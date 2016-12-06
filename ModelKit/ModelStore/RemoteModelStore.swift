@@ -46,6 +46,8 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
         self.baseURL = baseURL
     }
     
+    public var valueTransformerContext: ValueTransformerContext = .defaultContext
+    
     /**
      Creates a closure that deserializes a model and returns a Promise.
      Useful in promise chaining as an argument to .then
@@ -94,13 +96,13 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
     }
     
     open func serializeModel(_ model:Model, fields:[FieldType]?=nil) -> AttributeDictionary {
-        return model.dictionaryValue(fields: fields, explicitNull: true)
+        return model.dictionaryValue(fields: fields, explicitNull: true, in: self.valueTransformerContext)
     }
     
     open func deserializeModel<T:Model>(_ modelClass:T.Type, parameters:AttributeDictionary) -> T? {
         // TODO: would rather use value transformer here instead, but T is Model instead of modelClass and it doesn't get deserialized properly
         //        return ModelValueTransformer<T>().importValue(parameters)
-        let model = modelClass.from(dictionaryValue: parameters)
+        let model = modelClass.from(dictionaryValue: parameters, in: self.valueTransformerContext)
         model?.loadState = .loaded
         return model
     }

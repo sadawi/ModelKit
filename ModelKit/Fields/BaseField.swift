@@ -321,7 +321,11 @@ open class BaseField<T>: FieldType, Observer, Observable {
     
     func key(in context: ValueTransformerContext) -> String? {
         if let key = self.key {
-            return key.to(case: context.keyCase)
+            if let keyCase = context.keyCase {
+                return key.to(case: keyCase)
+            } else {
+                return key
+            }
         } else {
             return nil
         }

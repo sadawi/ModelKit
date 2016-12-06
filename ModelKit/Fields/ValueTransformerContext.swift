@@ -15,7 +15,9 @@ import StringInflections
  */
 open class ValueTransformerContext {
     public var name: String
-    public var keyCase: StringCase = .lowerCamel
+    
+    // TODO: remove explicit key from fields entirely, configure entirely in context.
+    public var keyCase: StringCase? = nil
     
     public init(name: String) {
         self.name = name
