@@ -15,8 +15,10 @@ struct Price: Equatable, ModelKit.ValueTransformable {
     static var valueTransformer: ModelKit.ValueTransformer<Price> {
         return ModelKit.ValueTransformer<Price>(
             importAction: { value, context in
-                if let importableValue = (value as AnyObject?) as? Float {
-                    return Price(value: importableValue)
+                if let floatValue = (value as? Float) {
+                    return Price(value: floatValue)
+                } else if let doubleValue = (value as? Double) {
+                    return Price(value: Float(doubleValue))
                 } else {
                     return nil
                 }

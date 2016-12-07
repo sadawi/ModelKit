@@ -42,5 +42,11 @@ open class ValueTransformerContext {
 }
 
 public extension ValueTransformerContext {
-    static let defaultContext = ValueTransformerContext(name: "default")
+    static let defaultContext: ValueTransformerContext = {
+        let context = ValueTransformerContext(name: "default")
+        context.transform(Float.self, with: NumericValueTransformer<Float>())
+        context.transform(Double.self, with: NumericValueTransformer<Double>())
+        context.transform(Int.self, with: NumericValueTransformer<Int>())
+        return context
+    }()
 }
