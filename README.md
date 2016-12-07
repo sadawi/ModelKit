@@ -6,10 +6,10 @@ This is a framework for working with model objects.
 pod 'ModelKit'
 ```
 
-Or, include just the components you want:
+Or, include only some components:
 * 'ModelKit/Fields'
 * 'ModelKit/Models'
-* 'ModelKit/ModelStore'
+* 'ModelKit/RemoteModelStore' (Alamofire dependency)
 
 ## Fields
 
