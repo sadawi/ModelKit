@@ -363,3 +363,15 @@ extension FieldTests {
         XCTAssertEqual(size.value, 500)
     }
 }
+
+extension FieldTests {
+    func testNumericConvertibles() {
+        let a: Float = 3.0
+        let b: Double = a.doubleValue
+        
+        XCTAssertEqual(b, 3.0)
+        
+        let c: Int = a.coerced()!
+        XCTAssertEqual(c, 3)
+    }
+}

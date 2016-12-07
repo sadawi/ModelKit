@@ -58,6 +58,8 @@
 		224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F97FD1DF095A5001E851F /* ModelKitTests.swift */; };
 		224F98001DF095A5001E851F /* ModelKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 224F97F21DF095A5001E851F /* ModelKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		224F98461DF09642001E851F /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 224F98451DF09642001E851F /* Podfile */; };
+		22DAC6B61DF7FCDD00108441 /* NumericValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */; };
+		22DAC6B81DF7FCF100108441 /* SimpleValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */; };
 		902751C3FA18C7E0AF33260D /* Pods_ModelKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090DEBA661399D9997A81C45 /* Pods_ModelKitTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -126,6 +128,8 @@
 		224F97FD1DF095A5001E851F /* ModelKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelKitTests.swift; sourceTree = "<group>"; };
 		224F97FF1DF095A5001E851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		224F98451DF09642001E851F /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NumericValueTransformer.swift; path = Fields/NumericValueTransformer.swift; sourceTree = "<group>"; };
+		22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleValueTransformer.swift; path = Fields/SimpleValueTransformer.swift; sourceTree = "<group>"; };
 		38A05B7372D948352D30FCD1 /* Pods-ModelKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.release.xcconfig"; sourceTree = "<group>"; };
 		B2EB45E0B156254A6D7C8539 /* Pods-ModelKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.debug.xcconfig"; sourceTree = "<group>"; };
 		DC22183A5F54223695D5D378 /* Pods-ModelKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKitTests/Pods-ModelKitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -210,6 +214,8 @@
 				220EF8FF1DF09DEE00B702CC /* ValueTransformer.swift */,
 				220EF8FB1DF09DC600B702CC /* DateTransformer.swift */,
 				220EF91F1DF0A58100B702CC /* ValueTransformerContext.swift */,
+				22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */,
+				22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */,
 			);
 			name = transformers;
 			sourceTree = "<group>";
@@ -614,6 +620,7 @@
 				220EF9001DF09DEE00B702CC /* ValueTransformer.swift in Sources */,
 				220EF9021DF09DFD00B702CC /* Mirror+Super.swift in Sources */,
 				220EF8EE1DF09C9400B702CC /* Observer.swift in Sources */,
+				22DAC6B81DF7FCF100108441 /* SimpleValueTransformer.swift in Sources */,
 				22450D031DF7880600614CC9 /* Response.swift in Sources */,
 				22450D041DF7880600614CC9 /* Router.swift in Sources */,
 				220EF8D11DF09C1600B702CC /* ModelArrayField.swift in Sources */,
@@ -634,6 +641,7 @@
 				220EF8D81DF09C3800B702CC /* BaseField.swift in Sources */,
 				220EF8F61DF09D7700B702CC /* DictionarySerializable.swift in Sources */,
 				22450D011DF7880600614CC9 /* RemoteModelStore.swift in Sources */,
+				22DAC6B61DF7FCDD00108441 /* NumericValueTransformer.swift in Sources */,
 				220EF8CC1DF09BEE00B702CC /* ArchiveModelStore.swift in Sources */,
 				220EF9201DF0A58100B702CC /* ValueTransformerContext.swift in Sources */,
 				220EF8DE1DF09C6600B702CC /* MemoryModelStore.swift in Sources */,

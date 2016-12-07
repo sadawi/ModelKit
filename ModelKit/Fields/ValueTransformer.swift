@@ -64,28 +64,3 @@ open class ValueTransformer<T>: ValueTransformerType {
         return value == nil || value is NSNull
     }
 }
-
-/**
- The simplest working implementation of a transformer: just attempts to cast between T and Any
- */
-open class SimpleValueTransformer<T>: ValueTransformer<T> {
-    open override func importValue(_ value: Any?, in context: ValueTransformerContext = .defaultContext) -> T? {
-        if let castValue = value as? T {
-            return castValue
-        } else if let objectCastValue = (value as AnyObject?) as? T {
-            // We might get better results by casting to an object first.
-            // For example, if value is a Double, `value as? Float` will be nil (probably wrong), but `(value as AnyObject?) as? Float` will not.
-            return objectCastValue
-        } else {
-            return nil
-        }
-    }
-    
-    open override func exportValue(_ value: T?, in context: ValueTransformerContext = .defaultContext) -> Any? {
-        if let value = value {
-            return value as Any?
-        } else {
-            return type(of: self).nullValue(explicit: context.explicitNull)
-        }
-    }
-}
