@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'ModelKit'
-    s.version          = '0.1.1'
+    s.version          = '0.1.2'
     s.summary          = 'A collection of utilities for working with model objects'
     s.homepage         = 'https://github.com/sadawi/ModelKit'
     s.license          = 'MIT'
@@ -21,6 +21,11 @@ Pod::Spec.new do |s|
     s.subspec 'Models' do |ss|
         ss.source_files = ['ModelKit/Models/**/*', 'ModelKit/ModelStore/**/*']
         ss.dependency 'ModelKit/Fields'
+    end
+
+    s.subspec 'RemoteModelStore' do |ss|
+        ss.source_files = 'ModelKit/RemoteModelStore/**/*'
+        ss.dependency 'ModelKit/Models'
         ss.dependency 'Alamofire', '~> 4.2.0'
         ss.dependency 'SwiftyJSON', '~> 3.1.3'
     end
