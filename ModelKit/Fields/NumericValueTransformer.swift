@@ -8,10 +8,19 @@
 
 import Foundation
 
-public protocol NumericConvertible {
+public protocol FloatConvertible {
     var floatValue: Float   { get }
+}
+
+public protocol DoubleConvertible {
     var doubleValue: Double { get }
+}
+
+public protocol IntConvertible {
     var intValue: Int       { get }
+}
+
+public protocol NumericConvertible: FloatConvertible, DoubleConvertible, IntConvertible {
 }
 
 public extension NumericConvertible {
