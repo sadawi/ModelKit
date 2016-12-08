@@ -43,9 +43,9 @@ open class RESTRouter {
         }
     }
 
-    public func path<T: Model>(to field: ModelArrayField<T>) -> String? {
+    public func path(to field: ModelFieldType, maxDepth: Int=0) -> String? {
         guard let owner     = field.model else { return nil }
-        guard let path      = self.path(to: owner) else { return nil }
+        guard let path      = self.instancePath(for: owner, maxDepth: maxDepth) else { return nil }
         guard let fieldKey  = field.key else { return nil }
         return [path, fieldKey].joined(separator: pathSeparator)
     }
@@ -70,21 +70,28 @@ open class RESTRouter {
      
      If the model conforms to `HasOwnerField` and has a non-nil owner field, that field will be used to generate the path (e.g., "companies/4/employees/1").
      
-     Warning: the generic type parameter is not covariant. The inverse field's type must match the model type exactly (not a superclass), or the owner path won't be used.
+     - parameter maxDepth: The number of owner objects to include in the path. 0 => "employees", 1 => "companies/4/employees", 2 => "regions/9/companies/4/employees", etc.
      */
-    public func collectionPath<T: Model>(for model: T) -> String? {
-        if let ownedModel = model as? HasOwnerField,
+    public func collectionPath<T: Model>(for model: T, maxDepth: Int = 1) -> String? {
+        if maxDepth > 0,
+            let ownedModel = model as? HasOwnerField,
             let ownerField = ownedModel.ownerField as? InvertibleModelFieldType,
-            let inverseField = ownerField.inverse() as? ModelArrayField<T>
+            let inverseField = ownerField.inverse()
         {
-            return self.path(to: inverseField)
+            return self.path(to: inverseField, maxDepth: maxDepth-1)
         } else {
-            return self.path(to: T.self)
+            return self.path(to: type(of: model))
         }
     }
     
-    public func instancePath<T: Model>(for model: T) -> String? {
-        if let collectionPath = self.collectionPath(for: model) {
+    
+    /**
+     Generates the path to a model in a collection.
+     
+     - parameter maxDepth: The number of owner objects to include in the path. 0 => "employees/1", 1 => "companies/4/employees/1", 2 => "regions/9/companies/4/employees/1", etc.
+    */
+    public func instancePath<T: Model>(for model: T, maxDepth: Int = 3) -> String? {
+        if let collectionPath = self.collectionPath(for: model, maxDepth: maxDepth) {
             return self.path(to: model, in: collectionPath)
         } else {
             return nil
