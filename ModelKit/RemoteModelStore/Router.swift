@@ -12,11 +12,12 @@ import StringInflections
 open class RESTRouter {
     var collectionNames = TypeDictionary<String>()
     var pluralizesCollections = true
+    var maxPathDepth: Int
     
     let pathSeparator = "/"
     
-    public init() {
-        
+    public init(maxPathDepth: Int=1) {
+        self.maxPathDepth = maxPathDepth
     }
     
     public func route(_ modelClass: Model.Type, to path: String) {
@@ -72,7 +73,9 @@ open class RESTRouter {
      
      - parameter maxDepth: The number of owner objects to include in the path. 0 => "employees", 1 => "companies/4/employees", 2 => "regions/9/companies/4/employees", etc.
      */
-    public func collectionPath<T: Model>(for model: T, maxDepth: Int = 1) -> String? {
+    public func collectionPath<T: Model>(for model: T, maxDepth: Int? = nil) -> String? {
+        let maxDepth = maxDepth ?? self.maxPathDepth
+        
         if maxDepth > 0,
             let ownedModel = model as? HasOwnerField,
             let ownerField = ownedModel.ownerField as? InvertibleModelFieldType,
@@ -90,8 +93,8 @@ open class RESTRouter {
      
      - parameter maxDepth: The number of owner objects to include in the path. 0 => "employees/1", 1 => "companies/4/employees/1", 2 => "regions/9/companies/4/employees/1", etc.
     */
-    public func instancePath<T: Model>(for model: T, maxDepth: Int = 3) -> String? {
-        if let collectionPath = self.collectionPath(for: model, maxDepth: maxDepth) {
+    public func instancePath<T: Model>(for model: T, maxDepth: Int? = nil) -> String? {
+        if let collectionPath = self.collectionPath(for: model, maxDepth: maxDepth ?? self.maxPathDepth) {
             return self.path(to: model, in: collectionPath)
         } else {
             return nil
