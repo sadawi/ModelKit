@@ -22,12 +22,26 @@ fileprivate class Possession: Model, HasOwnerField {
     }
 }
 
-fileprivate class Entity: Model {
+fileprivate class Group: Model {
+    let id          = Field<Identifier>()
+    let entities    = ModelField<Entity>(key: "contents")*
+
+    override var identifierField: FieldType? {
+        return self.id
+    }
+}
+
+fileprivate class Entity: Model, HasOwnerField {
     let id          = Field<Identifier>()
     let possessions = ModelField<Possession>()*
+    let group       = ModelField<Group>(inverse: { $0.entities })
     
     override var identifierField: FieldType? {
         return self.id
+    }
+    
+    var ownerField: ModelFieldType? {
+        return self.group
     }
 }
 
@@ -93,8 +107,14 @@ class ModelKitTests: XCTestCase {
         hat.identifier = "p1"
         hat.entity.value = entity
         
-        XCTAssertEqual(router.collectionPath(for: hat), "entities/e1/possessions")
-        XCTAssertEqual(router.instancePath(for: hat), "entities/e1/possessions/p1")
+        let group = Group()
+        group.identifier = "g1"
+        entity.group.value = group
+        XCTAssertEqual(router.instancePath(for: hat, maxDepth: 0), "possessions/p1")
+        XCTAssertEqual(router.instancePath(for: hat, maxDepth: 1), "entities/e1/possessions/p1")
+        
+         // Note that this uses the field key "contents" rather than "entities"
+        XCTAssertEqual(router.instancePath(for: hat, maxDepth: 2), "groups/g1/contents/e1/possessions/p1")
     }
     
 }
