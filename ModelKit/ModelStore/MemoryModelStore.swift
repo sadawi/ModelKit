@@ -6,14 +6,14 @@
 //  Copyright © 2015 Sam Williams. All rights reserved.
 //
 /**
-
-Notes: 
-[1]
-    There's a weird bug where doing things with model.dynamicType gives EXC_BAD_ACCESS on the device, but not simulator.
-    Other people have seen it: http://ambracode.com/index/show/1013298
-
-    Replacing `model` with `(model as Model)` seems to fix it.
-*/
+ 
+ Notes:
+ [1]
+ There's a weird bug where doing things with model.dynamicType gives EXC_BAD_ACCESS on the device, but not simulator.
+ Other people have seen it: http://ambracode.com/index/show/1013298
+ 
+ Replacing `model` with `(model as Model)` seems to fix it.
+ */
 
 import Foundation
 import PromiseKit
@@ -89,13 +89,13 @@ open class MemoryModelStore: ModelStore, ListableModelStore, ClearableModelStore
     }
     
     /**
-        A synchronous variant of lookup that does not return a promise.
-    */
+     A synchronous variant of lookup that does not return a promise.
+     */
     open func lookupImmediately<T: Model>(_ modelClass:T.Type, identifier:String) -> T? {
         let collection = self.collectionForClass(modelClass)
         return collection?[identifier] as? T
     }
-
+    
     @discardableResult open func updateImmediately<T: Model>(_ model: T) -> T {
         // store in the collection just to be safe
         if let id = model.identifier {
@@ -114,7 +114,7 @@ open class MemoryModelStore: ModelStore, ListableModelStore, ClearableModelStore
             }
         }
     }
-
+    
     open func list<T: Model>(_ modelClass:T.Type) -> Promise<[T]> {
         return Promise { fulfill, reject in
             if let items = self.collectionForClass(modelClass)?.allValues as? [T] {
@@ -124,5 +124,9 @@ open class MemoryModelStore: ModelStore, ListableModelStore, ClearableModelStore
             }
         }
     }
-
+    
+    public func list<T : Model>(_ field: ModelArrayField<T>) -> Promise<[T]> {
+        return Promise(value: field.value ?? [])
+    }
+    
 }

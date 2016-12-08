@@ -317,8 +317,17 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
         }
     }
     
-    open func list<T: Model>(_ modelClass:T.Type) -> Promise<[T]> {
+    public func list<T: Model>(_ modelClass:T.Type) -> Promise<[T]> {
         return self.list(modelClass, parameters: nil)
+    }
+
+    public func list<T : Model>(_ field: ModelArrayField<T>) -> Promise<[T]> {
+        return self.list(field, parameters: nil)
+    }
+
+    public func list<T : Model>(_ field: ModelArrayField<T>, parameters:Parameters?=nil) -> Promise<[T]> {
+        guard let path = self.router.path(to: field) else { return Promise(error: RemoteModelStoreError.noModelCollectionPath(modelClass: T.self)) }
+        return self.list(T.self, path: path, parameters: parameters)
     }
     
     /**

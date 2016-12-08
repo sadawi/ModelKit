@@ -16,6 +16,7 @@ public protocol ListableModelStore {
      Retrieves a list of all models of the specified type.
      */
     func list<T: Model>(_ modelClass:T.Type) -> Promise<[T]>
+    func list<T : Model>(_ field: ModelArrayField<T>) -> Promise<[T]>
 }
 
 public protocol ModelStore: ListableModelStore {

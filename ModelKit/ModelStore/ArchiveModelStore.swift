@@ -42,6 +42,10 @@ open class ArchiveModelStore: ListableModelStore, ClearableModelStore {
         return Promise(value: results)
     }
     
+    public func list<T : Model>(_ field: ModelArrayField<T>) -> Promise<[T]> {
+        return Promise(value: field.value ?? [])
+    }
+
     fileprivate func accumulateRelatedModels(_ models: [Model], suffix: String) -> [String:[Model]] {
         var registry:[String:[Model]] = [:]
         
