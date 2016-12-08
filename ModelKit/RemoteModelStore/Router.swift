@@ -83,7 +83,9 @@ open class RESTRouter {
         {
             return self.path(to: inverseField, maxDepth: maxDepth-1)
         } else {
-            return self.path(to: type(of: model))
+            // EXC_BAD_ACCESS unless I do this cast (device, not simulator)
+            let modelModel = model as Model
+            return self.path(to: type(of: modelModel))
         }
     }
     
