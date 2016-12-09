@@ -56,7 +56,7 @@ public extension Observable {
      - parameter owner: The observation owner, used only as a key for registering the action
      - parameter onChange: A closure to be run when the value changes
      */
-    @discardableResult public func addObserver<U:Observer>(owner:U, onChange:@escaping ((ValueType?) -> Void)) -> U where U.ValueType==ValueType {
+    @discardableResult public func addObserver<U: AnyObject>(_ owner:U, onChange:@escaping ((ValueType?) -> Void)) -> U {
         let observation = self.createClosureObservation(onChange: onChange)
         self.observations.set(owner, observation)
         return owner
