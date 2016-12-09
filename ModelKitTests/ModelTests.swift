@@ -323,8 +323,10 @@ class ModelTests: XCTestCase {
         model2.name.value = "Google"
         
         model.merge(from: model2)
-        
         XCTAssertEqual(model.name.value, "Google")
         XCTAssertEqual(model.identifier, "1")
+
+        model.merge(from: model2, includeIdentifier: true)
+        XCTAssertEqual(model.identifier, "2")
     }
 }

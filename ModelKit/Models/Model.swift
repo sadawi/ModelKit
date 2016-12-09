@@ -468,9 +468,9 @@ open class Model: NSObject, NSCopying {
      Fields are matched by key, and compared using `updatedAt` timestamps; the newer value wins.
      Identifier fields are skipped.
      */
-    open func merge(from model: Model) {
+    open func merge(from model: Model, includeIdentifier: Bool = false) {
         let otherFields = model.fields
-        for (key, field) in self.fields where key != self.identifierField?.key {
+        for (key, field) in self.fields where (includeIdentifier || key != self.identifierField?.key) {
             if let otherField = otherFields[key] {
                 field.merge(from: otherField)
             }
