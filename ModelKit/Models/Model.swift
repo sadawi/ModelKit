@@ -281,12 +281,12 @@ open class Model: NSObject, NSCopying {
     open func initializeField(_ field:FieldType) {
     }
     
-    open func visitAllFields(recursive:Bool = true, action:((FieldType) -> Void)) {
+    public func visitAllFields(recursive:Bool = true, action:((FieldType) -> Void)) {
         var seenModels: Set<Model> = Set()
         self.visitAllFields(recursive: recursive, action: action, seenModels: &seenModels)
     }
     
-    open func visitAllFields(recursive:Bool = true, action:((FieldType) -> Void), seenModels:inout Set<Model>) {
+    private func visitAllFields(recursive:Bool = true, action:((FieldType) -> Void), seenModels:inout Set<Model>) {
         guard !seenModels.contains(self) else { return }
         
         seenModels.insert(self)
@@ -309,12 +309,12 @@ open class Model: NSObject, NSCopying {
         }
     }
 
-    open func visitAllFieldValues(recursive:Bool = true, action:((Any?) -> Void)) {
+    public func visitAllFieldValues(recursive:Bool = true, action:((Any?) -> Void)) {
         var seenModels: Set<Model> = Set()
         self.visitAllFieldValues(recursive: recursive, action: action, seenModels: &seenModels)
 }
 
-    open func visitAllFieldValues(recursive:Bool = true, action:((Any?) -> Void), seenModels:inout Set<Model>) {
+    private func visitAllFieldValues(recursive:Bool = true, action:((Any?) -> Void), seenModels:inout Set<Model>) {
         guard !seenModels.contains(self) else { return }
 
         seenModels.insert(self)
