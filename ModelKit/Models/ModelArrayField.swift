@@ -54,7 +54,7 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
             self.modelLookup.removeValue(forKey: identifier)
         }
         
-        self.inverse(on: value)?.inverseValueRemoved(self.model)
+        self.inverse(on: value)?.inverseValueRemoved(self.ownerModel)
     }
     
     open override func valueAdded(_ value: T) {
@@ -62,7 +62,7 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
             self.modelLookup[identifier] = value
         }
         
-        self.inverse(on: value)?.inverseValueAdded(self.model)
+        self.inverse(on: value)?.inverseValueAdded(self.ownerModel)
     }
     
     open func inverse(on model:T) -> ModelFieldType? {

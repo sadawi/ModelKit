@@ -45,7 +45,7 @@ open class RESTRouter {
     }
 
     public func path(to field: ModelFieldType, maxDepth: Int=0) -> String? {
-        guard let owner     = field.model else { return nil }
+        guard let owner     = field.ownerModel else { return nil }
         guard let path      = self.instancePath(for: owner, maxDepth: maxDepth) else { return nil }
         guard let fieldKey  = field.key else { return nil }
         return [path, fieldKey].joined(separator: pathSeparator)

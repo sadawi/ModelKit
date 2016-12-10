@@ -15,7 +15,7 @@ public enum DeleteBehavior {
 
 
 public protocol ModelFieldType: FieldType {
-    var model: Model? { get set }
+    var ownerModel: Model? { get set }
     var foreignKey:Bool { get set }
     var cascadeDelete: Bool { get }
 
@@ -24,7 +24,7 @@ public protocol ModelFieldType: FieldType {
 }
 
 public extension ModelFieldType {
-    public var model: Model? {
+    public var ownerModel: Model? {
         get {
             return self.owner as? Model
         }
@@ -76,11 +76,11 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
         if oldValue != newValue {
             if let value = oldValue {
                 let inverseField = self.inverse(on: value)
-                inverseField?.inverseValueRemoved(self.model)
+                inverseField?.inverseValueRemoved(self.ownerModel)
             }
             if let value = newValue {
                 let inverseField = self.inverse(on: value)
-                inverseField?.inverseValueAdded(self.model)
+                inverseField?.inverseValueAdded(self.ownerModel)
             }
         }
     }
