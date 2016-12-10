@@ -77,7 +77,7 @@ open class Model: NSObject, NSCopying {
     
     public required override init() {
         super.init()
-        self.processFields()
+        self.buildFields()
         self.afterInit()
     }
     
@@ -230,27 +230,7 @@ open class Model: NSObject, NSCopying {
         return path.components(separatedBy: ".")
     }
     
-    /**
-     Builds a mapping of keys to fields.  Keys are either the field's `key` property (if specified) or the property name of the field.
-     This can be slow, since it uses reflection.  If you find this to be a performance bottleneck, consider overriding this var
-     with an explicit mapping of keys to fields.
-     */
-    open var fields: [String:FieldType] {
-        return _fields
-    }
-    lazy fileprivate var _fields: [String:FieldType] = {
-        var result:[String:FieldType] = [:]
-        let mirror = Mirror(reflecting: self)
-        mirror.eachChild { child in
-            if let label = child.label, let value = child.value as? FieldType {
-                // If the field has its key defined, use that; otherwise fall back to the property name.
-                let key = value.key ?? label
-                result[key] = value
-            }
-        }
-        
-        return result
-    }()
+    public var fields = [String:FieldType]()
     
     /**
      Which fields should we include in the dictionaryValue?
@@ -263,8 +243,8 @@ open class Model: NSObject, NSCopying {
     /**
      Look at the instance's fields, do some introspection and processing.
      */
-    internal func processFields() {
-        for (key, field) in self.fields {
+    internal func buildFields() {
+        for (key, field) in self.staticFields() {
             if field.key == nil {
                 field.key = key
             }
@@ -272,9 +252,30 @@ open class Model: NSObject, NSCopying {
             if let modelField = field as? ModelFieldType {
                 modelField.model = self
             }
+            self.fields[key] = field
         }
     }
     
+    /**
+     Builds a mapping of keys to fields.  Keys are either the field's `key` property (if specified) or the property name of the field.
+     This can be slow, since it uses reflection.  If you find this to be a performance bottleneck, consider overriding this var
+     with an explicit mapping of keys to fields.
+     */
+    private func staticFields() -> [String: FieldType] {
+        var result:[String:FieldType] = [:]
+        let mirror = Mirror(reflecting: self)
+        mirror.eachChild { child in
+            if let label = child.label, let value = child.value as? FieldType {
+                // If the field has its key defined, use that; otherwise fall back to the property name.
+                let key = value.key ?? label
+                result[key] = value
+            }
+        }
+        
+        return result
+    }
+    
+
     /**
      Performs any model-level field initialization your class may need, before any field values are set.
      */
