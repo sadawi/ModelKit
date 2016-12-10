@@ -9,6 +9,7 @@
 import Foundation
 
 public typealias Identifier = String
+public typealias Interface = [String:FieldType]
 
 open class ModelValueTransformerContext: ValueTransformerContext {
     /**
@@ -230,7 +231,7 @@ open class Model: NSObject, NSCopying {
         return path.components(separatedBy: ".")
     }
     
-    public var fields = [String:FieldType]()
+    public var fields = Interface()
     
     /**
      Which fields should we include in the dictionaryValue?
@@ -262,8 +263,8 @@ open class Model: NSObject, NSCopying {
      This can be slow, since it uses reflection.  If you find this to be a performance bottleneck, consider overriding this var
      with an explicit mapping of keys to fields.
      */
-    private func staticFields() -> [String: FieldType] {
-        var result:[String:FieldType] = [:]
+    private func staticFields() -> Interface {
+        var result = Interface()
         let mirror = Mirror(reflecting: self)
         mirror.eachChild { child in
             if let label = child.label, let value = child.value as? FieldType {
