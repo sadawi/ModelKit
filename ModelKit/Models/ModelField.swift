@@ -23,14 +23,23 @@ public protocol ModelFieldType: FieldType {
     func inverseValueAdded(_ value: Model?)
 }
 
+public extension ModelFieldType {
+    public var model: Model? {
+        get {
+            return self.owner as? Model
+        }
+        set {
+            self.owner = newValue
+        }
+    }
+}
+
 public protocol InvertibleModelFieldType: ModelFieldType {
     func inverse() -> ModelFieldType?
 }
 
 open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
     open var foreignKey:Bool = false
-    open weak var model: Model?
-    
     open var cascadeDelete: Bool = true
     
     public var findInverse: ((T)->ModelFieldType)?

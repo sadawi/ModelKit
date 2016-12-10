@@ -12,7 +12,6 @@ public protocol ModelArrayFieldType: ModelFieldType {
 }
 
 open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
-    open weak var model: Model?
     open var findInverse: ((T)->ModelFieldType)?
     open var foreignKey: Bool = false
     open var cascadeDelete: Bool = true

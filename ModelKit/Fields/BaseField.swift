@@ -55,6 +55,8 @@ public protocol FieldType:AnyObject {
     var validationState:ValidationState { get }
     var loadState:LoadState { get }
     
+    weak var owner: AnyObject? { get set }
+    
     var changedAt:Date? { get }
     var updatedAt:Date? { get }
     
@@ -84,6 +86,8 @@ let DefaultObserverKey:NSString = "____"
 
 open class BaseField<T>: FieldType, Observer, Observable {
     public typealias ValueType = T
+    
+    weak public var owner: AnyObject?
 
     // MARK: - Value transformers
 

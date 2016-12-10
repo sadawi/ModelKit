@@ -250,7 +250,8 @@ open class Model: NSObject, NSCopying {
             }
             self.initializeField(field)
             if let modelField = field as? ModelFieldType {
-                modelField.model = self
+                modelField.owner = self
+//                modelField.model = self
             }
             self.fields[key] = field
         }
