@@ -10,7 +10,7 @@ import Foundation
 
 open class CloneableField<T: Equatable>: Field<T>, Cloneable {
     public typealias CloneType = CloneableField<T>
-    
+
     public var prototype: CloneType? {
         willSet {
             if let prototype = self.prototype {
@@ -22,11 +22,6 @@ open class CloneableField<T: Equatable>: Field<T>, Cloneable {
                 prototype --> self
             }
         }
-    }
-    
-    open override func valueUpdated(oldValue: T?, newValue: T?) {
-        super.valueUpdated(oldValue: oldValue, newValue: newValue)
-        self.detach()
     }
 
     public var clones = NSHashTable<CloneType>()
@@ -47,5 +42,10 @@ open class CloneableField<T: Equatable>: Field<T>, Cloneable {
     public func detach() {
         self.prototype = nil
         // TODO: detach value
+    }
+    
+    public func setValue(value: T?, detach: Bool = true) {
+        self.value = value
+        self.detach()
     }
 }

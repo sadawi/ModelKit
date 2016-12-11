@@ -21,6 +21,18 @@ class PrototypeTests: XCTestCase {
         super.tearDown()
     }
     
+    func testObservers() {
+        let a = CloneableField<String>(key: "message")
+        let b = CloneableField<String>(key: "message")
+        a --> b
+        
+        a.value = "a"
+        XCTAssertEqual(b.value, "a")
+        a.removeObserver(b)
+        a.value = "A"
+        XCTAssertEqual(b.value, "a")
+    }
+    
     func testClonableField() {
         let a = CloneableField<String>(key: "message")
         a.value = "hello"
@@ -33,7 +45,6 @@ class PrototypeTests: XCTestCase {
         XCTAssertEqual(b.value, a.value)
         b.value = "oh"
         b.detach()
-        XCTAssertEqual(b.value, "oh")
         a.value = "hi"
         XCTAssertEqual(b.value, "oh")
     }
