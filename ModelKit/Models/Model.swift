@@ -513,7 +513,7 @@ open class Model: NSObject, NSCopying {
     }
     
     // MARK: - Observations
-    public func addObserver(observer: ModelObserver, for: FieldPath, action: ObservationAction) {
+    public func addObserver(observer: ModelObserver, for: FieldPath, action: ModelObservationAction) {
         var observation = self.observations[observer.observerIdentifier] ?? Observation()
         observation.addAction(action, propertyPath: propertyPath)
         self.observations[observer.observerIdentifier] = observation
