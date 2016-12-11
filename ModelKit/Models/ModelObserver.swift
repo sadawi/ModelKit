@@ -9,7 +9,5 @@
 import Foundation
 
 public protocol ModelObserver {
-    func modelChanged(_ model: Model, at: PropertyPath) {
-    }
-
+    func modelChanged(_ model: Model, at: FieldPath)
 }

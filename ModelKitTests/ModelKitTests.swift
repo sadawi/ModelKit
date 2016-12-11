@@ -116,7 +116,34 @@ class ModelKitTests: XCTestCase {
          // Note that this uses the field key "contents" rather than "entities"
         XCTAssertEqual(router.instancePath(for: hat, maxDepth: 2), "groups/g1/contents/e1/possessions/p1")
     }
-    
+}
+
+extension ModelKitTests {
+    func testFieldPaths() {
+        let prefix = FieldPath(["one", "two", "*"])
+        XCTAssert(prefix.isPrefix)
+        XCTAssertEqual(prefix.components, ["one", "two"])
+        
+        let a = FieldPath(["one", "two"])
+        let b = FieldPath(["one"])
+        let c = FieldPath()
+        
+        XCTAssertFalse(a.isPrefix(of: b))
+        XCTAssertTrue(b.isPrefix(of: a))
+        
+        XCTAssertFalse(a.isPrefix(of: c))
+        XCTAssertTrue(c.isPrefix(of: a))
+        XCTAssertTrue(c.isPrefix(of: b))
+        
+        let d:FieldPath = ["one"]
+        XCTAssertEqual(d.components, ["one"])
+        
+        let e = FieldPath(["one"], isPrefix: false)
+        XCTAssertFalse(e.matches(a))
+        
+        // TODO: prefixes might be wrong! If I'm observing geometry/corner/left and I set a whole new geometry, it should be triggered!
+
+    }
 }
 
 

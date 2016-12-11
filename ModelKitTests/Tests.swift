@@ -381,7 +381,7 @@ extension FieldTests {
         a["size"] = 10
         XCTAssertEqual(a["size"] as? Int, 10)
         
-        let field = a.field(forKeyPath: "size")
+        let field = a.field(at: "size")
         XCTAssert(field?.owner === a)
     }
 

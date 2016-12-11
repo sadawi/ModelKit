@@ -196,18 +196,20 @@ open class Model: NSObject, NSCopying {
     /**
      Finds a field (possibly belonging to a child model) for a key path, specified as a list of strings.
      */
-    open func field(forKeyPath components:[String]) -> FieldType? {
-        guard components.count > 0 else { return nil }
+    open func field(at path:FieldPath) -> FieldType? {
+        var path = path
+        
+        guard let firstComponent = path.shift() else { return nil }
         
         let fields = self.fields
-        if let firstField = fields[components[0]] {
-            let remainingComponents = Array(components[1..<components.count])
-            if remainingComponents.count == 0 {
+        
+        if let firstField = fields[firstComponent] {
+            if path.length == 0 {
                 // No more components.  Just return the field
                 return firstField
             } else if let firstValue = firstField.anyValue as? Model {
                 // There are more components remaining, and we can keep traversing key paths
-                return firstValue.field(forKeyPath: remainingComponents)
+                return firstValue.field(at: path)
             }
         }
         return nil
@@ -217,8 +219,8 @@ open class Model: NSObject, NSCopying {
      Finds a field (possibly belonging to a child model) for a key path, specified as a single string.
      The string will be split using `componentsForKeyPath(_:)`.
      */
-    open func field(forKeyPath path:String) -> FieldType? {
-        return field(forKeyPath: self.keyPathComponents(path))
+    open func field(at path:String) -> FieldType? {
+        return field(at: self.fieldPath(path))
     }
     
     /**
@@ -227,8 +229,8 @@ open class Model: NSObject, NSCopying {
      
      To change the default behavior, you'll probably want to subclass.
      */
-    open func keyPathComponents(_ path:String) -> [String] {
-        return path.components(separatedBy: ".")
+    open func fieldPath(_ path:String) -> FieldPath {
+        return FieldPath(path, separator: ".")
     }
     
     public var fields = Interface()
@@ -266,13 +268,13 @@ open class Model: NSObject, NSCopying {
         self.fields[key] = field
     }
     
-    open subscript (keyPath: String) -> Any? {
+    open subscript (keyPath: FieldPath) -> Any? {
         get {
-            guard let field = self.field(forKeyPath: keyPath) else { return nil }
+            guard let field = self.field(at: keyPath) else { return nil }
             return field.anyValue
         }
         set {
-            guard let field = self.field(forKeyPath: keyPath) else { return }
+            guard let field = self.field(at: keyPath) else { return }
             field.anyValue = newValue
         }
     }
@@ -452,8 +454,8 @@ open class Model: NSObject, NSCopying {
      - parameter keyPath: The path to the field (possibly belonging to a child model) that has an error.
      - parameter message: A description of what's wrong.
      */
-    open func addError(forKeyPath path:String, message:String) {
-        if let field = self.field(forKeyPath: path) {
+    open func addError(at path:FieldPath, message:String) {
+        if let field = self.field(at: path) {
             field.addValidationError(message)
         }
     }
