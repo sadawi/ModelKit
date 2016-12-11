@@ -118,3 +118,10 @@ class ModelKitTests: XCTestCase {
     }
     
 }
+
+
+extension ModelKitTests {
+    func testModelObservers() {
+        
+    }
+}
