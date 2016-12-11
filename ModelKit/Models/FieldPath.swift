@@ -46,7 +46,7 @@ public class FieldPath: ExpressibleByArrayLiteral, Hashable, CustomStringConvert
      - ["geometry"] is prefix of ["geometry"]
      - [] is prefix of all references
      */
-    func isPrefixOf(_ other: FieldPath) -> Bool {
+    func isPrefix(of other: FieldPath) -> Bool {
         if other.propertyChain.count < self.propertyChain.count {
             return false
         }
@@ -55,7 +55,7 @@ public class FieldPath: ExpressibleByArrayLiteral, Hashable, CustomStringConvert
     
     func matches(other: FieldPath) -> Bool {
         if self.isPrefix {
-            return self.isPrefixOf(other)
+            return self.isPrefix(of: other)
         } else {
             return self == other
         }
