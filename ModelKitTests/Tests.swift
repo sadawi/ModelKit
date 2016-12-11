@@ -374,4 +374,11 @@ extension FieldTests {
         let c: Int = a.coerced()!
         XCTAssertEqual(c, 3)
     }
+    
+    func testDynamicFields() {
+        let a = Model()
+        a << Field<Int>(key: "size")
+        a["size"] = 10
+        XCTAssertEqual(a["size"] as? Int, 10)
+    }
 }

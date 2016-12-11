@@ -197,7 +197,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
             return self.value as Any?
         }
         set {
-            self.value = nil
+            self.value = newValue as? T
         }
     }
     

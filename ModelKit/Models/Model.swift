@@ -255,6 +255,29 @@ open class Model: NSObject, NSCopying {
         }
     }
     
+    public static func <<(object: Model, field: FieldType) {
+        object.add(field: field)
+    }
+    
+    public func add(field: FieldType) {
+        guard let key = field.key else { return }
+
+        field.owner = self
+        self.fields[key] = field
+    }
+    
+    open subscript (keyPath: String) -> Any? {
+        get {
+            guard let field = self.field(forKeyPath: keyPath) else { return nil }
+            return field.anyValue
+        }
+        set {
+            guard let field = self.field(forKeyPath: keyPath) else { return }
+            field.anyValue = newValue
+        }
+    }
+
+    
     /**
      Builds a mapping of keys to fields.  Keys are either the field's `key` property (if specified) or the property name of the field.
      This can be slow, since it uses reflection.  If you find this to be a performance bottleneck, consider overriding this var
