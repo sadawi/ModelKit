@@ -28,7 +28,7 @@ public extension ValueObservable {
      - parameter observer: an Observer object that will receive change notifications
      */
     @discardableResult public func addObserver<U:ValueObserver>(_ observer:U) -> U where U.ObservedValueType==ObservedValueType {
-        let observation = Observation<ObservedValueType>()
+        let observation = ValueObservation<ObservedValueType>()
         observation.onChange = { (value:ObservedValueType?) -> Void in
             observer.valueChanged(value, observable:self)
         }
@@ -45,7 +45,7 @@ public extension ValueObservable {
      
      - parameter onChange: A closure to be run when the value changes
      */
-    public func addObserver(onChange:@escaping ((ObservedValueType?) -> Void)) -> Observation<ObservedValueType> {
+    public func addObserver(onChange:@escaping ((ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
         let observation = self.createClosureObservation(onChange: onChange)
         self.observations.add(observation)
         return observation
@@ -63,8 +63,8 @@ public extension ValueObservable {
         return owner
     }
     
-    private func createClosureObservation(onChange:@escaping ((ObservedValueType?) -> Void)) -> Observation<ObservedValueType> {
-        let observation = Observation<ObservedValueType>()
+    private func createClosureObservation(onChange:@escaping ((ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
+        let observation = ValueObservation<ObservedValueType>()
         observation.onChange = onChange
         observation.valueChanged(self.value)
         observation.getValue = { [weak self] in
@@ -96,7 +96,7 @@ public extension ValueObservable {
     /**
      Removes an observation (an object returned from a closure observation)
      */
-    public func removeObservation(_ observation:Observation<ObservedValueType>) {
+    public func removeObservation(_ observation:ValueObservation<ObservedValueType>) {
         self.observations.remove(observation)
     }
 
@@ -119,7 +119,7 @@ public func <--<T:ValueObservable, U:ValueObserver>(observer:U, observedField:T)
     return observable.addObserver(observer)
 }
 
-@discardableResult public func --><T:ValueObservable>(observable:T, onChange:@escaping ((T.ObservedValueType?) -> Void)) -> Observation<T.ObservedValueType> {
+@discardableResult public func --><T:ValueObservable>(observable:T, onChange:@escaping ((T.ObservedValueType?) -> Void)) -> ValueObservation<T.ObservedValueType> {
     return observable.addObserver(onChange: onChange)
 }
 
