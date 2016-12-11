@@ -12,7 +12,7 @@ import ModelKit
 let kSeen = "seen"
 
 private class TestField<T: Equatable>: Field<T> {
-    override init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
+    required init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
     }
     

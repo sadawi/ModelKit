@@ -380,5 +380,20 @@ extension FieldTests {
         a << Field<Int>(key: "size")
         a["size"] = 10
         XCTAssertEqual(a["size"] as? Int, 10)
+        
+        let field = a.field(forKeyPath: "size")
+        XCTAssert(field?.owner === a)
+    }
+
+    func testCopyingFields() {
+        let a = Field<Int>(name: "size", priority: 10, key: "size")
+        a.value = 10
+        let copy = a.copy()
+        
+        XCTAssertEqual(copy.name, a.name)
+        XCTAssertEqual(copy.value, 10)
+        
+        a.value = 100
+        XCTAssertEqual(copy.value, 10)
     }
 }
