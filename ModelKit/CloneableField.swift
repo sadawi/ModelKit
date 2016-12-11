@@ -9,17 +9,43 @@
 import Foundation
 
 open class CloneableField<T: Equatable>: Field<T>, Cloneable {
-    public typealias CloneType = Field<T>
+    public typealias CloneType = CloneableField<T>
     
-    public var prototype: CloneType?
-   
+    public var prototype: CloneType? {
+        willSet {
+            if let prototype = self.prototype {
+                prototype -/-> self
+            }
+        }
+        didSet {
+            if let prototype = self.prototype {
+                prototype --> self
+            }
+        }
+    }
+    
+    open override func valueUpdated(oldValue: T?, newValue: T?) {
+        super.valueUpdated(oldValue: oldValue, newValue: newValue)
+        self.detach()
+    }
+
     public var clones = NSHashTable<CloneType>()
     
-    open func clone() -> Field<T> {
-        return self
+    open func clone() -> CloneableField<T> {
+        let copy = self.copy() as! CloneableField<T>
+        copy.prototype = self
+        return copy
     }
     
     required public init(value: T?=nil, name: String?=nil, priority: Int=0, key: String?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
+    }
+    
+    /**
+     Separates from prototype
+     */
+    public func detach() {
+        self.prototype = nil
+        // TODO: detach value
     }
 }
