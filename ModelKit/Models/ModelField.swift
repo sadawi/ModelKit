@@ -50,6 +50,10 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
         self.findInverse = inverse
     }
     
+    public required init(value: T?, name: String?, priority: Int, key: String?) {
+        super.init(value: value, name: name, priority: priority, key: key)
+    }
+    
     open override func defaultValueTransformer(in context: ValueTransformerContext) -> ValueTransformer<T> {
         return self.foreignKey ? ModelForeignKeyValueTransformer<T>.sharedInstance : ModelValueTransformer<T>.sharedInstance
     }

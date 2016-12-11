@@ -36,7 +36,7 @@ open class EnumValueTransformer<E:RawRepresentable>: ValueTransformer<E> {
  A field whose value is a RawRepresentable
  */
 open class EnumField<T>: Field<T> where T:RawRepresentable, T:Equatable {
-    public override init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
+    public required init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
     }
     
