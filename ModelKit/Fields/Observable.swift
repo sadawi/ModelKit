@@ -36,7 +36,7 @@ public extension Observable {
         observation.getValue = { [weak self] in
             return self?.value
         }
-        self.observations.set(observer, observation)
+        self.observations.add(observation, for: observer)
         return observer
     }
     
@@ -47,7 +47,7 @@ public extension Observable {
      */
     public func addObserver(onChange:@escaping ((ObservedValueType?) -> Void)) -> Observation<ObservedValueType> {
         let observation = self.createClosureObservation(onChange: onChange)
-        self.observations.setNil(observation)
+        self.observations.add(observation)
         return observation
     }
 
@@ -59,7 +59,7 @@ public extension Observable {
      */
     @discardableResult public func addObserver<U: AnyObject>(_ owner:U, onChange:@escaping ((ObservedValueType?) -> Void)) -> U {
         let observation = self.createClosureObservation(onChange: onChange)
-        self.observations.set(owner, observation)
+        self.observations.add(observation, for: owner)
         return owner
     }
     
@@ -74,7 +74,7 @@ public extension Observable {
     }
     
     public func notifyObservers() {
-        self.observations.each { observation in
+        self.observations.forEach { observation in
             observation.valueChanged(self.value)
         }
     }
@@ -90,8 +90,16 @@ public extension Observable {
      Unregisters an observer
      */
     public func removeObserver<U:Observer>(_ observer:U) where U.ObservedValueType==ObservedValueType {
-        self.observations.remove(observer)
+        self.observations.remove(for: observer)
     }
+    
+    /**
+     Removes an observation (an object returned from a closure observation)
+     */
+    public func removeObservation(_ observation:Observation<ObservedValueType>) {
+        self.observations.remove(observation)
+    }
+
 }
 
 precedencegroup ObservationPrecedence {

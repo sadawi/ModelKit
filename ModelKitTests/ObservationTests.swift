@@ -52,13 +52,24 @@ class ObservationTests: XCTestCase {
         XCTAssertEqual(view.value, "Alice")
         
         var value:String = "test"
-        entity.name --> { value = $0! }
+        let o = entity.name --> { value = $0! }
         entity.name.value = "NEW VALUE"
         XCTAssertEqual(value, "NEW VALUE")
         
-        // Setting a new pure closure observer will remove the old one
+        // Can add more closure observers without interfering with old ones.
         var value2:String = "another value"
         entity.name --> { value2 = $0! }
+        
+        entity.name.value = "hello"
+        XCTAssertEqual(value2, "hello")
+        XCTAssertEqual(value, "hello")
+        
+        // Reset to demonstrate...
+        entity.name.value = "NEW VALUE"
+
+        // To remove the old one, we need to remove it explicitly.
+        entity.name.removeObservation(o)
+
         entity.name.value = "VALUE 2"
         XCTAssertEqual(value2, "VALUE 2")
         XCTAssertEqual(value, "NEW VALUE")
