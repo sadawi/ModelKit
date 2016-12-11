@@ -66,6 +66,19 @@ public postfix func *<T>(right:Field<T>) -> ArrayField<T> {
     return right.arrayField()
 }
 
+open class WrapperField<T: Equatable, U>: BaseField<U> {
+    /**
+     A field describing how individual values will be transformed and validated.
+     */
+    open var field:Field<T>
+    
+    public init(_ field:Field<T>, value:U?=nil, name:String?=nil, priority:Int?=nil, key:String?=nil) {
+        self.field = field
+        super.init(name: name ?? field.name, priority: priority ?? field.priority, key:key ?? field.key)
+    }
+}
+
+
 /**
  
  A multi-valued field.  It's a wrapper for a single-valued field that will handle transformations and validation for individual values.
@@ -82,15 +95,9 @@ public postfix func *<T>(right:Field<T>) -> ArrayField<T> {
  let tags = Field<String>(name: "Tags")*
  
  */
-open class ArrayField<T:Equatable>: BaseField<[T]> {
-    /**
-     A field describing how individual values will be transformed and validated.
-     */
-    open var field:Field<T>
-    
-    public init(_ field:Field<T>, value:[T]?=[], name:String?=nil, priority:Int?=nil, key:String?=nil) {
-        self.field = field
-        super.init(name: name ?? field.name, priority: priority ?? field.priority, key:key ?? field.key)
+open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
+    public override init(_ field:Field<T>, value:[T]?=[], name:String?=nil, priority:Int?=nil, key:String?=nil) {
+        super.init(field, value: value, name: name, priority: priority, key: key)
         self.value = value
     }
     
