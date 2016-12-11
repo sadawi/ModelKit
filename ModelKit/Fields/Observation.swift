@@ -19,7 +19,7 @@ import Foundation
  a --> b --> c
  ```
  */
-open class Observation<T>: Observable {
+open class Observation<T>: ValueObservable {
     internal var uuid = UUID()
     
     public typealias ObservedValueType = T
