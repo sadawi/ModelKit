@@ -8,34 +8,53 @@ private let kPropertyNameKey = "property"
 private let kTargetKey = "target"
 private let kChainSeparator = ": "
 
-public class FieldPath: ExpressibleByArrayLiteral, Hashable, CustomStringConvertible {
-    private(set) public var propertyChain: [String] = []
+public struct FieldPath: ExpressibleByArrayLiteral, ExpressibleByStringLiteral, CustomStringConvertible {
+    
+    private(set) public var components: [String] = []
     var isPrefix: Bool = false
     
-    public static var any: FieldPath {
-        return FieldPath(propertyChain: [], isPrefix: true)
+    public var length: Int {
+        return self.components.count
     }
     
     static let wildcard = "*"
     
-    public required init(arrayLiteral elements: String...) {
-        self.setPropertyChain(elements)
+    public init(_ string: String, separator: String = ".") {
+        self.init(string.components(separatedBy: separator))
     }
     
-    public convenience init(propertyChain: [String], isPrefix: Bool = false) {
+    public init(arrayLiteral elements: String...) {
+        self.setComponents(elements)
+    }
+
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(value)
+    }
+    
+    public typealias UnicodeScalarLiteralType = StringLiteralType
+    public init(unicodeScalarLiteral value: UnicodeScalarLiteralType) {
+        self.init(stringLiteral: value)
+    }
+    
+    public typealias ExtendedGraphemeClusterLiteralType = StringLiteralType
+    public init(extendedGraphemeClusterLiteral value: ExtendedGraphemeClusterLiteralType) {
+        self.init(stringLiteral: value)
+    }
+    
+    public init(_ components: [String], isPrefix: Bool = false) {
         self.init()
         self.isPrefix = isPrefix
-        self.setPropertyChain(propertyChain)
+        self.setComponents(components)
     }
     
-    public func setPropertyChain(_ propertyChain: [String]) {
-        if propertyChain.last == FieldPath.wildcard {
-            var propertyChain = propertyChain
-            propertyChain.removeLast()
+    public mutating func setComponents(_ components: [String]) {
+        if components.last == FieldPath.wildcard {
+            var components = components
+            components.removeLast()
             self.isPrefix = true
-            self.propertyChain = propertyChain
+            self.components = components
         } else {
-            self.propertyChain = propertyChain
+            self.components = components
         }
     }
     
@@ -47,13 +66,13 @@ public class FieldPath: ExpressibleByArrayLiteral, Hashable, CustomStringConvert
      - [] is prefix of all references
      */
     func isPrefix(of other: FieldPath) -> Bool {
-        if other.propertyChain.count < self.propertyChain.count {
+        if other.components.count < self.components.count {
             return false
         }
-        return Array(other.propertyChain[0..<self.propertyChain.count]) == self.propertyChain
+        return Array(other.components[0..<self.components.count]) == self.components
     }
     
-    func matches(other: FieldPath) -> Bool {
+    func matches(_ other: FieldPath) -> Bool {
         if self.isPrefix {
             return self.isPrefix(of: other)
         } else {
@@ -61,32 +80,27 @@ public class FieldPath: ExpressibleByArrayLiteral, Hashable, CustomStringConvert
         }
     }
     
-    fileprivate var stringValue: String {
-        var result = self.propertyChain.joined(separator: "---")
-        if self.isPrefix {
-            result.append("*")
-        }
-        return result
-    }
-    
-    public var hashValue: Int {
-        return self.stringValue.hash
-    }
-    
     func prepending(propertyName: String) -> FieldPath {
-        return FieldPath(propertyChain: [propertyName] + self.propertyChain, isPrefix: self.isPrefix)
+        return FieldPath([propertyName] + self.components, isPrefix: self.isPrefix)
     }
     
     func appending(propertyName: String) -> FieldPath {
-        return FieldPath(propertyChain: self.propertyChain + [propertyName], isPrefix: self.isPrefix)
+        return FieldPath(self.components + [propertyName], isPrefix: self.isPrefix)
     }
     
     public var description: String {
-        return self.propertyChain.joined(separator: "|")
+        return self.components.joined(separator: "|")
+    }
+    
+    public mutating func shift() -> String? {
+        if self.components.count > 0 {
+            return self.components.removeFirst()
+        } else {
+            return nil
+        }
     }
 }
 
 public func ==(left: FieldPath, right: FieldPath) -> Bool {
-    // TODO: technically, we're ignoring prototypes here.
-    return left.stringValue == right.stringValue
+    return left.components == right.components && left.isPrefix == right.isPrefix
 }
