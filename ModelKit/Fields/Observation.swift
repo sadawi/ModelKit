@@ -20,7 +20,7 @@ import Foundation
  ```
  */
 open class Observation<T>: Observable {
-    public typealias ValueType = T
+    public typealias ObservedValueType = T
     
     open var observations = ObservationRegistry<T>()
     
@@ -64,7 +64,7 @@ open class ObservationRegistry<V> {
         }
     }
     
-    func get<U:Observer>(_ observer:U?) -> Observation<V>? where U.ValueType==V {
+    func get<U:Observer>(_ observer:U?) -> Observation<V>? where U.ObservedValueType==V {
         return self.observations.object(forKey: observer)
     }
 
@@ -76,7 +76,7 @@ open class ObservationRegistry<V> {
         self.observations.setObject(observation, forKey: owner)
     }
     
-    func remove<U:Observer>(_ observer:U) where U.ValueType==V {
+    func remove<U:Observer>(_ observer:U) where U.ObservedValueType==V {
         self.observations.removeObject(forKey: observer)
     }
 
