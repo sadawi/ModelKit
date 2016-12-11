@@ -43,9 +43,4 @@ open class CloneableField<T: Equatable>: Field<T>, Cloneable {
         self.prototype = nil
         // TODO: detach value
     }
-    
-    public func setValue(value: T?, detach: Bool = true) {
-        self.value = value
-        self.detach()
-    }
 }

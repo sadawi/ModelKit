@@ -43,8 +43,8 @@ class PrototypeTests: XCTestCase {
         XCTAssertEqual(b.value, a.value)
         a.value = "goodbye"
         XCTAssertEqual(b.value, a.value)
-        b.value = "oh"
         b.detach()
+        b.value = "oh"
         a.value = "hi"
         XCTAssertEqual(b.value, "oh")
     }
