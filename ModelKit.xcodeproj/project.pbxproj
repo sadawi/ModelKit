@@ -60,6 +60,9 @@
 		224F98461DF09642001E851F /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 224F98451DF09642001E851F /* Podfile */; };
 		22DAC6B61DF7FCDD00108441 /* NumericValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */; };
 		22DAC6B81DF7FCF100108441 /* SimpleValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */; };
+		22FEA5651DFD04A500CA8BC5 /* PrototypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FEA5641DFD04A500CA8BC5 /* PrototypeTests.swift */; };
+		22FEA5691DFD04CD00CA8BC5 /* Cloneable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FEA5681DFD04CD00CA8BC5 /* Cloneable.swift */; };
+		22FEA56B1DFD04D500CA8BC5 /* CloneableField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FEA56A1DFD04D500CA8BC5 /* CloneableField.swift */; };
 		902751C3FA18C7E0AF33260D /* Pods_ModelKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090DEBA661399D9997A81C45 /* Pods_ModelKitTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -130,6 +133,9 @@
 		224F98451DF09642001E851F /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NumericValueTransformer.swift; path = Fields/NumericValueTransformer.swift; sourceTree = "<group>"; };
 		22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleValueTransformer.swift; path = Fields/SimpleValueTransformer.swift; sourceTree = "<group>"; };
+		22FEA5641DFD04A500CA8BC5 /* PrototypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrototypeTests.swift; sourceTree = "<group>"; };
+		22FEA5681DFD04CD00CA8BC5 /* Cloneable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cloneable.swift; path = Prototypes/Cloneable.swift; sourceTree = "<group>"; };
+		22FEA56A1DFD04D500CA8BC5 /* CloneableField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloneableField.swift; sourceTree = "<group>"; };
 		38A05B7372D948352D30FCD1 /* Pods-ModelKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.release.xcconfig"; sourceTree = "<group>"; };
 		B2EB45E0B156254A6D7C8539 /* Pods-ModelKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.debug.xcconfig"; sourceTree = "<group>"; };
 		DC22183A5F54223695D5D378 /* Pods-ModelKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKitTests/Pods-ModelKitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -362,6 +368,7 @@
 		224F97F11DF095A5001E851F /* ModelKit */ = {
 			isa = PBXGroup;
 			children = (
+				22FEA5621DFD046000CA8BC5 /* Prototypes */,
 				224F980B1DF095D5001E851F /* Fields */,
 				224F980A1DF095D0001E851F /* ModelStore */,
 				224F98091DF095CB001E851F /* Models */,
@@ -374,6 +381,7 @@
 		224F97FC1DF095A5001E851F /* ModelKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				22FEA5631DFD047400CA8BC5 /* Prototypes */,
 				220EF8C81DF099A400B702CC /* Fields */,
 				220EF8BD1DF0998300B702CC /* Models */,
 				224F97FF1DF095A5001E851F /* Info.plist */,
@@ -415,6 +423,23 @@
 				220EF8A71DF0974900B702CC /* fields */,
 			);
 			name = Fields;
+			sourceTree = "<group>";
+		};
+		22FEA5621DFD046000CA8BC5 /* Prototypes */ = {
+			isa = PBXGroup;
+			children = (
+				22FEA5681DFD04CD00CA8BC5 /* Cloneable.swift */,
+				22FEA56A1DFD04D500CA8BC5 /* CloneableField.swift */,
+			);
+			name = Prototypes;
+			sourceTree = "<group>";
+		};
+		22FEA5631DFD047400CA8BC5 /* Prototypes */ = {
+			isa = PBXGroup;
+			children = (
+				22FEA5641DFD04A500CA8BC5 /* PrototypeTests.swift */,
+			);
+			name = Prototypes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -615,6 +640,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22FEA5691DFD04CD00CA8BC5 /* Cloneable.swift in Sources */,
 				220EF8D71DF09C3800B702CC /* ArrayField.swift in Sources */,
 				220EF91D1DF0A2F700B702CC /* MemoryRegistry.swift in Sources */,
 				220EF9001DF09DEE00B702CC /* ValueTransformer.swift in Sources */,
@@ -626,6 +652,7 @@
 				220EF8D11DF09C1600B702CC /* ModelArrayField.swift in Sources */,
 				220EF90E1DF09FF200B702CC /* Array+Difference.swift in Sources */,
 				220EF9101DF0A01F00B702CC /* DictionaryExtension.swift in Sources */,
+				22FEA56B1DFD04D500CA8BC5 /* CloneableField.swift in Sources */,
 				220EF8DC1DF09C4400B702CC /* ValueTransformable.swift in Sources */,
 				220EF9071DF09E3100B702CC /* TransformerCache.swift in Sources */,
 				220EF8ED1DF09C9400B702CC /* Observation.swift in Sources */,
@@ -666,6 +693,7 @@
 				220EF8B91DF0992200B702CC /* ArrayTests.swift in Sources */,
 				220EF8BC1DF0992200B702CC /* TypeDictionaryTests.swift in Sources */,
 				220EF8C71DF099A000B702CC /* CustomFieldTests.swift in Sources */,
+				22FEA5651DFD04A500CA8BC5 /* PrototypeTests.swift in Sources */,
 				224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */,
 				220EF8BA1DF0992200B702CC /* RemoteRequestTests.swift in Sources */,
 				220EF8BB1DF0992200B702CC /* ArchiveTests.swift in Sources */,
