@@ -45,9 +45,10 @@ public extension Observable {
      
      - parameter onChange: A closure to be run when the value changes
      */
-    public func addObserver(onChange:@escaping ((ObservedValueType?) -> Void)) {
+    public func addObserver(onChange:@escaping ((ObservedValueType?) -> Void)) -> Observation<ObservedValueType> {
         let observation = self.createClosureObservation(onChange: onChange)
         self.observations.setNil(observation)
+        return observation
     }
 
     /**
@@ -110,7 +111,7 @@ public func <--<T:Observable, U:Observer>(observer:U, observedField:T) where U.O
     return observable.addObserver(observer)
 }
 
-@discardableResult public func --><T:Observable>(observable:T, onChange:@escaping ((T.ObservedValueType?) -> Void)) {
+@discardableResult public func --><T:Observable>(observable:T, onChange:@escaping ((T.ObservedValueType?) -> Void)) -> Observation<T.ObservedValueType> {
     return observable.addObserver(onChange: onChange)
 }
 
