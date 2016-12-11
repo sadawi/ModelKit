@@ -59,8 +59,6 @@ public struct FieldPath: ExpressibleByArrayLiteral, ExpressibleByStringLiteral, 
     }
     
     /**
-     Is this a non-strict superset of (i.e., less specific than or equal to) the other reference?
-     Example:
      - ["geometry"] is prefix of ["geometry", "size"], but not vice versa.
      - ["geometry"] is prefix of ["geometry"]
      - [] is prefix of all references
