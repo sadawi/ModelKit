@@ -329,4 +329,5 @@ class ModelTests: XCTestCase {
         model.merge(from: model2, includeIdentifier: true)
         XCTAssertEqual(model.identifier, "2")
     }
+    
 }

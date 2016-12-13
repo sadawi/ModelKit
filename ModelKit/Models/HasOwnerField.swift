@@ -9,5 +9,8 @@
 import Foundation
 
 public protocol HasOwnerField {
+    /**
+     The field on this object that points to this object's owner.
+     */
     var ownerField: ModelFieldType? { get }
 }

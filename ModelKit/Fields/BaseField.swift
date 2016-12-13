@@ -84,7 +84,7 @@ public extension FieldType {
 
 let DefaultObserverKey:NSString = "____"
 
-open class BaseField<T>: FieldType, Observer, Observable {
+open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     public typealias ValueType = T
     
     weak public var owner: AnyObject?
@@ -205,9 +205,12 @@ open class BaseField<T>: FieldType, Observer, Observable {
         self.loadState = .loaded
         self.validationState = .unknown
         self.updatedAt = Date()
+        self.processNewValue(value)
         self.valueUpdatedHandler?(newValue)
     }
     
+    open func processNewValue(_ value: T?) {
+    }
     
     // MARK: -
     
@@ -319,7 +322,7 @@ open class BaseField<T>: FieldType, Observer, Observable {
     /**
      If a field is registered as an observer, it will set its own value to the observed new value.
      */
-    open func valueChanged<ObservableType:Observable>(_ value:T?, observable:ObservableType?) {
+    open func valueChanged<ObservableType:ValueObservable>(_ value:T?, observable:ObservableType?) {
         self.value = value
     }
     
