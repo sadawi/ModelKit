@@ -205,9 +205,12 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
         self.loadState = .loaded
         self.validationState = .unknown
         self.updatedAt = Date()
+        self.processNewValue(value)
         self.valueUpdatedHandler?(newValue)
     }
     
+    open func processNewValue(_ value: T?) {
+    }
     
     // MARK: -
     

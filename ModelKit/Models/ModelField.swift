@@ -106,7 +106,7 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
     open func inverseValueRemoved(_ value: Model?) {
         self.value = nil
     }
-        
+    
     open override func writeUnseenValue(to dictionary: inout AttributeDictionary, seenFields: inout [FieldType], key: String, in context: ValueTransformerContext) {
         if let modelValueTransformer = self.valueTransformer() as? ModelValueTransformer<T> {
             dictionary[key] = modelValueTransformer.exportValue(self.value, seenFields: &seenFields, in: context)
@@ -121,4 +121,9 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
             dictionary[key] = modelValueTransformer.exportValue(self.value, fields: [identifierField], seenFields: &seenFields, in: context)
         }
     }
+    
+    open override func processNewValue(_ value: T?) {
+        super.processNewValue(value)
+    }
+
 }

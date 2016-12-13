@@ -83,10 +83,9 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
         }
     }
     
-    var modelValue: [Model]? {
-        return self.value
+    open override func processNewValue(_ value: T?) {
+        super.processNewValue(value)
     }
-    
 }
 
 public postfix func *<T:Model>(right:ModelField<T>) -> ModelArrayField<T> {

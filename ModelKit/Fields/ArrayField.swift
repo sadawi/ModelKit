@@ -135,4 +135,18 @@ open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
     
     open func valueAdded(_ value: T) {
     }
+    
+    open override func processNewValue(_ value: [T]?) {
+        super.processNewValue(value)
+        if let value = value {
+            for item in value {
+                self.processNewValue(item)
+            }
+        }
+    }
+
+    open func processNewValue(_ value: T?) {
+    }
+    
+    
 }
