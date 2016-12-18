@@ -20,8 +20,8 @@ open class Field<T:Equatable>: BaseField<T> {
         }
     }
     
-    open func arrayField() -> ArrayField<T> {
-        return ArrayField(self)
+    open func arrayField(value: [T]?=[], name: String?=nil, priority: Int?=nil, key: String?=nil) -> ArrayField<T> {
+        return ArrayField(self, value: value, name: name, priority: priority, key: key)
     }
 
     open func copy() -> Field<T> {
