@@ -55,6 +55,10 @@ class ObservationTests: XCTestCase {
         entity.tags.value = ["red", "green"]
         
         XCTAssertEqual(changedValue ?? [], ["red", "green"])
+        
+        entity.tags.append("yellow")
+        
+        XCTAssertEqual(changedValue ?? [], ["red", "green", "yellow"])
     }
     
     func testObservation() {
