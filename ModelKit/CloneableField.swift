@@ -18,9 +18,9 @@ open class CloneableField<T: Equatable>: Field<T>, Cloneable {
             }
         }
         didSet {
-            if let prototype = self.prototype {
-                prototype --> self
-            }
+//            if let prototype = self.prototype {
+//                prototype --> self
+//            }
         }
     }
 
@@ -41,6 +41,17 @@ open class CloneableField<T: Equatable>: Field<T>, Cloneable {
      */
     public func detach() {
         self.prototype = nil
-        // TODO: detach value
+        // TODO: detach value (recursive) if it's cloneable.
+    }
+    
+    open func setValue(_ newValue: T?, detach: Bool) {
+        super.setValue(newValue)
+        if detach {
+            self.detach()
+        }
+    }
+    
+    open override func setValue(_ newValue: T?) {
+        self.setValue(newValue, detach: true)
     }
 }

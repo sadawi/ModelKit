@@ -165,13 +165,29 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
      */
     open var key:String?
     
+    
     /**
      The value contained in this field.  Note: it's always Optional.
+     Delegates to setValue/getValue methods.
      */
-    open var value:T? {
-        didSet {
-            self.valueUpdated(oldValue: oldValue, newValue: self.value)
+    public var value:T? {
+        set {
+            self.setValue(newValue)
         }
+        get {
+            return self.getValue()
+        }
+    }
+    private var _value: T?
+    
+    open func getValue() -> T? {
+        return _value
+    }
+    
+    open func setValue(_ newValue: T?) {
+        let oldValue = _value
+        _value = newValue
+        self.valueUpdated(oldValue: oldValue, newValue: newValue)
     }
     
     open var anyObjectValue:AnyObject? {

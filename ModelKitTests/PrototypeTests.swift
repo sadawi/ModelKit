@@ -37,16 +37,27 @@ class PrototypeTests: XCTestCase {
         let a = CloneableField<String>(key: "message")
         a.value = "hello"
         let b = a.clone()
+        XCTAssertNotNil(b.prototype)
+        XCTAssertTrue(b.prototype === a)
         
         XCTAssertEqual(b.key, a.key)
         
         XCTAssertEqual(b.value, a.value)
+        
+        // Value change should propagate to clone
         a.value = "goodbye"
         XCTAssertEqual(b.value, a.value)
+        
+        // Explicit detach
         b.detach()
-        b.value = "oh"
         a.value = "hi"
-        XCTAssertEqual(b.value, "oh")
+        XCTAssertEqual(b.value, "goodbye")
+        
+        // Implicit detach when setting value.
+        let c = a.clone()
+        c.value = "c"
+        a.value = "a"
+        XCTAssertEqual(c.value, "c")
     }
     
 }
