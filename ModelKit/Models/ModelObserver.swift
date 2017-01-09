@@ -8,11 +8,12 @@
 
 import Foundation
 
-public protocol ModelObserver {
+public protocol ModelObserver: class {
     func modelChanged(_ model: Model, at: FieldPath)
 }
 
 open class ModelObservation: Observation {
-    public typealias Action = ((Model) -> Void)
+    public typealias Action = ((Model, FieldPath) -> ())
     public var uuid = UUID()
+    public var onChange:Action?
 }

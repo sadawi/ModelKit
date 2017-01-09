@@ -10,7 +10,6 @@ import Foundation
 
 public typealias Identifier = String
 public typealias Interface = [String:FieldType]
-public typealias ModelObservationAction = ((Model, FieldPath) -> ())
 
 open class ModelValueTransformerContext: ValueTransformerContext {
     /**
@@ -512,11 +511,13 @@ open class Model: NSObject, NSCopying {
         return Model.prototype(for: self)
     }
     
-//    // MARK: - Observations
-//    public func addObserver(observer: ModelObserver, for: FieldPath, action: ModelObservationAction) {
-//        var observation = self.observations[observer.observerIdentifier] ?? Observation()
-//        observation.addAction(action, propertyPath: propertyPath)
-//        self.observations[observer.observerIdentifier] = observation
-//    }
+    open var observations = ObservationRegistry<ModelObservation>()
+
+    // MARK: - Observations
+    public func addObserver(observer: ModelObserver, for: FieldPath, action: @escaping ModelObservation.Action) {
+        let observation = self.observations.get(for: observer) ?? ModelObservation()
+        observation.onChange = action
+        self.observations.add(observation, for: observer)
+    }
 
 }

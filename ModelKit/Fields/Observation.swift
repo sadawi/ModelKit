@@ -10,6 +10,8 @@ import Foundation
 
 public protocol Observation: AnyObject {
     associatedtype Action
+    
+    var onChange:Action? { get set }
     var uuid: UUID { get }
 }
 
@@ -42,7 +44,7 @@ open class ValueObservation<T>: Observation, ValueObservable {
         }
     }
     
-    var onChange:Action?
+    public var onChange:Action?
     
     var getValue:((Void) -> T?)?
     
