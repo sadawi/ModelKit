@@ -157,5 +157,7 @@ extension ModelKitTests {
         m.addObserver { model, path in
             changedPath = path
         }
+        m["name"] = "Alice"
+        XCTAssertEqual(changedPath?.components ?? [], ["name"])
     }
 }

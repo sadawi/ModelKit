@@ -527,5 +527,12 @@ open class Model: NSObject, NSCopying {
         return observation
     }
 
+    public func removeObserver(_ observer: ModelObserver) {
+        self.observations.remove(for: observer)
+    }
+
+    public func removeAllObservers() {
+        self.observations.clear()
+    }
 
 }
