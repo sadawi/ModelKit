@@ -14,13 +14,13 @@ open class CloneableField<T: Equatable>: Field<T>, Cloneable {
     public var prototype: CloneType? {
         willSet {
             if let prototype = self.prototype {
-                prototype -/-> self
+                prototype.removeObserver(self)
             }
         }
         didSet {
-//            if let prototype = self.prototype {
-//                prototype --> self
-//            }
+            self.prototype?.addObserver(self) { [weak self] newValue -> Void in
+                self?.prototypeValueChanged(newValue)
+            }
         }
     }
 
@@ -53,5 +53,9 @@ open class CloneableField<T: Equatable>: Field<T>, Cloneable {
     
     open override func setValue(_ newValue: T?) {
         self.setValue(newValue, detach: true)
+    }
+    
+    open func prototypeValueChanged(_ newValue: T?) {
+        self.setValue(newValue, detach: false)
     }
 }
