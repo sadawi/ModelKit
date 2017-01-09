@@ -11,3 +11,8 @@ import Foundation
 public protocol ModelObserver {
     func modelChanged(_ model: Model, at: FieldPath)
 }
+
+open class ModelObservation: Observation {
+    public typealias Action = ((Model) -> Void)
+    public var uuid = UUID()
+}
