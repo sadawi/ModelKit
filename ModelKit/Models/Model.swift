@@ -233,6 +233,14 @@ open class Model: NSObject, NSCopying {
         return FieldPath(path, separator: ".")
     }
     
+    open func fieldPath(for field: FieldType) -> FieldPath? {
+        if let key = field.key {
+            return [key]
+        } else {
+            return nil
+        }
+    }
+    
     public var fields = Interface()
     
     /**
@@ -307,6 +315,15 @@ open class Model: NSObject, NSCopying {
      Performs any model-level field initialization your class may need, before any field values are set.
      */
     open func initializeField(_ field:FieldType) {
+        field.addObserver { [weak self] newValue in
+            self?.fieldValueChanged(field)
+        }
+    }
+    
+    open func fieldValueChanged(_ field: FieldType) {
+        if let path = self.fieldPath(for: field) {
+            self.notifyObservers(path: path)
+        }
     }
     
     public func visitAllFields(recursive:Bool = true, action:((FieldType) -> Void)) {
@@ -529,6 +546,13 @@ open class Model: NSObject, NSCopying {
         self.observations.add(observation)
         return observation
     }
+    
+    public func notifyObservers(path: FieldPath) {
+        self.observations.forEach { observation in
+            observation.onChange?(self, path)
+        }
+    }
+    
 
 
 }

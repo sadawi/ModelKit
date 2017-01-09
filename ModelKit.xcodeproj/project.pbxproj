@@ -64,6 +64,7 @@
 		22DAC6B81DF7FCF100108441 /* SimpleValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */; };
 		22DBA5871E24338900E904A4 /* ValueObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBA5861E24338900E904A4 /* ValueObservation.swift */; };
 		22DBA5891E243F4300E904A4 /* ObservationRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBA5881E243F4300E904A4 /* ObservationRegistry.swift */; };
+		22DBA58C1E24531A00E904A4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBA58B1E24531A00E904A4 /* Observable.swift */; };
 		902751C3FA18C7E0AF33260D /* Pods_ModelKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090DEBA661399D9997A81C45 /* Pods_ModelKitTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -138,6 +139,7 @@
 		22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleValueTransformer.swift; path = Fields/SimpleValueTransformer.swift; sourceTree = "<group>"; };
 		22DBA5861E24338900E904A4 /* ValueObservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueObservation.swift; path = Fields/ValueObservation.swift; sourceTree = "<group>"; };
 		22DBA5881E243F4300E904A4 /* ObservationRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationRegistry.swift; path = Fields/ObservationRegistry.swift; sourceTree = "<group>"; };
+		22DBA58B1E24531A00E904A4 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = Fields/Observable.swift; sourceTree = "<group>"; };
 		38A05B7372D948352D30FCD1 /* Pods-ModelKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.release.xcconfig"; sourceTree = "<group>"; };
 		B2EB45E0B156254A6D7C8539 /* Pods-ModelKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.debug.xcconfig"; sourceTree = "<group>"; };
 		DC22183A5F54223695D5D378 /* Pods-ModelKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKitTests/Pods-ModelKitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -211,9 +213,8 @@
 			children = (
 				220EF8EA1DF09C9400B702CC /* Observation.swift */,
 				22DBA5881E243F4300E904A4 /* ObservationRegistry.swift */,
-				220EF8E91DF09C9400B702CC /* ValueObservable.swift */,
-				220EF8EB1DF09C9400B702CC /* ValueObserver.swift */,
-				22DBA5861E24338900E904A4 /* ValueObservation.swift */,
+				22DBA58B1E24531A00E904A4 /* Observable.swift */,
+				22DBA58A1E2452FC00E904A4 /* values */,
 			);
 			name = observation;
 			sourceTree = "<group>";
@@ -437,6 +438,16 @@
 			name = observation;
 			sourceTree = "<group>";
 		};
+		22DBA58A1E2452FC00E904A4 /* values */ = {
+			isa = PBXGroup;
+			children = (
+				220EF8E91DF09C9400B702CC /* ValueObservable.swift */,
+				220EF8EB1DF09C9400B702CC /* ValueObserver.swift */,
+				22DBA5861E24338900E904A4 /* ValueObservation.swift */,
+			);
+			name = values;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -646,6 +657,7 @@
 				220EF8D11DF09C1600B702CC /* ModelArrayField.swift in Sources */,
 				220EF90E1DF09FF200B702CC /* Array+Difference.swift in Sources */,
 				220EF9101DF0A01F00B702CC /* DictionaryExtension.swift in Sources */,
+				22DBA58C1E24531A00E904A4 /* Observable.swift in Sources */,
 				22DBA5871E24338900E904A4 /* ValueObservation.swift in Sources */,
 				220EF8DC1DF09C4400B702CC /* ValueTransformable.swift in Sources */,
 				220EF9071DF09E3100B702CC /* TransformerCache.swift in Sources */,
