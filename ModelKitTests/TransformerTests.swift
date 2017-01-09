@@ -46,9 +46,10 @@ class TransformerTests: XCTestCase {
     
     func testDateTransformer() {
         let transformer = DateTransformer(dateFormat: "yyyy-MM-dd")
+        transformer.dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         let date = NSDate(timeIntervalSince1970: 0)
         let string = transformer.exportValue(date as Date) as? String
-        XCTAssertEqual("1969-12-31", string)
+        XCTAssertEqual("1970-01-01", string)
         
         let string2 = "2015-03-03"
         let date2 = transformer.importValue(string2)

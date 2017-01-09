@@ -14,7 +14,7 @@ private class Entity {
     let size = Field<Int>()
 }
 
-fileprivate class Person: Observable {
+fileprivate class Person: ValueObservable {
     typealias ValueType = String
     
     var value: String? {
@@ -25,7 +25,7 @@ fileprivate class Person: Observable {
     var observations = ObservationRegistry<String>()
 }
 
-fileprivate class View:Observer, Observable {
+fileprivate class View:ValueObserver, ValueObservable {
     var value:String? {
         didSet {
             self.notifyObservers()
@@ -33,7 +33,7 @@ fileprivate class View:Observer, Observable {
     }
     
     // Observer
-    func valueChanged<ObservableType:Observable>(_ value:String?, observable: ObservableType?) {
+    func observedValueChanged<ObservableType:ValueObservable>(_ value:String?, observable: ObservableType?) {
         self.value = value
     }
     

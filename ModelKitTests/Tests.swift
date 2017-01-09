@@ -23,7 +23,7 @@ fileprivate  class Entity {
     let color = EnumField<Color>(key: "color")
 }
 
-fileprivate class Person: Observable {
+fileprivate class Person: ValueObservable {
     typealias ValueType = String
     
     var value: String? {

@@ -15,22 +15,22 @@ import Foundation
  
  Note: The only reason this is a class protocol is that marking its methods as "mutating" seemed to cause segfaults!
  */
-public protocol Observable: class {
+public protocol ValueObservable: class {
     associatedtype ObservedValueType
     var value: ObservedValueType? { get set }
     var observations: ObservationRegistry<ObservedValueType> { get }
 }
 
-public extension Observable {
+public extension ValueObservable {
     /**
      Registers a value change observer.
      
      - parameter observer: an Observer object that will receive change notifications
      */
-    @discardableResult public func addObserver<U:Observer>(_ observer:U) -> U where U.ObservedValueType==ObservedValueType {
-        let observation = Observation<ObservedValueType>()
+    @discardableResult public func addObserver<U:ValueObserver>(_ observer:U) -> U where U.ObservedValueType==ObservedValueType {
+        let observation = ValueObservation<ObservedValueType>()
         observation.onChange = { (value:ObservedValueType?) -> Void in
-            observer.valueChanged(value, observable:self)
+            observer.observedValueChanged(value, observable:self)
         }
         observation.valueChanged(self.value)
         observation.getValue = { [weak self] in
@@ -45,7 +45,7 @@ public extension Observable {
      
      - parameter onChange: A closure to be run when the value changes
      */
-    public func addObserver(onChange:@escaping ((ObservedValueType?) -> Void)) -> Observation<ObservedValueType> {
+    public func addObserver(onChange:@escaping ((ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
         let observation = self.createClosureObservation(onChange: onChange)
         self.observations.add(observation)
         return observation
@@ -63,8 +63,8 @@ public extension Observable {
         return owner
     }
     
-    private func createClosureObservation(onChange:@escaping ((ObservedValueType?) -> Void)) -> Observation<ObservedValueType> {
-        let observation = Observation<ObservedValueType>()
+    private func createClosureObservation(onChange:@escaping ((ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
+        let observation = ValueObservation<ObservedValueType>()
         observation.onChange = onChange
         observation.valueChanged(self.value)
         observation.getValue = { [weak self] in
@@ -89,14 +89,14 @@ public extension Observable {
     /**
      Unregisters an observer
      */
-    public func removeObserver<U:Observer>(_ observer:U) where U.ObservedValueType==ObservedValueType {
+    public func removeObserver<U:ValueObserver>(_ observer:U) where U.ObservedValueType==ObservedValueType {
         self.observations.remove(for: observer)
     }
     
     /**
      Removes an observation (an object returned from a closure observation)
      */
-    public func removeObservation(_ observation:Observation<ObservedValueType>) {
+    public func removeObservation(_ observation:ValueObservation<ObservedValueType>) {
         self.observations.remove(observation)
     }
 
@@ -111,23 +111,23 @@ infix operator -->: ObservationPrecedence
 infix operator -/->: ObservationPrecedence
 infix operator <-->: ObservationPrecedence
 
-public func <--<T:Observable, U:Observer>(observer:U, observedField:T) where U.ObservedValueType == T.ObservedValueType {
+public func <--<T:ValueObservable, U:ValueObserver>(observer:U, observedField:T) where U.ObservedValueType == T.ObservedValueType {
     observedField.addObserver(observer)
 }
 
-@discardableResult public func --><T:Observable, U:Observer>(observable:T, observer:U) -> U where U.ObservedValueType == T.ObservedValueType {
+@discardableResult public func --><T:ValueObservable, U:ValueObserver>(observable:T, observer:U) -> U where U.ObservedValueType == T.ObservedValueType {
     return observable.addObserver(observer)
 }
 
-@discardableResult public func --><T:Observable>(observable:T, onChange:@escaping ((T.ObservedValueType?) -> Void)) -> Observation<T.ObservedValueType> {
+@discardableResult public func --><T:ValueObservable>(observable:T, onChange:@escaping ((T.ObservedValueType?) -> Void)) -> ValueObservation<T.ObservedValueType> {
     return observable.addObserver(onChange: onChange)
 }
 
-public func -/-><T:Observable, U:Observer>(observable:T, observer:U) where U.ObservedValueType == T.ObservedValueType {
+public func -/-><T:ValueObservable, U:ValueObserver>(observable:T, observer:U) where U.ObservedValueType == T.ObservedValueType {
     observable.removeObserver(observer)
 }
 
-public func <--><T, U>(left: T, right: U) where T:Observer, T:Observable, U:Observer, U:Observable, T.ObservedValueType == U.ObservedValueType {
+public func <--><T, U>(left: T, right: U) where T:ValueObserver, T:ValueObservable, U:ValueObserver, U:ValueObservable, T.ObservedValueType == U.ObservedValueType {
     // Order is important!
     right.addObserver(left)
     left.addObserver(right)
