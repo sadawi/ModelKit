@@ -33,9 +33,6 @@ public extension ValueObservable {
             observer.observedValueChanged(value, observable:self)
         }
         observation.valueChanged(self.value)
-        observation.getValue = { [weak self] in
-            return self?.value
-        }
         self.observations.add(observation, for: observer)
         return observer
     }
@@ -67,9 +64,6 @@ public extension ValueObservable {
         let observation = ValueObservation<ObservedValueType>()
         observation.onChange = onChange
         observation.valueChanged(self.value)
-        observation.getValue = { [weak self] in
-            return self?.value
-        }
         return observation
     }
     

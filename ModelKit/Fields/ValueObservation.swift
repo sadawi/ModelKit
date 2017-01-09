@@ -20,30 +20,16 @@ import Foundation
  a --> b --> c
  ```
  */
-open class ValueObservation<T>: Observation, ValueObservable {
+open class ValueObservation<T>: Observation {
     public typealias Action = ((T?) -> Void)
     public var uuid = UUID()
     
     public typealias ObservedValueType = T
     
-    open var observations = ObservationRegistry<ValueObservation<T>>()
-    
-    open var value:T? {
-        get {
-            return self.getValue?()
-        }
-        set {
-            self.onChange?(newValue)
-            self.notifyObservers()
-        }
-    }
-    
     public var onChange:Action?
     
-    var getValue:((Void) -> T?)?
-    
     open func valueChanged(_ newValue:T?) {
-        self.value = newValue
+        self.onChange?(newValue)
     }
 }
 
