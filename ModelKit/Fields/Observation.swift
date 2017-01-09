@@ -51,9 +51,9 @@ open class ValueObservation<T>: ValueObservable {
  - If an owner is dealloced, its observations will be nulled out.
  - TODO: Remove an owned observation without needing a reference to the owner.
  */
-open class ObservationRegistry<V> {
-    var ownedObservations:NSMapTable<AnyObject, ValueObservation<V>> = NSMapTable.weakToStrongObjects()
-    var unownedObservations = [UUID: ValueObservation<V>]()
+open class ObservationRegistry<T> {
+    var ownedObservations:NSMapTable<AnyObject, ValueObservation<T>> = NSMapTable.weakToStrongObjects()
+    var unownedObservations = [UUID: ValueObservation<T>]()
     
     public init() { }
 
@@ -62,26 +62,26 @@ open class ObservationRegistry<V> {
         self.ownedObservations.removeAllObjects()
     }
     
-    func forEach(_ closure:((ValueObservation<V>) -> Void)) {
+    func forEach(_ closure:((ValueObservation<T>) -> Void)) {
         self.unownedObservations.values.forEach(closure)
         
         let enumerator = self.ownedObservations.objectEnumerator()
         while let observation = enumerator?.nextObject() {
-            if let observation = observation as? ValueObservation<V> {
+            if let observation = observation as? ValueObservation<T> {
                 closure(observation)
             }
         }
     }
     
-    func get(for owner:AnyObject) -> ValueObservation<V>? {
+    func get(for owner:AnyObject) -> ValueObservation<T>? {
         return self.ownedObservations.object(forKey: owner)
     }
 
-    func add(_ observation:ValueObservation<V>) {
+    func add(_ observation:ValueObservation<T>) {
         self.unownedObservations[observation.uuid] = observation
     }
 
-    func add(_ observation:ValueObservation<V>, for owner: AnyObject) {
+    func add(_ observation:ValueObservation<T>, for owner: AnyObject) {
         self.ownedObservations.setObject(observation, forKey: owner)
     }
     
@@ -89,7 +89,7 @@ open class ObservationRegistry<V> {
         self.ownedObservations.removeObject(forKey: owner)
     }
 
-    func remove<V>(_ observation: ValueObservation<V>) {
+    func remove<T>(_ observation: ValueObservation<T>) {
         self.unownedObservations.removeValue(forKey: observation.uuid)
     }
 
