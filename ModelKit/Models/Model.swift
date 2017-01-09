@@ -247,7 +247,7 @@ open class Model: NSObject, NSCopying {
      Look at the instance's fields, do some introspection and processing.
      */
     internal func buildFields() {
-        for (key, field) in self.staticFields() {
+        for (key, field) in self.staticFields {
             if field.key == nil {
                 field.key = key
             }
@@ -279,13 +279,16 @@ open class Model: NSObject, NSCopying {
         }
     }
 
-    
+    lazy open var staticFields:Interface = {
+       return self.buildStaticFields()
+    }()
+
     /**
      Builds a mapping of keys to fields.  Keys are either the field's `key` property (if specified) or the property name of the field.
-     This can be slow, since it uses reflection.  If you find this to be a performance bottleneck, consider overriding this var
+     This can be slow, since it uses reflection.  If you find this to be a performance bottleneck, consider overriding the `staticFields` var
      with an explicit mapping of keys to fields.
      */
-    private func staticFields() -> Interface {
+    private func buildStaticFields() -> Interface {
         var result = Interface()
         let mirror = Mirror(reflecting: self)
         mirror.eachChild { child in
