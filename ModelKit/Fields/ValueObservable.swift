@@ -40,7 +40,7 @@ public extension ValueObservable {
     }
     
     @discardableResult public func addObserver(updateImmediately: Bool, onChange:@escaping ((Void) -> Void)) {
-        self.addObserver(updateImmediately: updateImmediately) { _ in
+        self.addObserver { (newValue: ObservedValueType?) in
             onChange()
         }
     }
