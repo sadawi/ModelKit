@@ -519,5 +519,13 @@ open class Model: NSObject, NSCopying {
         observation.onChange = action
         self.observations.add(observation, for: observer)
     }
+    
+    @discardableResult public func addObserver(onChange:@escaping ModelObservation.Action) -> ModelObservation {
+        let observation = ModelObservation()
+        observation.onChange = onChange
+        self.observations.add(observation)
+        return observation
+    }
+
 
 }

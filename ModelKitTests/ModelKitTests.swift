@@ -149,6 +149,13 @@ extension ModelKitTests {
 
 extension ModelKitTests {
     func testModelObservers() {
+        let m = Model()
+        m << Field<String>(key: "name")
+        m["name"] = "Bob"
         
+        var changedPath: FieldPath? = nil
+        m.addObserver { model, path in
+            changedPath = path
+        }
     }
 }
