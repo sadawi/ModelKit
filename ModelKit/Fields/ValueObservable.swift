@@ -113,7 +113,7 @@ infix operator -/->: ObservationPrecedence
 infix operator <-->: ObservationPrecedence
 
 public func <--<T:ValueObservable, U:ValueObserver>(observer:U, observable:T) where U.ObservedValueType == T.ObservedValueType {
-    observable.addObserver(observer, updateImmediately: true)
+    observable --> observer
 }
 
 @discardableResult public func --><T:ValueObservable, U:ValueObserver>(observable:T, observer:U) -> U where U.ObservedValueType == T.ObservedValueType {
