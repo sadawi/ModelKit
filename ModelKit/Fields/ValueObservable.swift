@@ -44,7 +44,7 @@ public extension ValueObservable {
      
      - parameter onChange: A closure to be run when the value changes
      */
-    public func addObserver(updateImmediately: Bool = false, onChange:@escaping ((ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
+    @discardableResult public func addObserver(updateImmediately: Bool = false, onChange:@escaping ((ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
         let observation = self.createClosureObservation(onChange: onChange)
         if updateImmediately {
             observation.valueChanged(self.value)
