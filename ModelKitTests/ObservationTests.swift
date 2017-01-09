@@ -12,6 +12,7 @@ import ModelKit
 private class Entity {
     let name = Field<String>()
     let size = Field<Int>()
+    let tags = Field<String>()*
 }
 
 fileprivate class Person: ValueObservable {
@@ -43,7 +44,23 @@ fileprivate class View:ValueObserver, ValueObservable {
 }
 
 class ObservationTests: XCTestCase {
-
+    func testArrayObservation() {
+        let entity = Entity()
+        
+        var changedValue: [String]? = nil
+        
+        entity.tags.addObserver { newValue in
+            changedValue = newValue
+        }
+        entity.tags.value = ["red", "green"]
+        
+        XCTAssertEqual(changedValue ?? [], ["red", "green"])
+        
+        entity.tags.append("yellow")
+        
+        XCTAssertEqual(changedValue ?? [], ["red", "green", "yellow"])
+    }
+    
     func testObservation() {
         let view = View()
         let entity = Entity()

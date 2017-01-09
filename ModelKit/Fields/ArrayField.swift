@@ -101,6 +101,13 @@ open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
         self.value = value
     }
     
+    open override func valueUpdated(oldValue: Array<T>?, newValue: Array<T>?) {
+        super.valueUpdated(oldValue: oldValue, newValue: newValue)
+        
+        // Consider any update a change
+        self.valueChanged()
+    }
+    
     open func append(_ value:T) {
         self.value?.append(value)
         self.valueAdded(value)
