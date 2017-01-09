@@ -260,7 +260,6 @@ open class Model: NSObject, NSCopying, Observable {
                 field.key = key
             }
             self.initializeField(field)
-            field.owner = self
             self.fields[key] = field
         }
     }
@@ -272,7 +271,7 @@ open class Model: NSObject, NSCopying, Observable {
     public func add(field: FieldType) {
         guard let key = field.key else { return }
 
-        field.owner = self
+        self.initializeField(field)
         self.fields[key] = field
     }
     
@@ -315,7 +314,8 @@ open class Model: NSObject, NSCopying, Observable {
      Performs any model-level field initialization your class may need, before any field values are set.
      */
     open func initializeField(_ field:FieldType) {
-        field.addObserver(updateImmediately: false) { [weak self] in
+        field.owner = self
+        field.addObserver { [weak self] in
             self?.fieldValueChanged(field)
         }
     }
