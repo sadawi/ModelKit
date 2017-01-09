@@ -31,7 +31,7 @@ fileprivate class Person: ValueObservable {
             self.notifyObservers()
         }
     }
-    var observations = ObservationRegistry<ValueObservation<String>>()
+    var observations = ObservationRegistry<String>()
 }
 
 class FieldTests: XCTestCase {
@@ -381,7 +381,7 @@ extension FieldTests {
         a["size"] = 10
         XCTAssertEqual(a["size"] as? Int, 10)
         
-        let field = a.field(at: "size")
+        let field = a.field(forKeyPath: "size")
         XCTAssert(field?.owner === a)
     }
 
