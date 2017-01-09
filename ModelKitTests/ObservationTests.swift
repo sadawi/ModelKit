@@ -33,7 +33,7 @@ fileprivate class View:ValueObserver, ValueObservable {
     }
     
     // Observer
-    func valueChanged<ObservableType:ValueObservable>(_ value:String?, observable: ObservableType?) {
+    func observedValueChanged<ObservableType:ValueObservable>(_ value:String?, observable: ObservableType?) {
         self.value = value
     }
     

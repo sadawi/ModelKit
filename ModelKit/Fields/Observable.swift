@@ -30,7 +30,7 @@ public extension ValueObservable {
     @discardableResult public func addObserver<U:ValueObserver>(_ observer:U) -> U where U.ObservedValueType==ObservedValueType {
         let observation = ValueObservation<ObservedValueType>()
         observation.onChange = { (value:ObservedValueType?) -> Void in
-            observer.valueChanged(value, observable:self)
+            observer.observedValueChanged(value, observable:self)
         }
         observation.valueChanged(self.value)
         observation.getValue = { [weak self] in
