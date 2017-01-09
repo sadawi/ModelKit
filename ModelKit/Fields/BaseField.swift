@@ -317,7 +317,7 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     
     // MARK: - Observation
     
-    open var observations = ObservationRegistry<T>()
+    open var observations = ObservationRegistry<ValueObservation<T>>()
     
     /**
      If a field is registered as an observer, it will set its own value to the observed new value.

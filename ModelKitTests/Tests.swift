@@ -31,7 +31,7 @@ fileprivate class Person: ValueObservable {
             self.notifyObservers()
         }
     }
-    var observations = ObservationRegistry<String>()
+    var observations = ObservationRegistry<ValueObservation<String>>()
 }
 
 class FieldTests: XCTestCase {

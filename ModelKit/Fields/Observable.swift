@@ -18,7 +18,7 @@ import Foundation
 public protocol ValueObservable: class {
     associatedtype ObservedValueType
     var value: ObservedValueType? { get set }
-    var observations: ObservationRegistry<ObservedValueType> { get }
+    var observations: ObservationRegistry<ValueObservation<ObservedValueType>> { get }
 }
 
 public extension ValueObservable {

@@ -22,7 +22,7 @@ fileprivate class Person: ValueObservable {
             self.notifyObservers()
         }
     }
-    var observations = ObservationRegistry<String>()
+    var observations = ObservationRegistry<ValueObservation<String>>()
 }
 
 fileprivate class View:ValueObserver, ValueObservable {
@@ -39,7 +39,7 @@ fileprivate class View:ValueObserver, ValueObservable {
     
     // Observable
     typealias ValueType = String
-    var observations = ObservationRegistry<ValueType>()
+    var observations = ObservationRegistry<ValueObservation<ValueType>>()
 }
 
 class ObservationTests: XCTestCase {

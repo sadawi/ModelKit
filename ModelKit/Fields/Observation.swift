@@ -8,6 +8,11 @@
 
 import Foundation
 
+public protocol Observation: AnyObject {
+    associatedtype Action
+    var uuid: UUID { get }
+}
+
 /**
  An object that holds a closure that is to be run when a value changes.
  
@@ -19,12 +24,13 @@ import Foundation
  a --> b --> c
  ```
  */
-open class ValueObservation<T>: ValueObservable {
-    internal var uuid = UUID()
+open class ValueObservation<T>: Observation, ValueObservable {
+    public typealias Action = ((T?) -> Void)
+    public var uuid = UUID()
     
     public typealias ObservedValueType = T
     
-    open var observations = ObservationRegistry<T>()
+    open var observations = ObservationRegistry<ValueObservation<T>>()
     
     open var value:T? {
         get {
@@ -36,7 +42,8 @@ open class ValueObservation<T>: ValueObservable {
         }
     }
     
-    var onChange:((T?) -> Void)?
+    var onChange:Action?
+    
     var getValue:((Void) -> T?)?
     
     open func valueChanged(_ newValue:T?) {
@@ -51,9 +58,9 @@ open class ValueObservation<T>: ValueObservable {
  - If an owner is dealloced, its observations will be nulled out.
  - TODO: Remove an owned observation without needing a reference to the owner.
  */
-open class ObservationRegistry<T> {
-    var ownedObservations:NSMapTable<AnyObject, ValueObservation<T>> = NSMapTable.weakToStrongObjects()
-    var unownedObservations = [UUID: ValueObservation<T>]()
+open class ObservationRegistry<ObservationType: Observation> {
+    var ownedObservations:NSMapTable<AnyObject, ObservationType> = NSMapTable.weakToStrongObjects()
+    var unownedObservations = [UUID: ObservationType]()
     
     public init() { }
 
@@ -62,26 +69,26 @@ open class ObservationRegistry<T> {
         self.ownedObservations.removeAllObjects()
     }
     
-    func forEach(_ closure:((ValueObservation<T>) -> Void)) {
+    func forEach(_ closure:((ObservationType) -> Void)) {
         self.unownedObservations.values.forEach(closure)
         
         let enumerator = self.ownedObservations.objectEnumerator()
         while let observation = enumerator?.nextObject() {
-            if let observation = observation as? ValueObservation<T> {
+            if let observation = observation as? ObservationType {
                 closure(observation)
             }
         }
     }
     
-    func get(for owner:AnyObject) -> ValueObservation<T>? {
+    func get(for owner:AnyObject) -> ObservationType? {
         return self.ownedObservations.object(forKey: owner)
     }
 
-    func add(_ observation:ValueObservation<T>) {
+    func add(_ observation:ObservationType) {
         self.unownedObservations[observation.uuid] = observation
     }
 
-    func add(_ observation:ValueObservation<T>, for owner: AnyObject) {
+    func add(_ observation:ObservationType, for owner: AnyObject) {
         self.ownedObservations.setObject(observation, forKey: owner)
     }
     
@@ -89,7 +96,7 @@ open class ObservationRegistry<T> {
         self.ownedObservations.removeObject(forKey: owner)
     }
 
-    func remove<T>(_ observation: ValueObservation<T>) {
+    func remove(_ observation: ObservationType) {
         self.unownedObservations.removeValue(forKey: observation.uuid)
     }
 
