@@ -22,7 +22,7 @@ fileprivate class Person: ValueObservable {
             self.notifyObservers()
         }
     }
-    var observations = ObservationRegistry<ValueObservation<String>>()
+    var observations = ObservationRegistry<String>()
 }
 
 fileprivate class View:ValueObserver, ValueObservable {
@@ -33,13 +33,13 @@ fileprivate class View:ValueObserver, ValueObservable {
     }
     
     // Observer
-    func observedValueChanged<ObservableType:ValueObservable>(_ value:String?, observable: ObservableType?) {
+    func valueChanged<ObservableType:ValueObservable>(_ value:String?, observable: ObservableType?) {
         self.value = value
     }
     
     // Observable
     typealias ValueType = String
-    var observations = ObservationRegistry<ValueObservation<ValueType>>()
+    var observations = ObservationRegistry<ValueType>()
 }
 
 class ObservationTests: XCTestCase {

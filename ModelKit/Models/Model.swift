@@ -196,20 +196,18 @@ open class Model: NSObject, NSCopying {
     /**
      Finds a field (possibly belonging to a child model) for a key path, specified as a list of strings.
      */
-    open func field(at path:FieldPath) -> FieldType? {
-        var path = path
-        
-        guard let firstComponent = path.shift() else { return nil }
+    open func field(forKeyPath components:[String]) -> FieldType? {
+        guard components.count > 0 else { return nil }
         
         let fields = self.fields
-        
-        if let firstField = fields[firstComponent] {
-            if path.length == 0 {
+        if let firstField = fields[components[0]] {
+            let remainingComponents = Array(components[1..<components.count])
+            if remainingComponents.count == 0 {
                 // No more components.  Just return the field
                 return firstField
             } else if let firstValue = firstField.anyValue as? Model {
                 // There are more components remaining, and we can keep traversing key paths
-                return firstValue.field(at: path)
+                return firstValue.field(forKeyPath: remainingComponents)
             }
         }
         return nil
@@ -219,8 +217,8 @@ open class Model: NSObject, NSCopying {
      Finds a field (possibly belonging to a child model) for a key path, specified as a single string.
      The string will be split using `componentsForKeyPath(_:)`.
      */
-    open func field(at path:String) -> FieldType? {
-        return field(at: self.fieldPath(path))
+    open func field(forKeyPath path:String) -> FieldType? {
+        return field(forKeyPath: self.keyPathComponents(path))
     }
     
     /**
@@ -229,8 +227,8 @@ open class Model: NSObject, NSCopying {
      
      To change the default behavior, you'll probably want to subclass.
      */
-    open func fieldPath(_ path:String) -> FieldPath {
-        return FieldPath(path, separator: ".")
+    open func keyPathComponents(_ path:String) -> [String] {
+        return path.components(separatedBy: ".")
     }
     
     public var fields = Interface()
@@ -268,13 +266,13 @@ open class Model: NSObject, NSCopying {
         self.fields[key] = field
     }
     
-    open subscript (keyPath: FieldPath) -> Any? {
+    open subscript (keyPath: String) -> Any? {
         get {
-            guard let field = self.field(at: keyPath) else { return nil }
+            guard let field = self.field(forKeyPath: keyPath) else { return nil }
             return field.anyValue
         }
         set {
-            guard let field = self.field(at: keyPath) else { return }
+            guard let field = self.field(forKeyPath: keyPath) else { return }
             field.anyValue = newValue
         }
     }
@@ -454,8 +452,8 @@ open class Model: NSObject, NSCopying {
      - parameter keyPath: The path to the field (possibly belonging to a child model) that has an error.
      - parameter message: A description of what's wrong.
      */
-    open func addError(at path:FieldPath, message:String) {
-        if let field = self.field(at: path) {
+    open func addError(forKeyPath path:String, message:String) {
+        if let field = self.field(forKeyPath: path) {
             field.addValidationError(message)
         }
     }
@@ -511,21 +509,4 @@ open class Model: NSObject, NSCopying {
         return Model.prototype(for: self)
     }
     
-    open var observations = ObservationRegistry<ModelObservation>()
-
-    // MARK: - Observations
-    public func addObserver(observer: ModelObserver, for: FieldPath, action: @escaping ModelObservation.Action) {
-        let observation = self.observations.get(for: observer) ?? ModelObservation()
-        observation.onChange = action
-        self.observations.add(observation, for: observer)
-    }
-    
-    @discardableResult public func addObserver(onChange:@escaping ModelObservation.Action) -> ModelObservation {
-        let observation = ModelObservation()
-        observation.onChange = onChange
-        self.observations.add(observation)
-        return observation
-    }
-
-
 }
