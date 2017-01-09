@@ -45,7 +45,7 @@ public func ==(lhs:ValidationState, rhs:ValidationState) -> Bool {
     }
 }
 
-public protocol FieldType:AnyObject {
+public protocol FieldType: Observable {
     var anyObjectValue: AnyObject? { get set }
     var anyValue: Any? { get set }
     var valueType:Any.Type { get }

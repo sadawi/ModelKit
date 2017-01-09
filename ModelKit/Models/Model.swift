@@ -22,7 +22,7 @@ public extension ValueTransformerContext {
     static let defaultModelContext = ModelValueTransformerContext(name: "model")
 }
 
-open class Model: NSObject, NSCopying {
+open class Model: NSObject, NSCopying, Observable {
     /**
      The class to instantiate, based on a dictionary value.  For example, your dictionary might include a "type" string.
      
@@ -315,7 +315,7 @@ open class Model: NSObject, NSCopying {
      Performs any model-level field initialization your class may need, before any field values are set.
      */
     open func initializeField(_ field:FieldType) {
-        field.addObserver { [weak self] newValue in
+        field.addObserver { [weak self] in
             self?.fieldValueChanged(field)
         }
     }
@@ -540,12 +540,19 @@ open class Model: NSObject, NSCopying {
         self.observations.add(observation, for: observer)
     }
     
-    @discardableResult public func addObserver(onChange:@escaping ModelObservation.Action) -> ModelObservation {
+    @discardableResult public func addObserver(updateImmediately: Bool = false, onChange:@escaping ModelObservation.Action) -> ModelObservation {
         let observation = ModelObservation()
         observation.onChange = onChange
         self.observations.add(observation)
         return observation
     }
+    
+    @discardableResult public func addObserver(updateImmediately: Bool, onChange:@escaping ((Void) -> Void)) {
+        self.addObserver(updateImmediately: updateImmediately) { _, _ in
+            onChange()
+        }
+    }
+
     
     public func notifyObservers(path: FieldPath) {
         self.observations.forEach { observation in

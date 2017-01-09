@@ -39,6 +39,12 @@ public extension ValueObservable {
         return observer
     }
     
+    @discardableResult public func addObserver(updateImmediately: Bool, onChange:@escaping ((Void) -> Void)) {
+        self.addObserver(updateImmediately: updateImmediately) { _ in
+            onChange()
+        }
+    }
+
     /**
      Registers a value change action.
      
