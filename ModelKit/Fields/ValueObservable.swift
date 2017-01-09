@@ -18,7 +18,7 @@ import Foundation
 public protocol ValueObservable: class {
     associatedtype ObservedValueType
     var value: ObservedValueType? { get set }
-    var observations: ObservationRegistry<ObservedValueType> { get }
+    var observations: ObservationRegistry<ValueObservation<ObservedValueType>> { get }
 }
 
 public extension ValueObservable {
@@ -27,14 +27,13 @@ public extension ValueObservable {
      
      - parameter observer: an Observer object that will receive change notifications
      */
-    @discardableResult public func addObserver<U:ValueObserver>(_ observer:U) -> U where U.ObservedValueType==ObservedValueType {
+    @discardableResult public func addObserver<U:ValueObserver>(_ observer:U, updateImmediately: Bool = false) -> U where U.ObservedValueType==ObservedValueType {
         let observation = ValueObservation<ObservedValueType>()
         observation.onChange = { (value:ObservedValueType?) -> Void in
-            observer.valueChanged(value, observable:self)
+            observer.observedValueChanged(value, observable:self)
         }
-        observation.valueChanged(self.value)
-        observation.getValue = { [weak self] in
-            return self?.value
+        if updateImmediately {
+            observation.valueChanged(self.value)
         }
         self.observations.add(observation, for: observer)
         return observer
@@ -45,8 +44,11 @@ public extension ValueObservable {
      
      - parameter onChange: A closure to be run when the value changes
      */
-    public func addObserver(onChange:@escaping ((ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
+    public func addObserver(updateImmediately: Bool = false, onChange:@escaping ((ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
         let observation = self.createClosureObservation(onChange: onChange)
+        if updateImmediately {
+            observation.valueChanged(self.value)
+        }
         self.observations.add(observation)
         return observation
     }
@@ -57,8 +59,11 @@ public extension ValueObservable {
      - parameter owner: The observation owner, used only as a key for registering the action
      - parameter onChange: A closure to be run when the value changes
      */
-    @discardableResult public func addObserver<U: AnyObject>(_ owner:U, onChange:@escaping ((ObservedValueType?) -> Void)) -> U {
+    @discardableResult public func addObserver<U: AnyObject>(_ owner:U, updateImmediately: Bool = false, onChange:@escaping ((ObservedValueType?) -> Void)) -> U {
         let observation = self.createClosureObservation(onChange: onChange)
+        if updateImmediately {
+            observation.valueChanged(self.value)
+        }
         self.observations.add(observation, for: owner)
         return owner
     }
@@ -66,10 +71,6 @@ public extension ValueObservable {
     private func createClosureObservation(onChange:@escaping ((ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
         let observation = ValueObservation<ObservedValueType>()
         observation.onChange = onChange
-        observation.valueChanged(self.value)
-        observation.getValue = { [weak self] in
-            return self?.value
-        }
         return observation
     }
     
@@ -111,16 +112,16 @@ infix operator -->: ObservationPrecedence
 infix operator -/->: ObservationPrecedence
 infix operator <-->: ObservationPrecedence
 
-public func <--<T:ValueObservable, U:ValueObserver>(observer:U, observedField:T) where U.ObservedValueType == T.ObservedValueType {
-    observedField.addObserver(observer)
+public func <--<T:ValueObservable, U:ValueObserver>(observer:U, observable:T) where U.ObservedValueType == T.ObservedValueType {
+    observable --> observer
 }
 
 @discardableResult public func --><T:ValueObservable, U:ValueObserver>(observable:T, observer:U) -> U where U.ObservedValueType == T.ObservedValueType {
-    return observable.addObserver(observer)
+    return observable.addObserver(observer, updateImmediately: true)
 }
 
 @discardableResult public func --><T:ValueObservable>(observable:T, onChange:@escaping ((T.ObservedValueType?) -> Void)) -> ValueObservation<T.ObservedValueType> {
-    return observable.addObserver(onChange: onChange)
+    return observable.addObserver(updateImmediately: true, onChange: onChange)
 }
 
 public func -/-><T:ValueObservable, U:ValueObserver>(observable:T, observer:U) where U.ObservedValueType == T.ObservedValueType {
@@ -129,7 +130,7 @@ public func -/-><T:ValueObservable, U:ValueObserver>(observable:T, observer:U) w
 
 public func <--><T, U>(left: T, right: U) where T:ValueObserver, T:ValueObservable, U:ValueObserver, U:ValueObservable, T.ObservedValueType == U.ObservedValueType {
     // Order is important!
-    right.addObserver(left)
-    left.addObserver(right)
+    left <-- right
+    left --> right
 }
 
