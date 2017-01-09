@@ -10,5 +10,5 @@ import Foundation
 
 public protocol ValueObserver:AnyObject {
     associatedtype ObservedValueType
-    func valueChanged<ObservableType:ValueObservable>(_ value:ObservedValueType?, observable:ObservableType?)
+    func observedValueChanged<ObservableType:ValueObservable>(_ value:ObservedValueType?, observable:ObservableType?)
 }

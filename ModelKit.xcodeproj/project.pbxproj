@@ -31,9 +31,9 @@
 		220EF8DE1DF09C6600B702CC /* MemoryModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8DD1DF09C6600B702CC /* MemoryModelStore.swift */; };
 		220EF8E11DF09C7100B702CC /* ModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8DF1DF09C7100B702CC /* ModelStore.swift */; };
 		220EF8E21DF09C7100B702CC /* ModelStoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8E01DF09C7100B702CC /* ModelStoreDelegate.swift */; };
-		220EF8EC1DF09C9400B702CC /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8E91DF09C9400B702CC /* Observable.swift */; };
+		220EF8EC1DF09C9400B702CC /* ValueObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8E91DF09C9400B702CC /* ValueObservable.swift */; };
 		220EF8ED1DF09C9400B702CC /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8EA1DF09C9400B702CC /* Observation.swift */; };
-		220EF8EE1DF09C9400B702CC /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8EB1DF09C9400B702CC /* Observer.swift */; };
+		220EF8EE1DF09C9400B702CC /* ValueObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8EB1DF09C9400B702CC /* ValueObserver.swift */; };
 		220EF8F11DF09CB500B702CC /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8EF1DF09CB500B702CC /* ModelManager.swift */; };
 		220EF8F21DF09CB500B702CC /* ModelValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8F01DF09CB500B702CC /* ModelValueTransformer.swift */; };
 		220EF8F61DF09D7700B702CC /* DictionarySerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF8F51DF09D7700B702CC /* DictionarySerializable.swift */; };
@@ -58,8 +58,12 @@
 		224F97FE1DF095A5001E851F /* ModelKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224F97FD1DF095A5001E851F /* ModelKitTests.swift */; };
 		224F98001DF095A5001E851F /* ModelKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 224F97F21DF095A5001E851F /* ModelKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		224F98461DF09642001E851F /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 224F98451DF09642001E851F /* Podfile */; };
+		22A1F2F31DFD2ED600241434 /* ModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1F2F21DFD2ED600241434 /* ModelObserver.swift */; };
+		22A1F2F51DFD2FB700241434 /* FieldPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1F2F41DFD2FB700241434 /* FieldPath.swift */; };
 		22DAC6B61DF7FCDD00108441 /* NumericValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */; };
 		22DAC6B81DF7FCF100108441 /* SimpleValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */; };
+		22DBA5871E24338900E904A4 /* ValueObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBA5861E24338900E904A4 /* ValueObservation.swift */; };
+		22DBA5891E243F4300E904A4 /* ObservationRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBA5881E243F4300E904A4 /* ObservationRegistry.swift */; };
 		902751C3FA18C7E0AF33260D /* Pods_ModelKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090DEBA661399D9997A81C45 /* Pods_ModelKitTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,9 +102,9 @@
 		220EF8DD1DF09C6600B702CC /* MemoryModelStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoryModelStore.swift; path = ModelStore/MemoryModelStore.swift; sourceTree = "<group>"; };
 		220EF8DF1DF09C7100B702CC /* ModelStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelStore.swift; path = ModelStore/ModelStore.swift; sourceTree = "<group>"; };
 		220EF8E01DF09C7100B702CC /* ModelStoreDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelStoreDelegate.swift; path = ModelStore/ModelStoreDelegate.swift; sourceTree = "<group>"; };
-		220EF8E91DF09C9400B702CC /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = Fields/Observable.swift; sourceTree = "<group>"; };
+		220EF8E91DF09C9400B702CC /* ValueObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueObservable.swift; path = Fields/ValueObservable.swift; sourceTree = "<group>"; };
 		220EF8EA1DF09C9400B702CC /* Observation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observation.swift; path = Fields/Observation.swift; sourceTree = "<group>"; };
-		220EF8EB1DF09C9400B702CC /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observer.swift; path = Fields/Observer.swift; sourceTree = "<group>"; };
+		220EF8EB1DF09C9400B702CC /* ValueObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueObserver.swift; path = Fields/ValueObserver.swift; sourceTree = "<group>"; };
 		220EF8EF1DF09CB500B702CC /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelManager.swift; path = Models/ModelManager.swift; sourceTree = "<group>"; };
 		220EF8F01DF09CB500B702CC /* ModelValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelValueTransformer.swift; path = Models/ModelValueTransformer.swift; sourceTree = "<group>"; };
 		220EF8F51DF09D7700B702CC /* DictionarySerializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DictionarySerializable.swift; path = Models/DictionarySerializable.swift; sourceTree = "<group>"; };
@@ -128,8 +132,12 @@
 		224F97FD1DF095A5001E851F /* ModelKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelKitTests.swift; sourceTree = "<group>"; };
 		224F97FF1DF095A5001E851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		224F98451DF09642001E851F /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		22A1F2F21DFD2ED600241434 /* ModelObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelObserver.swift; path = Models/ModelObserver.swift; sourceTree = "<group>"; };
+		22A1F2F41DFD2FB700241434 /* FieldPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FieldPath.swift; path = Models/FieldPath.swift; sourceTree = "<group>"; };
 		22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NumericValueTransformer.swift; path = Fields/NumericValueTransformer.swift; sourceTree = "<group>"; };
 		22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleValueTransformer.swift; path = Fields/SimpleValueTransformer.swift; sourceTree = "<group>"; };
+		22DBA5861E24338900E904A4 /* ValueObservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueObservation.swift; path = Fields/ValueObservation.swift; sourceTree = "<group>"; };
+		22DBA5881E243F4300E904A4 /* ObservationRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationRegistry.swift; path = Fields/ObservationRegistry.swift; sourceTree = "<group>"; };
 		38A05B7372D948352D30FCD1 /* Pods-ModelKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.release.xcconfig"; sourceTree = "<group>"; };
 		B2EB45E0B156254A6D7C8539 /* Pods-ModelKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.debug.xcconfig"; sourceTree = "<group>"; };
 		DC22183A5F54223695D5D378 /* Pods-ModelKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKitTests/Pods-ModelKitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -201,9 +209,11 @@
 		220EF8A91DF0975200B702CC /* observation */ = {
 			isa = PBXGroup;
 			children = (
-				220EF8E91DF09C9400B702CC /* Observable.swift */,
 				220EF8EA1DF09C9400B702CC /* Observation.swift */,
-				220EF8EB1DF09C9400B702CC /* Observer.swift */,
+				22DBA5881E243F4300E904A4 /* ObservationRegistry.swift */,
+				220EF8E91DF09C9400B702CC /* ValueObservable.swift */,
+				220EF8EB1DF09C9400B702CC /* ValueObserver.swift */,
+				22DBA5861E24338900E904A4 /* ValueObservation.swift */,
 			);
 			name = observation;
 			sourceTree = "<group>";
@@ -306,6 +316,7 @@
 			children = (
 				220EF8CE1DF09C1600B702CC /* ModelArrayField.swift */,
 				220EF8CF1DF09C1600B702CC /* ModelField.swift */,
+				22A1F2F41DFD2FB700241434 /* FieldPath.swift */,
 			);
 			name = fields;
 			sourceTree = "<group>";
@@ -384,6 +395,7 @@
 		224F98091DF095CB001E851F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				22A1F2EF1DFD2EB800241434 /* observation */,
 				220EF9151DF0A0FF00B702CC /* registry */,
 				220EF9121DF0A0C500B702CC /* utilities */,
 				220EF8AF1DF097B300B702CC /* extensions */,
@@ -415,6 +427,14 @@
 				220EF8A71DF0974900B702CC /* fields */,
 			);
 			name = Fields;
+			sourceTree = "<group>";
+		};
+		22A1F2EF1DFD2EB800241434 /* observation */ = {
+			isa = PBXGroup;
+			children = (
+				22A1F2F21DFD2ED600241434 /* ModelObserver.swift */,
+			);
+			name = observation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -619,34 +639,38 @@
 				220EF91D1DF0A2F700B702CC /* MemoryRegistry.swift in Sources */,
 				220EF9001DF09DEE00B702CC /* ValueTransformer.swift in Sources */,
 				220EF9021DF09DFD00B702CC /* Mirror+Super.swift in Sources */,
-				220EF8EE1DF09C9400B702CC /* Observer.swift in Sources */,
+				220EF8EE1DF09C9400B702CC /* ValueObserver.swift in Sources */,
 				22DAC6B81DF7FCF100108441 /* SimpleValueTransformer.swift in Sources */,
 				22450D031DF7880600614CC9 /* Response.swift in Sources */,
 				22450D041DF7880600614CC9 /* Router.swift in Sources */,
 				220EF8D11DF09C1600B702CC /* ModelArrayField.swift in Sources */,
 				220EF90E1DF09FF200B702CC /* Array+Difference.swift in Sources */,
 				220EF9101DF0A01F00B702CC /* DictionaryExtension.swift in Sources */,
+				22DBA5871E24338900E904A4 /* ValueObservation.swift in Sources */,
 				220EF8DC1DF09C4400B702CC /* ValueTransformable.swift in Sources */,
 				220EF9071DF09E3100B702CC /* TransformerCache.swift in Sources */,
 				220EF8ED1DF09C9400B702CC /* Observation.swift in Sources */,
 				22450CFC1DF785E900614CC9 /* TypeDictionary.swift in Sources */,
 				22450D021DF7880600614CC9 /* RequestEncoder.swift in Sources */,
 				220EF8DA1DF09C3800B702CC /* Field.swift in Sources */,
+				22A1F2F31DFD2ED600241434 /* ModelObserver.swift in Sources */,
 				220EF8D21DF09C1600B702CC /* ModelField.swift in Sources */,
 				220EF8E11DF09C7100B702CC /* ModelStore.swift in Sources */,
 				220EF8F21DF09CB500B702CC /* ModelValueTransformer.swift in Sources */,
 				2249CC411DF23A4500FD3ABD /* HasOwnerField.swift in Sources */,
 				220EF8F11DF09CB500B702CC /* ModelManager.swift in Sources */,
 				220EF8FE1DF09DE000B702CC /* ValidationRule.swift in Sources */,
+				22DBA5891E243F4300E904A4 /* ObservationRegistry.swift in Sources */,
 				220EF8D81DF09C3800B702CC /* BaseField.swift in Sources */,
 				220EF8F61DF09D7700B702CC /* DictionarySerializable.swift in Sources */,
 				22450D011DF7880600614CC9 /* RemoteModelStore.swift in Sources */,
 				22DAC6B61DF7FCDD00108441 /* NumericValueTransformer.swift in Sources */,
+				22A1F2F51DFD2FB700241434 /* FieldPath.swift in Sources */,
 				220EF8CC1DF09BEE00B702CC /* ArchiveModelStore.swift in Sources */,
 				220EF9201DF0A58100B702CC /* ValueTransformerContext.swift in Sources */,
 				220EF8DE1DF09C6600B702CC /* MemoryModelStore.swift in Sources */,
 				220EF8D01DF09C1600B702CC /* Model.swift in Sources */,
-				220EF8EC1DF09C9400B702CC /* Observable.swift in Sources */,
+				220EF8EC1DF09C9400B702CC /* ValueObservable.swift in Sources */,
 				220EF8E21DF09C7100B702CC /* ModelStoreDelegate.swift in Sources */,
 				220EF91E1DF0A2F700B702CC /* ModelRegistry.swift in Sources */,
 				220EF8FC1DF09DC600B702CC /* DateTransformer.swift in Sources */,
