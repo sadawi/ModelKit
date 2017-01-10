@@ -159,5 +159,17 @@ extension ModelKitTests {
         }
         m["name"] = "Alice"
         XCTAssertEqual(changedPath?.components ?? [], ["name"])
+
+        let n = Model()
+        n << ModelField<Model>(key: "person")
+        n["person"] = m
+        
+        var nChangedPath: FieldPath? = nil
+        n.addObserver { model, path in
+            nChangedPath = path
+        }
+        m["name"] = "Joe"
+        XCTAssertEqual(nChangedPath?.components ?? [], ["person", "name"])
+
     }
 }
