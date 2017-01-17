@@ -28,7 +28,7 @@ open class ValueObservation<T>: Observation {
     
     public var action:Action?
     
-    open func valueChanged(_ newValue:T?) {
+    open func perform(newValue:T?) {
         self.action?(newValue)
     }
 }

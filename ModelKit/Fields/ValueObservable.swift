@@ -33,7 +33,7 @@ public extension ValueObservable {
             observer.observedValueChanged(value, observable:self)
         }
         if updateImmediately {
-            observation.valueChanged(self.value)
+            observation.perform(newValue: self.value)
         }
         self.observations.add(observation, for: observer)
         return observer
@@ -53,7 +53,7 @@ public extension ValueObservable {
     @discardableResult public func addObserver(updateImmediately: Bool = false, action:@escaping ((ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
         let observation = self.createClosureObservation(action: action)
         if updateImmediately {
-            observation.valueChanged(self.value)
+            observation.perform(newValue: self.value)
         }
         self.observations.add(observation)
         return observation
@@ -68,7 +68,7 @@ public extension ValueObservable {
     @discardableResult public func addObserver<U: AnyObject>(_ owner:U, updateImmediately: Bool = false, action:@escaping ((ObservedValueType?) -> Void)) -> U {
         let observation = self.createClosureObservation(action: action)
         if updateImmediately {
-            observation.valueChanged(self.value)
+            observation.perform(newValue: self.value)
         }
         self.observations.add(observation, for: owner)
         return owner
@@ -82,7 +82,7 @@ public extension ValueObservable {
     
     public func notifyObservers() {
         self.observations.forEach { observation in
-            observation.valueChanged(self.value)
+            observation.perform(newValue: self.value)
         }
     }
     
