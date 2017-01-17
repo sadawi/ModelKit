@@ -542,13 +542,10 @@ open class Model: NSObject, NSCopying, Observable {
     open var observations = ObservationRegistry<ModelObservation>()
 
     // MARK: - Observations
-    public func addObserver(observer: ModelObserver, for fieldPath: FieldPath, action: @escaping ModelObservation.Action) {
-        self.observations.add(ModelObservation(fieldPath: fieldPath, action: action), for: observer)
-    }
     
-    @discardableResult public func addObserver(updateImmediately: Bool = false, action:@escaping ModelObservation.Action) -> ModelObservation {
-        let observation = ModelObservation(action: action)
-        self.observations.add(observation)
+    @discardableResult public func addObserver(_ observer: AnyObject?=nil, for fieldPath: FieldPath?=nil, updateImmediately: Bool = false, action:@escaping ModelObservation.Action) -> ModelObservation {
+        let observation = ModelObservation(fieldPath: fieldPath, action: action)
+        self.observations.add(observation, for: observer)
         return observation
     }
     
@@ -566,7 +563,7 @@ open class Model: NSObject, NSCopying, Observable {
     }
     
 
-    public func removeObserver(_ observer: ModelObserver) {
+    public func removeObserver(_ observer: AnyObject) {
         self.observations.remove(for: observer)
     }
 

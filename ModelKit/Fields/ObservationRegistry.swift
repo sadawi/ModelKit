@@ -43,11 +43,9 @@ open class ObservationRegistry<ObservationType: Observation> {
         }
     }
     
-    func add(_ observation:ObservationType) {
-        self.add(observation, for: NSNull())
-    }
-    
-    func add(_ observation:ObservationType, for owner: AnyObject) {
+    func add(_ observation:ObservationType, for owner: AnyObject?=nil) {
+        let owner = owner ?? NSNull()
+        
         var observations: [UUID: ObservationType]
         if let existing = self.observations.object(forKey: owner) as? [UUID: ObservationType] {
             observations = existing
