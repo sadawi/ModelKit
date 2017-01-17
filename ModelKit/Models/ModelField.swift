@@ -18,6 +18,8 @@ public protocol ModelFieldType: FieldType {
     var ownerModel: Model? { get set }
     var foreignKey:Bool { get set }
     var cascadeDelete: Bool { get }
+    
+    func addObserver(updateImmediately: Bool, onChange: @escaping ((FieldPath) -> Void))
 
     func inverseValueRemoved(_ value: Model?)
     func inverseValueAdded(_ value: Model?)
@@ -31,6 +33,10 @@ public extension ModelFieldType {
         set {
             self.owner = newValue
         }
+    }
+    
+    public func addObserver(onChange: @escaping ((FieldPath) -> Void)) {
+        self.addObserver(updateImmediately: false, onChange: onChange)
     }
 }
 
@@ -124,6 +130,10 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
     
     open override func processNewValue(_ value: T?) {
         super.processNewValue(value)
+    }
+    
+    open func addObserver(updateImmediately: Bool, onChange: @escaping ((FieldPath) -> Void)) {
+        // TODO
     }
 
 }

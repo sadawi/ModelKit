@@ -315,14 +315,22 @@ open class Model: NSObject, NSCopying, Observable {
      */
     open func initializeField(_ field:FieldType) {
         field.owner = self
-        field.addObserver { [weak self] in
-            self?.fieldValueChanged(field)
+        
+        if let modelField = field as? ModelFieldType {
+            modelField.addObserver { [weak self] (path:FieldPath) -> Void in
+                self?.fieldValueChanged(field, at: path)
+            }
+        } else {
+            field.addObserver { [weak self] in
+                self?.fieldValueChanged(field, at: [])
+            }
         }
     }
     
-    open func fieldValueChanged(_ field: FieldType) {
+    open func fieldValueChanged(_ field: FieldType, at relativePath: FieldPath) {
         if let path = self.fieldPath(for: field) {
-            self.notifyObservers(path: path)
+            let fullPath = path.appending(path: relativePath)
+            self.notifyObservers(path: fullPath)
         }
     }
     
