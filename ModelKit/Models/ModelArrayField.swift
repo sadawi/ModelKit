@@ -87,7 +87,7 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
         super.processNewValue(value)
     }
     
-    open func addObserver(updateImmediately: Bool, onChange: @escaping ((FieldPath) -> Void)) {
+    open func addObserver(updateImmediately: Bool, action: @escaping ((FieldPath) -> Void)) {
         // TODO
     }
 
