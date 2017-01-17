@@ -542,15 +542,12 @@ open class Model: NSObject, NSCopying, Observable {
     open var observations = ObservationRegistry<ModelObservation>()
 
     // MARK: - Observations
-    public func addObserver(observer: ModelObserver, for: FieldPath, action: @escaping ModelObservation.Action) {
-        let observation = self.observations.get(for: observer) ?? ModelObservation()
-        observation.action = action
-        self.observations.add(observation, for: observer)
+    public func addObserver(observer: ModelObserver, for fieldPath: FieldPath, action: @escaping ModelObservation.Action) {
+        self.observations.add(ModelObservation(fieldPath: fieldPath, action: action), for: observer)
     }
     
     @discardableResult public func addObserver(updateImmediately: Bool = false, action:@escaping ModelObservation.Action) -> ModelObservation {
-        let observation = ModelObservation()
-        observation.action = action
+        let observation = ModelObservation(action: action)
         self.observations.add(observation)
         return observation
     }

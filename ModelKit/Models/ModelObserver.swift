@@ -17,4 +17,9 @@ open class ModelObservation: Observation {
     public var uuid = UUID()
     public var fieldPath: FieldPath?
     public var action:Action?
+    
+    public init(fieldPath: FieldPath?=nil, action: @escaping Action) {
+        self.action = action
+        self.fieldPath = fieldPath
+    }
 }
