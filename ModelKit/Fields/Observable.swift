@@ -10,11 +10,11 @@ import Foundation
 
 public protocol Observable: class {
     /// A minimal observation
-    func addObserver(updateImmediately: Bool, onChange:@escaping ((Void) -> Void))
+    func addObserver(updateImmediately: Bool, action:@escaping ((Void) -> Void))
 }
 
 public extension Observable {
-    func addObserver(onChange:@escaping ((Void) -> Void)) {
-        self.addObserver(updateImmediately: false, onChange: onChange)
+    func addObserver(action:@escaping ((Void) -> Void)) {
+        self.addObserver(updateImmediately: false, action: action)
     }
 }

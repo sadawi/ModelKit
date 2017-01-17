@@ -544,27 +544,27 @@ open class Model: NSObject, NSCopying, Observable {
     // MARK: - Observations
     public func addObserver(observer: ModelObserver, for: FieldPath, action: @escaping ModelObservation.Action) {
         let observation = self.observations.get(for: observer) ?? ModelObservation()
-        observation.onChange = action
+        observation.action = action
         self.observations.add(observation, for: observer)
     }
     
-    @discardableResult public func addObserver(updateImmediately: Bool = false, onChange:@escaping ModelObservation.Action) -> ModelObservation {
+    @discardableResult public func addObserver(updateImmediately: Bool = false, action:@escaping ModelObservation.Action) -> ModelObservation {
         let observation = ModelObservation()
-        observation.onChange = onChange
+        observation.action = action
         self.observations.add(observation)
         return observation
     }
     
-    @discardableResult public func addObserver(updateImmediately: Bool, onChange:@escaping ((Void) -> Void)) {
+    @discardableResult public func addObserver(updateImmediately: Bool, action:@escaping ((Void) -> Void)) {
         self.addObserver(updateImmediately: updateImmediately) { _, _ in
-            onChange()
+            action()
         }
     }
 
     
     public func notifyObservers(path: FieldPath) {
         self.observations.forEach { observation in
-            observation.onChange?(self, path)
+            observation.action?(self, path)
         }
     }
     

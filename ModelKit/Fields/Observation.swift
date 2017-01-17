@@ -11,6 +11,6 @@ import Foundation
 public protocol Observation: AnyObject {
     associatedtype Action
     
-    var onChange:Action? { get set }
+    var action:Action? { get set }
     var uuid: UUID { get }
 }

@@ -16,5 +16,5 @@ open class ModelObservation: Observation {
     public typealias Action = ((Model, FieldPath) -> ())
     public var uuid = UUID()
     public var fieldPath: FieldPath?
-    public var onChange:Action?
+    public var action:Action?
 }

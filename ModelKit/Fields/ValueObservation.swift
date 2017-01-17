@@ -26,9 +26,9 @@ open class ValueObservation<T>: Observation {
     
     public typealias ObservedValueType = T
     
-    public var onChange:Action?
+    public var action:Action?
     
     open func valueChanged(_ newValue:T?) {
-        self.onChange?(newValue)
+        self.action?(newValue)
     }
 }
