@@ -22,4 +22,14 @@ open class ModelObservation: Observation {
         self.action = action
         self.fieldPath = fieldPath
     }
+    
+    public func perform(model: Model, fieldPath: FieldPath) {
+        if let selfFieldPath = self.fieldPath {
+            if selfFieldPath.matches(fieldPath) {
+                self.action?(model, fieldPath)
+            }
+        } else {
+            self.action?(model, fieldPath)
+        }
+    }
 }

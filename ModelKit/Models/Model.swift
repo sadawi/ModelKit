@@ -561,7 +561,7 @@ open class Model: NSObject, NSCopying, Observable {
     
     public func notifyObservers(path: FieldPath) {
         self.observations.forEach { observation in
-            observation.action?(self, path)
+            observation.perform(model: self, fieldPath: path)
         }
     }
     
