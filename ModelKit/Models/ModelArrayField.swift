@@ -17,7 +17,9 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
     open var cascadeDelete: Bool = true
     
     private var modelLookup: [Identifier: T] = [:]
-    
+
+    public var modelObservations = ObservationRegistry<ModelObservation>()
+
     open override var value:[T]? {
         didSet {
             let oldValues = oldValue ?? []

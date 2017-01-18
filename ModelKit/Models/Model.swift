@@ -315,12 +315,13 @@ open class Model: NSObject, NSCopying, Observable {
      */
     open func initializeField(_ field:FieldType) {
         field.owner = self
-        
+    
         if let modelField = field as? ModelFieldType {
-            modelField.addObserver { [weak self] (path:FieldPath) -> Void in
-                self?.fieldValueChanged(field, at: path)
+            modelField.addModelObserver(self, updateImmediately: false) { [weak self] model, fieldPath in
+                self?.fieldValueChanged(field, at: fieldPath)
             }
         } else {
+            // Can't add observeration blocks that take values, since the FieldType protocol doesn't know about the value type
             field.addObserver { [weak self] in
                 self?.fieldValueChanged(field, at: [])
             }

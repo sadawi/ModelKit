@@ -19,10 +19,13 @@ public protocol ModelFieldType: FieldType {
     var foreignKey:Bool { get set }
     var cascadeDelete: Bool { get }
     
-    func addObserver(updateImmediately: Bool, action: @escaping ((FieldPath) -> Void))
-
     func inverseValueRemoved(_ value: Model?)
     func inverseValueAdded(_ value: Model?)
+    
+    var modelObservations: ObservationRegistry<ModelObservation> { get }
+    
+    func addModelObserver(_ observer: AnyObject?, updateImmediately: Bool, action: @escaping ((Model, FieldPath) -> Void))
+    func removeModelObserver(_ observer: AnyObject)
 }
 
 public extension ModelFieldType {
@@ -35,8 +38,13 @@ public extension ModelFieldType {
         }
     }
     
-    public func addObserver(action: @escaping ((FieldPath) -> Void)) {
-        self.addObserver(updateImmediately: false, action: action)
+    public func addModelObserver(_ observer: AnyObject?, updateImmediately: Bool, action: @escaping ((Model, FieldPath) -> Void)) {
+        let observation = ModelObservation(fieldPath: nil, action: action)
+        self.modelObservations.add(observation, for: observer)
+    }
+    
+    public func removeModelObserver(_ observer: AnyObject) {
+        self.modelObservations.remove(for: observer)
     }
 }
 
@@ -49,6 +57,8 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
     open var cascadeDelete: Bool = true
     
     public var findInverse: ((T)->ModelFieldType)?
+    
+    public var modelObservations = ObservationRegistry<ModelObservation>()
     
     public init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil, foreignKey:Bool=false, inverse: ((T)->ModelFieldType)?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
@@ -92,6 +102,13 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
                 let inverseField = self.inverse(on: value)
                 inverseField?.inverseValueAdded(self.ownerModel)
             }
+            
+            oldValue?.removeObserver(self)
+            newValue?.addObserver(self) { [weak self] model, path in
+                self?.modelObservations.forEach { observation in
+                    observation.perform(model: model, fieldPath: path)
+                }
+            }
         }
     }
     
@@ -131,9 +148,4 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
     open override func processNewValue(_ value: T?) {
         super.processNewValue(value)
     }
-    
-    open func addObserver(updateImmediately: Bool, action: @escaping ((FieldPath) -> Void)) {
-        // TODO
-    }
-
 }

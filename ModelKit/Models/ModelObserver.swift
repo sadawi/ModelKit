@@ -13,7 +13,7 @@ public protocol ModelObserver: class {
 }
 
 open class ModelObservation: Observation {
-    public typealias Action = ((Model, FieldPath) -> ())
+    public typealias Action = ((Model, FieldPath) -> Void)
     public var uuid = UUID()
     public var fieldPath: FieldPath?
     public var action:Action?
