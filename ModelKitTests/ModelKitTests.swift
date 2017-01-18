@@ -162,6 +162,7 @@ extension ModelKitTests {
 
         let n = Model()
         n << ModelField<Model>(key: "person")
+        n << Field<String>(key: "color")
         n["person"] = m
         
         var nChangedPath: FieldPath? = nil
@@ -171,5 +172,26 @@ extension ModelKitTests {
         m["name"] = "Joe"
         XCTAssertEqual(nChangedPath?.components ?? [], ["person", "name"])
 
+        
+        // Observe only specified paths
+        
+        var changedPathC: FieldPath? = nil
+        
+        n.addObserver(for: ["person", "name"]) { model, path in
+            changedPathC = path
+        }
+        n["color"] = "blue"
+        XCTAssertEqual(nChangedPath?.components ?? [], ["color"])
+        XCTAssertNil(changedPathC)
+        
+        m["name"] = "Jimmy"
+        
+        XCTAssertEqual(changedPathC?.components ?? [], ["person", "name"])
+        
+        // Now replace the parent of the observed path. Should also trigger observation.
+        changedPathC = nil
+        let person2 = Model()
+        n["person"] = person2
+        XCTAssertEqual(changedPathC?.components ?? [], ["person"])
     }
 }

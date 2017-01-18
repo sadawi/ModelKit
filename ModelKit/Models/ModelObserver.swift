@@ -23,12 +23,16 @@ open class ModelObservation: Observation {
         self.fieldPath = fieldPath
     }
     
-    public func perform(model: Model, fieldPath: FieldPath) {
+    open func matches(fieldPath: FieldPath) -> Bool {
         if let selfFieldPath = self.fieldPath {
-            if selfFieldPath.matches(fieldPath) {
-                self.action?(model, fieldPath)
-            }
+            return selfFieldPath.matches(fieldPath)
         } else {
+            return true
+        }
+    }
+    
+    public func perform(model: Model, fieldPath: FieldPath) {
+        if self.matches(fieldPath: fieldPath) {
             self.action?(model, fieldPath)
         }
     }
