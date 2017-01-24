@@ -101,12 +101,12 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
                 }
             }
             
-            if let value = oldValue, let inverseField = self.inverse(on: value) {
-                inverseField.inverseValueRemoved(self.ownerModel)
-            }
-            if let value = newValue, let inverseField = self.inverse(on: value) {
-                inverseField.inverseValueAdded(self.ownerModel)
-            }
+//            if let value = oldValue, let inverseField = self.inverse(on: value) {
+//                inverseField.inverseValueRemoved(self.ownerModel)
+//            }
+//            if let value = newValue, let inverseField = self.inverse(on: value) {
+//                inverseField.inverseValueAdded(self.ownerModel)
+//            }
         }
     }
     
