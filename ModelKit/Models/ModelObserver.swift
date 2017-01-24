@@ -23,9 +23,10 @@ open class ModelObservation: Observation {
         self.fieldPath = fieldPath
     }
     
-    open func matches(fieldPath: FieldPath) -> Bool {
-        if let selfFieldPath = self.fieldPath {
-            return selfFieldPath.matches(fieldPath)
+    open func matches(fieldPath changedFieldPath: FieldPath) -> Bool {
+        if let observedFieldPath = self.fieldPath {
+            // Either or both may be a prefix path, which must be the receiver of a .matches() call
+            return changedFieldPath.matches(observedFieldPath) || observedFieldPath.matches(changedFieldPath)
         } else {
             return true
         }

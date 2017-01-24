@@ -316,16 +316,18 @@ open class Model: NSObject, NSCopying, Observable {
     open func initializeField(_ field:FieldType) {
         field.owner = self
     
+        // Can't add observeration blocks that take values, since the FieldType protocol doesn't know about the value type
+        field.addObserver { [weak self] in
+            self?.fieldValueChanged(field, at: [])
+        }
+
+        // If it's a model field, add a deep observer for changes on its value.
         if let modelField = field as? ModelFieldType {
             modelField.addModelObserver(self, updateImmediately: false) { [weak self] model, fieldPath in
                 self?.fieldValueChanged(field, at: fieldPath)
             }
-        } else {
-            // Can't add observeration blocks that take values, since the FieldType protocol doesn't know about the value type
-            field.addObserver { [weak self] in
-                self?.fieldValueChanged(field, at: [])
-            }
         }
+        
     }
     
     open func fieldValueChanged(_ field: FieldType, at relativePath: FieldPath) {
@@ -558,6 +560,10 @@ open class Model: NSObject, NSCopying, Observable {
 
     
     public func notifyObservers(path: FieldPath) {
+        // Changing a value at a path implies a change of all child paths. Notify accordingly.
+        var path = path
+        path.isPrefix = true
+        
         self.observations.forEach { observation in
             observation.perform(model: self, fieldPath: path)
         }
