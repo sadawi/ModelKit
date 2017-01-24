@@ -94,20 +94,18 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
         super.valueUpdated(oldValue: oldValue, newValue: newValue)
         
         if oldValue != newValue {
-            if let value = oldValue {
-                let inverseField = self.inverse(on: value)
-                inverseField?.inverseValueRemoved(self.ownerModel)
-            }
-            if let value = newValue {
-                let inverseField = self.inverse(on: value)
-                inverseField?.inverseValueAdded(self.ownerModel)
-            }
-            
             oldValue?.removeObserver(self)
             newValue?.addObserver(self) { [weak self] model, path in
                 self?.modelObservations.forEach { observation in
                     observation.perform(model: model, fieldPath: path)
                 }
+            }
+            
+            if let value = oldValue, let inverseField = self.inverse(on: value) {
+                inverseField.inverseValueRemoved(self.ownerModel)
+            }
+            if let value = newValue, let inverseField = self.inverse(on: value) {
+                inverseField.inverseValueAdded(self.ownerModel)
             }
         }
     }

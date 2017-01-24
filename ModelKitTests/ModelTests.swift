@@ -122,14 +122,16 @@ class ModelTests: XCTestCase {
     func testInverseFields() {
         let person1 = Person()
         let profileA = Profile()
+        let profileB = Profile()
         
+        // Setting side A of 1:1 field should also set inverse.
         person1.profile.value = profileA
         XCTAssertEqual(profileA.person.value, person1)
         
-        let profileB = Profile()
+        // Set side B of 1:1 field. Should also set new side A, and nil out original side A.
         profileB.person.value = person1
         XCTAssertEqual(person1.profile.value, profileB)
-        
+
         XCTAssertNil(profileA.person.value)
         
         let company1 = Company()
