@@ -18,9 +18,14 @@ public protocol ModelFieldType: FieldType {
     var ownerModel: Model? { get set }
     var foreignKey:Bool { get set }
     var cascadeDelete: Bool { get }
-
+    
     func inverseValueRemoved(_ value: Model?)
     func inverseValueAdded(_ value: Model?)
+    
+    var modelObservations: ObservationRegistry<ModelObservation> { get }
+    
+    func addModelObserver(_ observer: AnyObject?, updateImmediately: Bool, action: @escaping ModelObservation.Action)
+    func removeModelObserver(_ observer: AnyObject)
 }
 
 public extension ModelFieldType {
@@ -31,6 +36,15 @@ public extension ModelFieldType {
         set {
             self.owner = newValue
         }
+    }
+    
+    public func addModelObserver(_ observer: AnyObject?, updateImmediately: Bool, action: @escaping ModelObservation.Action) {
+        let observation = ModelObservation(fieldPath: nil, action: action)
+        self.modelObservations.add(observation, for: observer)
+    }
+    
+    public func removeModelObserver(_ observer: AnyObject) {
+        self.modelObservations.remove(for: observer)
     }
 }
 
@@ -43,6 +57,8 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
     open var cascadeDelete: Bool = true
     
     public var findInverse: ((T)->ModelFieldType)?
+    
+    public var modelObservations = ObservationRegistry<ModelObservation>()
     
     public init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil, foreignKey:Bool=false, inverse: ((T)->ModelFieldType)?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
@@ -78,13 +94,18 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
         super.valueUpdated(oldValue: oldValue, newValue: newValue)
         
         if oldValue != newValue {
-            if let value = oldValue {
-                let inverseField = self.inverse(on: value)
-                inverseField?.inverseValueRemoved(self.ownerModel)
+            oldValue?.removeObserver(self)
+            newValue?.addObserver(self) { [weak self] model, path, seen in
+                self?.modelObservations.forEach { observation in
+                    observation.perform(model: model, fieldPath: path, seen: &seen)
+                }
             }
-            if let value = newValue {
-                let inverseField = self.inverse(on: value)
-                inverseField?.inverseValueAdded(self.ownerModel)
+            
+            if let value = oldValue, let inverseField = self.inverse(on: value) {
+                inverseField.inverseValueRemoved(self.ownerModel)
+            }
+            if let value = newValue, let inverseField = self.inverse(on: value) {
+                inverseField.inverseValueAdded(self.ownerModel)
             }
         }
     }
@@ -125,5 +146,4 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
     open override func processNewValue(_ value: T?) {
         super.processNewValue(value)
     }
-
 }

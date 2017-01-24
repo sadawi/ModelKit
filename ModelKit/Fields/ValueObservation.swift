@@ -21,14 +21,14 @@ import Foundation
  ```
  */
 open class ValueObservation<T>: Observation {
-    public typealias Action = ((T?) -> Void)
+    public typealias Action = ((T?, T?) -> Void)
     public var uuid = UUID()
     
     public typealias ObservedValueType = T
     
-    public var onChange:Action?
+    public var action:Action?
     
-    open func valueChanged(_ newValue:T?) {
-        self.onChange?(newValue)
+    open func perform(oldValue:T?, newValue:T?) {
+        self.action?(oldValue, newValue)
     }
 }

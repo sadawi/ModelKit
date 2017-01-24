@@ -45,7 +45,7 @@ public func ==(lhs:ValidationState, rhs:ValidationState) -> Bool {
     }
 }
 
-public protocol FieldType:AnyObject {
+public protocol FieldType: Observable {
     var anyObjectValue: AnyObject? { get set }
     var anyValue: Any? { get set }
     var valueType:Any.Type { get }
@@ -167,11 +167,26 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     
     /**
      The value contained in this field.  Note: it's always Optional.
+     Delegates to setValue/getValue methods.
      */
-    open var value:T? {
-        didSet {
-            self.valueUpdated(oldValue: oldValue, newValue: self.value)
+    public var value:T? {
+        set {
+            self.setValue(newValue)
         }
+        get {
+            return self.getValue()
+        }
+    }
+    private var _value: T?
+    
+    open func getValue() -> T? {
+        return _value
+    }
+    
+    open func setValue(_ newValue: T?) {
+        let oldValue = _value
+        _value = newValue
+        self.valueUpdated(oldValue: oldValue, newValue: newValue)
     }
     
     open var anyObjectValue:AnyObject? {
@@ -322,8 +337,8 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     /**
      If a field is registered as an observer, it will set its own value to the observed new value.
      */
-    open func observedValueChanged<ObservableType:ValueObservable>(_ value:T?, observable:ObservableType?) {
-        self.value = value
+    open func observedValueChanged<ObservableType:ValueObservable>(from oldValue:T?, to newValue:T?, observable:ObservableType?) {
+        self.value = newValue
     }
     
     // MARK: - Dictionary values

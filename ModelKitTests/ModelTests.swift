@@ -44,6 +44,16 @@ class ModelTests: XCTestCase {
         let profile = ModelField<Profile>(inverse: { $0.person })
     }
     
+    fileprivate class Item: Model {
+        let item:ModelField<Item> = {
+            let field = ModelField<Item>()
+            field.findInverse = { item in
+                return item.item
+            }
+            return field
+        }()
+    }
+    
     fileprivate class Club: Model {
         let name = Field<String>()
         let members = ModelField<Person>()*
@@ -119,17 +129,27 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(dictionary as! [String: String], ["name": "Apple"])
     }
     
+    func testObservationCycles() {
+        let item1 = Item()
+        let item2 = Item()
+        
+        item1.item.value = item1
+        item1.item.value = item2
+    }
+    
     func testInverseFields() {
         let person1 = Person()
         let profileA = Profile()
+        let profileB = Profile()
         
+        // Setting side A of 1:1 field should also set inverse.
         person1.profile.value = profileA
         XCTAssertEqual(profileA.person.value, person1)
         
-        let profileB = Profile()
+        // Set side B of 1:1 field. Should also set new side A, and nil out original side A.
         profileB.person.value = person1
         XCTAssertEqual(person1.profile.value, profileB)
-        
+
         XCTAssertNil(profileA.person.value)
         
         let company1 = Company()

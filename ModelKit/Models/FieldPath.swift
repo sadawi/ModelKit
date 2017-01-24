@@ -85,6 +85,14 @@ public struct FieldPath: ExpressibleByArrayLiteral, ExpressibleByStringLiteral, 
     func appending(propertyName: String) -> FieldPath {
         return FieldPath(self.components + [propertyName], isPrefix: self.isPrefix)
     }
+
+    func prepending(path: FieldPath) -> FieldPath {
+        return FieldPath(path.components + self.components, isPrefix: self.isPrefix)
+    }
+    
+    func appending(path: FieldPath) -> FieldPath {
+        return FieldPath(self.components + path.components, isPrefix: self.isPrefix)
+    }
     
     public var description: String {
         return self.components.joined(separator: "|")

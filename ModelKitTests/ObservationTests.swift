@@ -34,8 +34,8 @@ fileprivate class View:ValueObserver, ValueObservable {
     }
     
     // Observer
-    func observedValueChanged<ObservableType:ValueObservable>(_ value:String?, observable: ObservableType?) {
-        self.value = value
+    func observedValueChanged<ObservableType:ValueObservable>(from oldValue:String?, to newValue: String?, observable: ObservableType?) {
+        self.value = newValue
     }
     
     // Observable
@@ -49,7 +49,7 @@ class ObservationTests: XCTestCase {
         
         var changedValue: [String]? = nil
         
-        entity.tags.addObserver { newValue in
+        entity.tags.addObserver { oldValue, newValue in
             changedValue = newValue
         }
         entity.tags.value = ["red", "green"]
@@ -69,13 +69,13 @@ class ObservationTests: XCTestCase {
         XCTAssertEqual(view.value, "Alice")
         
         var value:String = "test"
-        let o = entity.name --> { value = $0! }
+        let o = entity.name --> { value = $1! }
         entity.name.value = "NEW VALUE"
         XCTAssertEqual(value, "NEW VALUE")
         
         // Can add more closure observers without interfering with old ones.
         var value2:String = "another value"
-        entity.name --> { value2 = $0! }
+        entity.name --> { value2 = $1! }
         
         entity.name.value = "hello"
         XCTAssertEqual(value2, "hello")
@@ -222,8 +222,8 @@ class ObservationTests: XCTestCase {
         
         var output:String? = nil
         
-        a.name --> b.name --> { value in
-            output = value
+        a.name --> b.name --> { oldValue, newValue in
+            output = newValue
         }
         
         a.name.value = "Joe"

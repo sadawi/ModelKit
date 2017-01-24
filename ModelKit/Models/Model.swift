@@ -22,7 +22,7 @@ public extension ValueTransformerContext {
     static let defaultModelContext = ModelValueTransformerContext(name: "model")
 }
 
-open class Model: NSObject, NSCopying {
+open class Model: NSObject, NSCopying, Observable {
     /**
      The class to instantiate, based on a dictionary value.  For example, your dictionary might include a "type" string.
      
@@ -233,6 +233,14 @@ open class Model: NSObject, NSCopying {
         return FieldPath(path, separator: ".")
     }
     
+    open func fieldPath(for field: FieldType) -> FieldPath? {
+        if let key = field.key {
+            return [key]
+        } else {
+            return nil
+        }
+    }
+    
     public var fields = Interface()
     
     /**
@@ -247,12 +255,11 @@ open class Model: NSObject, NSCopying {
      Look at the instance's fields, do some introspection and processing.
      */
     internal func buildFields() {
-        for (key, field) in self.staticFields() {
+        for (key, field) in self.staticFields {
             if field.key == nil {
                 field.key = key
             }
             self.initializeField(field)
-            field.owner = self
             self.fields[key] = field
         }
     }
@@ -264,7 +271,7 @@ open class Model: NSObject, NSCopying {
     public func add(field: FieldType) {
         guard let key = field.key else { return }
 
-        field.owner = self
+        self.initializeField(field)
         self.fields[key] = field
     }
     
@@ -279,13 +286,16 @@ open class Model: NSObject, NSCopying {
         }
     }
 
-    
+    lazy open var staticFields:Interface = {
+       return self.buildStaticFields()
+    }()
+
     /**
      Builds a mapping of keys to fields.  Keys are either the field's `key` property (if specified) or the property name of the field.
-     This can be slow, since it uses reflection.  If you find this to be a performance bottleneck, consider overriding this var
+     This can be slow, since it uses reflection.  If you find this to be a performance bottleneck, consider overriding the `staticFields` var
      with an explicit mapping of keys to fields.
      */
-    private func staticFields() -> Interface {
+    private func buildStaticFields() -> Interface {
         var result = Interface()
         let mirror = Mirror(reflecting: self)
         mirror.eachChild { child in
@@ -304,6 +314,33 @@ open class Model: NSObject, NSCopying {
      Performs any model-level field initialization your class may need, before any field values are set.
      */
     open func initializeField(_ field:FieldType) {
+        field.owner = self
+    
+        // Can't add observeration blocks that take values, since the FieldType protocol doesn't know about the value type
+        field.addObserver { [weak self] in
+            var seen = Set<Model>()
+            self?.fieldValueChanged(field, at: [], seen: &seen)
+        }
+
+        // If it's a model field, add a deep observer for changes on its value.
+        if let modelField = field as? ModelFieldType {
+            modelField.addModelObserver(self, updateImmediately: false) { [weak self] model, fieldPath, seen in
+                print(fieldPath)
+                self?.fieldValueChanged(field, at: fieldPath, seen: &seen)
+            }
+        }
+        
+    }
+    
+    open func fieldValueChanged(_ field: FieldType, at relativePath: FieldPath, seen: inout Set<Model>) {
+        // Avoid cycles
+        guard !seen.contains(self) else { return }
+        
+        if let path = self.fieldPath(for: field) {
+            let fullPath = path.appending(path: relativePath)
+            seen.insert(self)
+            self.notifyObservers(path: fullPath, seen: &seen)
+        }
     }
     
     public func visitAllFields(recursive:Bool = true, action:((FieldType) -> Void)) {
@@ -514,18 +551,37 @@ open class Model: NSObject, NSCopying {
     open var observations = ObservationRegistry<ModelObservation>()
 
     // MARK: - Observations
-    public func addObserver(observer: ModelObserver, for: FieldPath, action: @escaping ModelObservation.Action) {
-        let observation = self.observations.get(for: observer) ?? ModelObservation()
-        observation.onChange = action
-        self.observations.add(observation, for: observer)
-    }
     
-    @discardableResult public func addObserver(onChange:@escaping ModelObservation.Action) -> ModelObservation {
-        let observation = ModelObservation()
-        observation.onChange = onChange
-        self.observations.add(observation)
+    @discardableResult public func addObserver(_ observer: AnyObject?=nil, for fieldPath: FieldPath?=nil, updateImmediately: Bool = false, action:@escaping ModelObservation.Action) -> ModelObservation {
+        let observation = ModelObservation(fieldPath: fieldPath, action: action)
+        self.observations.add(observation, for: observer)
         return observation
     }
+    
+    @discardableResult public func addObserver(updateImmediately: Bool, action:@escaping ((Void) -> Void)) {
+        self.addObserver(updateImmediately: updateImmediately) { _, _, _ in
+            action()
+        }
+    }
 
+    
+    public func notifyObservers(path: FieldPath, seen: inout Set<Model>) {
+        // Changing a value at a path implies a change of all child paths. Notify accordingly.
+        var path = path
+        path.isPrefix = true
+        
+        self.observations.forEach { observation in
+            observation.perform(model: self, fieldPath: path, seen: &seen)
+        }
+    }
+    
+
+    public func removeObserver(_ observer: AnyObject) {
+        self.observations.remove(for: observer)
+    }
+
+    public func removeAllObservers() {
+        self.observations.clear()
+    }
 
 }

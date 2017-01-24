@@ -17,7 +17,9 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
     open var cascadeDelete: Bool = true
     
     private var modelLookup: [Identifier: T] = [:]
-    
+
+    public var modelObservations = ObservationRegistry<ModelObservation>()
+
     open override var value:[T]? {
         didSet {
             let oldValues = oldValue ?? []
@@ -86,6 +88,11 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
     open override func processNewValue(_ value: T?) {
         super.processNewValue(value)
     }
+    
+    open func addObserver(updateImmediately: Bool, action: @escaping ((FieldPath) -> Void)) {
+        // TODO
+    }
+
 }
 
 public postfix func *<T:Model>(right:ModelField<T>) -> ModelArrayField<T> {

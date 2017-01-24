@@ -16,45 +16,60 @@ import Foundation
  - TODO: Remove an owned observation without needing a reference to the owner.
  */
 open class ObservationRegistry<ObservationType: Observation> {
-    var ownedObservations:NSMapTable<AnyObject, ObservationType> = NSMapTable.weakToStrongObjects()
-    var unownedObservations = [UUID: ObservationType]()
+    private var observations:NSMapTable<AnyObject, NSDictionary> = NSMapTable.weakToStrongObjects()
     
     public init() { }
     
     func clear() {
-        self.unownedObservations.removeAll()
-        self.ownedObservations.removeAllObjects()
+        self.observations.removeAllObjects()
     }
     
     func forEach(_ closure:((ObservationType) -> Void)) {
-        self.unownedObservations.values.forEach(closure)
-        
-        let enumerator = self.ownedObservations.objectEnumerator()
-        while let observation = enumerator?.nextObject() {
-            if let observation = observation as? ObservationType {
-                closure(observation)
+        let enumerator = self.observations.objectEnumerator()
+        while let observations = enumerator?.nextObject() {
+            if let observations = observations as? [UUID:ObservationType] {
+                for (_, observation) in observations {
+                    closure(observation)
+                }
             }
         }
     }
     
-    func get(for owner:AnyObject) -> ObservationType? {
-        return self.ownedObservations.object(forKey: owner)
+    func get(for owner:AnyObject) -> [ObservationType] {
+        if let observations = self.observations.object(forKey: owner) as? [UUID: ObservationType] {
+            return Array(observations.values)
+        } else {
+            return []
+        }
     }
     
-    func add(_ observation:ObservationType) {
-        self.unownedObservations[observation.uuid] = observation
+    func add(_ observation:ObservationType, for owner: AnyObject?=nil) {
+        let owner = owner ?? NSNull()
+        
+        var observations: [UUID: ObservationType]
+        if let existing = self.observations.object(forKey: owner) as? [UUID: ObservationType] {
+            observations = existing
+        } else {
+            observations = [:]
+        }
+        observations[observation.uuid] = observation
+        self.observations.setObject(observations as NSDictionary, forKey: owner)
     }
-    
-    func add(_ observation:ObservationType, for owner: AnyObject) {
-        self.ownedObservations.setObject(observation, forKey: owner)
+
+    func remove(observation: ObservationType, for owner: AnyObject) {
+        if let existing = self.observations.object(forKey: owner) as? [UUID: ObservationType] {
+            var existing = existing
+            existing.removeValue(forKey: observation.uuid)
+            self.observations.setObject(existing as NSDictionary, forKey: owner)
+        }
     }
-    
+
     func remove(for owner: AnyObject) {
-        self.ownedObservations.removeObject(forKey: owner)
+        self.observations.removeObject(forKey: owner)
     }
     
     func remove(_ observation: ObservationType) {
-        self.unownedObservations.removeValue(forKey: observation.uuid)
+        self.remove(observation: observation, for: NSNull())
     }
     
 }
