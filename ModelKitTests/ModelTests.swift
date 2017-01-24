@@ -137,35 +137,35 @@ class ModelTests: XCTestCase {
         item1.item.value = item2
     }
     
-//    func testInverseFields() {
-//        let person1 = Person()
-//        let profileA = Profile()
-//        let profileB = Profile()
-//        
-//        // Setting side A of 1:1 field should also set inverse.
-//        person1.profile.value = profileA
-//        XCTAssertEqual(profileA.person.value, person1)
-//        
-//        // Set side B of 1:1 field. Should also set new side A, and nil out original side A.
-//        profileB.person.value = person1
-//        XCTAssertEqual(person1.profile.value, profileB)
-//
-//        XCTAssertNil(profileA.person.value)
-//        
-//        let company1 = Company()
-//        let company2 = Company()
-//
-//        person1.company.value = company1
-//        XCTAssertEqual(1, company1.employees.value?.count)
-//        
-//        company1.employees.removeFirst(person1)
-//        XCTAssertEqual(0, company1.employees.value?.count)
-//        XCTAssertNil(person1.company.value)
-//        
-//        company2.employees.value = [person1]
-//        XCTAssertEqual(person1.company.value, company2)
-//        XCTAssertEqual(0, company1.employees.value?.count)
-//    }
+    func testInverseFields() {
+        let person1 = Person()
+        let profileA = Profile()
+        let profileB = Profile()
+        
+        // Setting side A of 1:1 field should also set inverse.
+        person1.profile.value = profileA
+        XCTAssertEqual(profileA.person.value, person1)
+        
+        // Set side B of 1:1 field. Should also set new side A, and nil out original side A.
+        profileB.person.value = person1
+        XCTAssertEqual(person1.profile.value, profileB)
+
+        XCTAssertNil(profileA.person.value)
+        
+        let company1 = Company()
+        let company2 = Company()
+
+        person1.company.value = company1
+        XCTAssertEqual(1, company1.employees.value?.count)
+        
+        company1.employees.removeFirst(person1)
+        XCTAssertEqual(0, company1.employees.value?.count)
+        XCTAssertNil(person1.company.value)
+        
+        company2.employees.value = [person1]
+        XCTAssertEqual(person1.company.value, company2)
+        XCTAssertEqual(0, company1.employees.value?.count)
+    }
     
     fileprivate class Letter: Model {
         override class func instanceClass<T>(for dictionaryValue: AttributeDictionary) -> T.Type? {
