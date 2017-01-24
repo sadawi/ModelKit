@@ -318,22 +318,28 @@ open class Model: NSObject, NSCopying, Observable {
     
         // Can't add observeration blocks that take values, since the FieldType protocol doesn't know about the value type
         field.addObserver { [weak self] in
-            self?.fieldValueChanged(field, at: [])
+            var seen = Set<Model>()
+            self?.fieldValueChanged(field, at: [], seen: &seen)
         }
 
         // If it's a model field, add a deep observer for changes on its value.
         if let modelField = field as? ModelFieldType {
-            modelField.addModelObserver(self, updateImmediately: false) { [weak self] model, fieldPath in
-                self?.fieldValueChanged(field, at: fieldPath)
+            modelField.addModelObserver(self, updateImmediately: false) { [weak self] model, fieldPath, seen in
+                print(fieldPath)
+                self?.fieldValueChanged(field, at: fieldPath, seen: &seen)
             }
         }
         
     }
     
-    open func fieldValueChanged(_ field: FieldType, at relativePath: FieldPath) {
+    open func fieldValueChanged(_ field: FieldType, at relativePath: FieldPath, seen: inout Set<Model>) {
+        // Avoid cycles
+        guard !seen.contains(self) else { return }
+        
         if let path = self.fieldPath(for: field) {
             let fullPath = path.appending(path: relativePath)
-            self.notifyObservers(path: fullPath)
+            seen.insert(self)
+            self.notifyObservers(path: fullPath, seen: &seen)
         }
     }
     
@@ -553,19 +559,19 @@ open class Model: NSObject, NSCopying, Observable {
     }
     
     @discardableResult public func addObserver(updateImmediately: Bool, action:@escaping ((Void) -> Void)) {
-        self.addObserver(updateImmediately: updateImmediately) { _, _ in
+        self.addObserver(updateImmediately: updateImmediately) { _, _, _ in
             action()
         }
     }
 
     
-    public func notifyObservers(path: FieldPath) {
+    public func notifyObservers(path: FieldPath, seen: inout Set<Model>) {
         // Changing a value at a path implies a change of all child paths. Notify accordingly.
         var path = path
         path.isPrefix = true
         
         self.observations.forEach { observation in
-            observation.perform(model: self, fieldPath: path)
+            observation.perform(model: self, fieldPath: path, seen: &seen)
         }
     }
     

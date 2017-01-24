@@ -13,7 +13,7 @@ public protocol ModelObserver: class {
 }
 
 open class ModelObservation: Observation {
-    public typealias Action = ((Model, FieldPath) -> Void)
+    public typealias Action = ((Model, FieldPath, inout Set<Model>) -> Void)
     public var uuid = UUID()
     public var fieldPath: FieldPath?
     public var action:Action?
@@ -32,9 +32,9 @@ open class ModelObservation: Observation {
         }
     }
     
-    public func perform(model: Model, fieldPath: FieldPath) {
+    public func perform(model: Model, fieldPath: FieldPath, seen: inout Set<Model>) {
         if self.matches(fieldPath: fieldPath) {
-            self.action?(model, fieldPath)
+            self.action?(model, fieldPath, &seen)
         }
     }
 }

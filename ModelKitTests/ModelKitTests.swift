@@ -154,7 +154,7 @@ extension ModelKitTests {
         m["name"] = "Bob"
         
         var changedPath: FieldPath? = nil
-        m.addObserver { model, path in
+        m.addObserver { model, path, _ in
             changedPath = path
         }
         m["name"] = "Alice"
@@ -166,7 +166,7 @@ extension ModelKitTests {
         n["person"] = m
         
         var nChangedPath: FieldPath? = nil
-        n.addObserver { model, path in
+        n.addObserver { model, path, _ in
             nChangedPath = path
         }
         m["name"] = "Joe"
@@ -177,7 +177,7 @@ extension ModelKitTests {
         
         var changedPathC: FieldPath? = nil
         
-        n.addObserver(for: ["person", "name"]) { model, path in
+        n.addObserver(for: ["person", "name"]) { model, path, _ in
             changedPathC = path
         }
         n["color"] = "blue"

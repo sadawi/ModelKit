@@ -24,7 +24,7 @@ public protocol ModelFieldType: FieldType {
     
     var modelObservations: ObservationRegistry<ModelObservation> { get }
     
-    func addModelObserver(_ observer: AnyObject?, updateImmediately: Bool, action: @escaping ((Model, FieldPath) -> Void))
+    func addModelObserver(_ observer: AnyObject?, updateImmediately: Bool, action: @escaping ModelObservation.Action)
     func removeModelObserver(_ observer: AnyObject)
 }
 
@@ -38,7 +38,7 @@ public extension ModelFieldType {
         }
     }
     
-    public func addModelObserver(_ observer: AnyObject?, updateImmediately: Bool, action: @escaping ((Model, FieldPath) -> Void)) {
+    public func addModelObserver(_ observer: AnyObject?, updateImmediately: Bool, action: @escaping ModelObservation.Action) {
         let observation = ModelObservation(fieldPath: nil, action: action)
         self.modelObservations.add(observation, for: observer)
     }
@@ -95,9 +95,9 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
         
         if oldValue != newValue {
             oldValue?.removeObserver(self)
-            newValue?.addObserver(self) { [weak self] model, path in
+            newValue?.addObserver(self) { [weak self] model, path, seen in
                 self?.modelObservations.forEach { observation in
-                    observation.perform(model: model, fieldPath: path)
+                    observation.perform(model: model, fieldPath: path, seen: &seen)
                 }
             }
             
