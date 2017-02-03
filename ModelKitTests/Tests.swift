@@ -152,6 +152,14 @@ class FieldTests: XCTestCase {
         XCTAssertFalse(notBlankString.validate().isValid)
         notBlankString.value = "hi"
         XCTAssertTrue(notBlankString.validate().isValid)
+        
+        let field = Field<String>().require([NotBlankRule(), LengthRule(minimum: 2, maximum: 10)])
+        field.value = ""
+        XCTAssertFalse(field.validate().isValid)
+        field.value = "1"
+        XCTAssertFalse(field.validate().isValid)
+        field.value = "11"
+        XCTAssert(field.validate().isValid)
     }
     
     func testTimestamps() {

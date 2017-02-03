@@ -324,6 +324,11 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
         self.validationRules.append(rule)
         return self
     }
+
+    @discardableResult open func require(_ rules: [ValidationRule<T>]) -> Self {
+        self.validationRules.append(contentsOf: rules)
+        return self
+    }
     
     internal func valueChanged() {
         self.changedAt = Date()
