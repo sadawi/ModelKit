@@ -61,13 +61,13 @@ To validate a field value, call `field.validate()`, which returns a `ValidationS
 
 ```swift
 public enum ValidationState:Equatable {
-    case Unknown
-    case Invalid([String])
-    case Valid
+    case unknown
+    case invalid([String])
+    case valid
 }
 ```
 
-The associated value of the `.Invalid` case is a list of error messages (e.g., `["must be greater than 0", "is required"]`).
+The associated value of the `.invalid` case is a list of error messages (e.g., `["must be greater than 0", "is required"]`).
 
 ### Timestamps
 
