@@ -340,7 +340,7 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     open var observations = ObservationRegistry<ValueObservation<T>>()
     
     /**
-     If a field is registered as an observer, it will set its own value to the observed new value.
+     If a field is registered as a value observer, it will set its own value to the observed new value.
      */
     open func observedValueChanged<ObservableType:ValueObservable>(from oldValue:T?, to newValue:T?, observable:ObservableType?) {
         self.value = newValue
