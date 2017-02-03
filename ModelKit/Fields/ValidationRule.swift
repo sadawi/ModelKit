@@ -69,6 +69,8 @@ open class TransformerRule<FromType, ToType>: ValidationRule<FromType> {
     var rule:ValidationRule<ToType>?
     var transform:((FromType) -> ToType?)?
     
+    var transformationDescription: String?
+    
     override init() {
         super.init()
     }
@@ -82,6 +84,19 @@ open class TransformerRule<FromType, ToType>: ValidationRule<FromType> {
             return false
         }
     }
+    
+    override var message: String? {
+        get {
+            if let transformationDescription = self.transformationDescription, let message = self.rule?.message {
+                return "\(transformationDescription) \(message)"
+            } else {
+                return self.rule?.message
+            }
+        }
+        set {
+            // Nothing
+        }
+    }
 }
 
 open class LengthRule: TransformerRule<String, Int> {
@@ -89,6 +104,7 @@ open class LengthRule: TransformerRule<String, Int> {
         super.init()
         self.transform = { $0.characters.count }
         self.rule = RangeRule(minimum: minimum, maximum: maximum)
+        self.transformationDescription = "length"
     }
 }
 

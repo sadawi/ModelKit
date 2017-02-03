@@ -139,6 +139,13 @@ class FieldTests: XCTestCase {
         XCTAssertFalse(person.age.validate().isValid)
     }
     
+    func testValidationMessages() {
+        let idField = Field<String>().require(LengthRule(minimum: 1, maximum: 3))
+        idField.value = "1111"
+        let state = idField.validate()
+        XCTAssertEqual(state, ValidationState.invalid(["length must be less than 3"]))
+    }
+    
     func testMoreValidators() {
         let notBlankString = Field<String>().require(NotBlankRule())
         notBlankString.value = ""
