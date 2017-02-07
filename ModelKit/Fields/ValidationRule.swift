@@ -100,6 +100,10 @@ open class TransformerRule<FromType, ToType>: ValidationRule<FromType> {
 }
 
 open class LengthRule: TransformerRule<String, Int> {
+    public convenience init(length: Int?) {
+        self.init(minimum: length, maximum: length)
+    }
+    
     public init(minimum:Int?=nil, maximum:Int?=nil) {
         super.init()
         self.transform = { $0.characters.count }
@@ -119,6 +123,27 @@ open class NotBlankRule: ValidationRule<String> {
             return v.characters.count > 0
         } else {
             return false
+        }
+    }
+}
+
+open class CharacterSetRule: ValidationRule<String> {
+    open var characterSet: CharacterSet
+    
+    public init(characterSet: CharacterSet) {
+        self.characterSet = characterSet
+        super.init()
+        self.message = "contains invalid characters"
+    }
+    
+    override open func validate(_ value: String?) -> Bool {
+        if let v = value {
+            // Crash in .isSuperSet(of:)
+            // see https://forums.developer.apple.com/thread/63262
+            
+            return v.rangeOfCharacter(from: self.characterSet.inverted) == nil
+        } else {
+            return true
         }
     }
 
