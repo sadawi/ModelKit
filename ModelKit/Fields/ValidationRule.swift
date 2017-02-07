@@ -126,3 +126,23 @@ open class NotBlankRule: ValidationRule<String> {
         }
     }
 }
+
+open class CharacterSetRule: ValidationRule<String> {
+    open var characterSet: CharacterSet
+    
+    public init(characterSet: CharacterSet) {
+        self.characterSet = characterSet
+        super.init()
+        self.message = "contains invalid characters"
+    }
+    
+    override open func validate(_ value: String?) -> Bool {
+        if let v = value {
+            let valueCharacters = CharacterSet(charactersIn: v)
+            return self.characterSet.isSuperset(of: valueCharacters)
+        } else {
+            return true
+        }
+    }
+
+}

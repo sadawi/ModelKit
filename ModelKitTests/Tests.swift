@@ -118,6 +118,14 @@ class FieldTests: XCTestCase {
         XCTAssertTrue(person.longString.validate().isValid)
     }
     
+    func testCharacterSetRule() {
+        let field = Field<String>().require(CharacterSetRule(characterSet: CharacterSet.letters))
+        field.value = "a1"
+        XCTAssertEqual(ValidationState.invalid(["contains invalid characters"]), field.validate())
+        field.value = "a"
+        XCTAssertEqual(ValidationState.valid, field.validate())
+    }
+    
     func testCustomValidation() {
         let person = ValidatedPerson()
         person.age.value = -10
