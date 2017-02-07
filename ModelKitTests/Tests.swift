@@ -119,10 +119,10 @@ class FieldTests: XCTestCase {
     }
     
     func testCharacterSetRule() {
-        let field = Field<String>().require(CharacterSetRule(characterSet: CharacterSet.letters))
-        field.value = "a1"
+        let field = Field<String>().require(CharacterSetRule(characterSet: CharacterSet.uppercaseHexadecimal))
+        field.value = "J9"
         XCTAssertEqual(ValidationState.invalid(["contains invalid characters"]), field.validate())
-        field.value = "a"
+        field.value = "F9"
         XCTAssertEqual(ValidationState.valid, field.validate())
     }
     

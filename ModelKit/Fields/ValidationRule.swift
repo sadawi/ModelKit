@@ -138,8 +138,10 @@ open class CharacterSetRule: ValidationRule<String> {
     
     override open func validate(_ value: String?) -> Bool {
         if let v = value {
-            let valueCharacters = CharacterSet(charactersIn: v)
-            return self.characterSet.isSuperset(of: valueCharacters)
+            // Crash in .isSuperSet(of:)
+            // see https://forums.developer.apple.com/thread/63262
+            
+            return v.rangeOfCharacter(from: self.characterSet.inverted) == nil
         } else {
             return true
         }

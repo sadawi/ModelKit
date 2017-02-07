@@ -48,6 +48,7 @@
 		220EF91D1DF0A2F700B702CC /* MemoryRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF91B1DF0A2F700B702CC /* MemoryRegistry.swift */; };
 		220EF91E1DF0A2F700B702CC /* ModelRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF91C1DF0A2F700B702CC /* ModelRegistry.swift */; };
 		220EF9201DF0A58100B702CC /* ValueTransformerContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220EF91F1DF0A58100B702CC /* ValueTransformerContext.swift */; };
+		22419E2D1E4A3F0B0063A0C2 /* CharacterSet+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22419E2C1E4A3F0B0063A0C2 /* CharacterSet+extensions.swift */; };
 		22450CFC1DF785E900614CC9 /* TypeDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22450CFB1DF785E900614CC9 /* TypeDictionary.swift */; };
 		22450D011DF7880600614CC9 /* RemoteModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22450CFD1DF7880600614CC9 /* RemoteModelStore.swift */; };
 		22450D021DF7880600614CC9 /* RequestEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22450CFE1DF7880600614CC9 /* RequestEncoder.swift */; };
@@ -120,6 +121,7 @@
 		220EF91B1DF0A2F700B702CC /* MemoryRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoryRegistry.swift; path = Models/MemoryRegistry.swift; sourceTree = "<group>"; };
 		220EF91C1DF0A2F700B702CC /* ModelRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelRegistry.swift; path = Models/ModelRegistry.swift; sourceTree = "<group>"; };
 		220EF91F1DF0A58100B702CC /* ValueTransformerContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueTransformerContext.swift; path = Fields/ValueTransformerContext.swift; sourceTree = "<group>"; };
+		22419E2C1E4A3F0B0063A0C2 /* CharacterSet+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CharacterSet+extensions.swift"; path = "Fields/CharacterSet+extensions.swift"; sourceTree = "<group>"; };
 		22450CFB1DF785E900614CC9 /* TypeDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TypeDictionary.swift; path = Fields/TypeDictionary.swift; sourceTree = "<group>"; };
 		22450CFD1DF7880600614CC9 /* RemoteModelStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteModelStore.swift; path = RemoteModelStore/RemoteModelStore.swift; sourceTree = "<group>"; };
 		22450CFE1DF7880600614CC9 /* RequestEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestEncoder.swift; path = RemoteModelStore/RequestEncoder.swift; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 		22419E271E4A3BD30063A0C2 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				22419E2C1E4A3F0B0063A0C2 /* CharacterSet+extensions.swift */,
 			);
 			name = extensions;
 			sourceTree = "<group>";
@@ -686,6 +689,7 @@
 				22450D011DF7880600614CC9 /* RemoteModelStore.swift in Sources */,
 				22DAC6B61DF7FCDD00108441 /* NumericValueTransformer.swift in Sources */,
 				22A1F2F51DFD2FB700241434 /* FieldPath.swift in Sources */,
+				22419E2D1E4A3F0B0063A0C2 /* CharacterSet+extensions.swift in Sources */,
 				220EF8CC1DF09BEE00B702CC /* ArchiveModelStore.swift in Sources */,
 				220EF9201DF0A58100B702CC /* ValueTransformerContext.swift in Sources */,
 				220EF8DE1DF09C6600B702CC /* MemoryModelStore.swift in Sources */,
