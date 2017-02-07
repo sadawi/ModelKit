@@ -100,6 +100,10 @@ open class TransformerRule<FromType, ToType>: ValidationRule<FromType> {
 }
 
 open class LengthRule: TransformerRule<String, Int> {
+    public convenience init(length: Int?) {
+        self.init(minimum: length, maximum: length)
+    }
+    
     public init(minimum:Int?=nil, maximum:Int?=nil) {
         super.init()
         self.transform = { $0.characters.count }
@@ -121,5 +125,4 @@ open class NotBlankRule: ValidationRule<String> {
             return false
         }
     }
-
 }
