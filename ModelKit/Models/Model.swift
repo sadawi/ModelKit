@@ -275,6 +275,15 @@ open class Model: NSObject, NSCopying, Observable {
         self.fields[key] = field
     }
     
+    open subscript (key: String) -> Any? {
+        get {
+            return self[FieldPath(key)]
+        }
+        set {
+            return self[FieldPath(key)] = newValue
+        }
+    }
+    
     open subscript (keyPath: FieldPath) -> Any? {
         get {
             guard let field = self.field(at: keyPath) else { return nil }

@@ -119,6 +119,14 @@ class ModelKitTests: XCTestCase {
 }
 
 extension ModelKitTests {
+    func testFieldPathKey() {
+        let model = Model()
+        let key = "name"
+        model << Field<String>(key: key)
+        model[key] = "Bob"
+        XCTAssertEqual(model[key] as? String, "Bob")
+    }
+    
     func testFieldPaths() {
         let prefix = FieldPath(["one", "two", "*"])
         XCTAssert(prefix.isPrefix)
