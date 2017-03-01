@@ -267,7 +267,7 @@ class ValueFieldTests: XCTestCase {
         let object = ValueObject()
         XCTAssertEqual("red", object.color.value)
         XCTAssertEqual("shelf", object.label.value?.name)
-        XCTAssertEqual(LoadState.loaded, object.color.loadState)
+        XCTAssertEqual(LoadState.notLoaded, object.color.loadState)
         
         let object2 = ValueObject()
         XCTAssertEqual("shelf", object2.label.value?.name)

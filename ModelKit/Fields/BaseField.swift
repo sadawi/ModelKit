@@ -146,7 +146,8 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     // MARK: - 
     
     /**
-     Information about whether this field's value has been set
+     Information about whether this field's value has been set (including to nil). 
+     A field initialized with a default value will be considered .notLoaded
      */
     open var loadState:LoadState = .notLoaded
     
@@ -247,10 +248,9 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     public init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
         if let value = value {
             self.value = value
-            
-            // didSet isn't triggered from init
-            self.loadState = .loaded
         }
+        // Ensure we initialize as .notLoaded, even if a value is set.
+        self.loadState = .notLoaded
         self.name = name
         self.priority = priority
         self.key = key
