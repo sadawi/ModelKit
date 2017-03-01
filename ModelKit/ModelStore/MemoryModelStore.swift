@@ -25,6 +25,9 @@ open class MemoryModelStore: ModelStore, ListableModelStore, ClearableModelStore
     fileprivate var data: NSMutableDictionary = NSMutableDictionary()
     open var delegate:ModelStoreDelegate?
     
+    public init() {
+    }
+    
     fileprivate func keyForClass<T: Model>(_ modelClass: T.Type) -> String {
         return String(describing: modelClass)
     }
