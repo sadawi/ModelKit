@@ -537,12 +537,28 @@ open class Model: NSObject, NSCopying, Observable {
     /**
      Merges field values from another model.
      Fields are matched by key, and compared using `updatedAt` timestamps; the newer value wins.
-     Identifier fields are skipped.
      */
-    open func merge(from model: Model, includeIdentifier: Bool = false) {
+
+    public func merge(from model: Model) {
+        self.merge(from: model, include: Array(self.fields.values))
+    }
+
+    public func merge(from model: Model, exclude excludedFields: [FieldType]) {
+        self.merge(from: model) { field in
+            !excludedFields.contains { $0 === field }
+        }
+    }
+    
+    public func merge(from model: Model, include condition: ((FieldType)->Bool)) {
+        let fields = self.fields.values.filter(condition)
+        merge(from: model, include: fields)
+    }
+
+    open func merge(from model: Model, include includedFields: [FieldType]) {
         let otherFields = model.fields
-        for (key, field) in self.fields where (includeIdentifier || key != self.identifierField?.key) {
-            if let otherField = otherFields[key] {
+        
+        for field in includedFields {
+            if let key = field.key, let otherField = otherFields[key] {
                 field.merge(from: otherField)
             }
         }
