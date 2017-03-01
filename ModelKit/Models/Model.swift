@@ -544,22 +544,28 @@ open class Model: NSObject, NSCopying, Observable {
     }
 
     public func merge(from model: Model, exclude excludedFields: [FieldType]) {
-        self.merge(from: model) { field in
+        self.merge(from: model) { field, otherField in
             !excludedFields.contains { $0 === field }
         }
     }
     
-    public func merge(from model: Model, include condition: ((FieldType)->Bool)) {
-        let fields = self.fields.values.filter(condition)
-        merge(from: model, include: fields)
+    public func merge(from model: Model, if condition: @escaping ((FieldType, FieldType)->Bool)) {
+        let fields = Array(self.fields.values)
+        merge(from: model, include: fields, if: condition)
     }
 
-    open func merge(from model: Model, include includedFields: [FieldType]) {
+    open func merge(from model: Model, include includedFields: [FieldType], if condition: ((FieldType, FieldType) -> Bool)? = nil) {
         let otherFields = model.fields
         
         for field in includedFields {
             if let key = field.key, let otherField = otherFields[key] {
-                field.merge(from: otherField)
+                var shouldMerge = true
+                if let condition = condition {
+                    shouldMerge = condition(field, otherField)
+                }
+                if shouldMerge {
+                    field.merge(from: otherField)
+                }
             }
         }
     }
