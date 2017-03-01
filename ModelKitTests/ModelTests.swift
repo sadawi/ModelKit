@@ -328,8 +328,6 @@ class ModelTests: XCTestCase {
         model.name.value = nil
         let d2 = model.dictionaryValue(in: context)
         XCTAssert(d2["name"] is NSNull)
-        
-        
     }
     
     func testMerging() {
@@ -364,4 +362,9 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(model.id.value, "1")
     }
     
+    func testFieldLoadStates() {
+        let company = Company()
+        XCTAssertEqual(company.id.loadState, .notLoaded)
+        XCTAssertEqual(company.employees.loadState, .notLoaded)
+    }
 }

@@ -99,6 +99,11 @@ open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
     public override init(_ field:Field<T>, value:[T]?=[], name:String?=nil, priority:Int?=nil, key:String?=nil) {
         super.init(field, value: value, name: name, priority: priority, key: key)
         self.value = value
+        
+        // Be sure to treat the default value as not loaded
+        if value?.count == 0 {
+            self.loadState = .notLoaded
+        }
     }
     
     open override func valueUpdated(oldValue: Array<T>?, newValue: Array<T>?) {
