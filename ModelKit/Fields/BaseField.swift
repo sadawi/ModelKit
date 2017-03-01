@@ -440,7 +440,7 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
      */
     public func merge(from field: FieldType) {
         if let field = field as? BaseField<ValueType> {
-            if field.isNewer(than: self) {
+            if field.loadState == .loaded && field.isNewer(than: self) {
                 self.copyValue(from: field)
             }
         }

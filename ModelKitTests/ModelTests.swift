@@ -350,4 +350,18 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(model.identifier, "2")
     }
     
+    func testMergingUnsetFields() {
+        let model = Company()
+        let model2 = Company()
+
+        model.id.value = "1"
+        model.merge(from: model2)
+        XCTAssertEqual(model.id.value, "1")
+        
+        model2.id.value = "2"
+        model2.id.loadState = .notLoaded
+        model.merge(from: model2)
+        XCTAssertEqual(model.id.value, "1")
+    }
+    
 }
