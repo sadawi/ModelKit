@@ -96,7 +96,7 @@ public extension ValueObservable {
     /**
      Unregisters an observer
      */
-    public func removeObserver<U:ValueObserver>(_ observer:U) where U.ObservedValueType==ObservedValueType {
+    public func removeObserver<U: AnyObject>(_ observer:U) {
         self.observations.remove(for: observer)
     }
     

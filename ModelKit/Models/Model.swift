@@ -334,7 +334,7 @@ open class Model: NSObject, NSCopying, Observable {
         // If it's a model field, add a deep observer for changes on its value.
         if let modelField = field as? ModelFieldType {
             modelField.addModelObserver(self, updateImmediately: false) { [weak self] model, fieldPath, seen in
-                print(fieldPath)
+                let field = field
                 self?.fieldValueChanged(field, at: fieldPath, seen: &seen)
             }
         }
