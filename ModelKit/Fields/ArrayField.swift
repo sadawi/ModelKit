@@ -128,8 +128,12 @@ open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
     
     // MARK: - Dictionary values
     
+    open func buildValueTransformer() -> ArrayValueTransformer<T> {
+        return ArrayValueTransformer<T>()
+    }
+    
     open override func defaultValueTransformer(in context: ValueTransformerContext = .defaultContext) -> ValueTransformer<[T]> {
-        let transformer = ArrayValueTransformer<T>()
+        let transformer = self.buildValueTransformer()
         if let innerTransformer = self.field.valueTransformer(in: context) {
             transformer.innerTransformer = innerTransformer
         }

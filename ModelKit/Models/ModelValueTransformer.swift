@@ -68,5 +68,15 @@ open class ModelForeignKeyValueTransformer<T: Model>: ValueTransformer<T> {
             }
         )
     }
-    
+}
+
+open class ModelArrayValueTransformer<T: Model>: ArrayValueTransformer<T> {
+    open func exportValue(_ value: [T]?, seenFields: inout [FieldType], in context: ValueTransformerContext = .defaultContext) -> Any? {
+        if let value = value, let innerTransformer = self.innerTransformer as? ModelValueTransformer<T> {
+            let arrayValue = value.map { innerTransformer.exportValue($0, seenFields: &seenFields, in: context) }.flatMap { $0 }
+            return self.scalarValue(arrayValue)
+        } else {
+            return nil
+        }
+    }
 }

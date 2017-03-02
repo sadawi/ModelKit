@@ -19,7 +19,7 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
     private var modelLookup: [Identifier: T] = [:]
 
     public var modelObservations = ObservationRegistry<ModelObservation>()
-
+    
     open override var value:[T]? {
         didSet {
             let oldValues = oldValue ?? []
@@ -91,6 +91,20 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
     
     open func addObserver(updateImmediately: Bool, action: @escaping ((FieldPath) -> Void)) {
         // TODO
+    }
+    
+    // MARK: - 
+    
+    open override func buildValueTransformer() -> ArrayValueTransformer<T> {
+        return ModelArrayValueTransformer<T>()
+    }
+    
+    open override func writeUnseenValue(to dictionary: inout AttributeDictionary, seenFields: inout [FieldType], key: String, in context: ValueTransformerContext) {
+        if let transformer = self.valueTransformer() as? ModelArrayValueTransformer<T> {
+            dictionary[key] = transformer.exportValue(self.value, seenFields: &seenFields, in: context)
+        } else {
+            super.writeUnseenValue(to: &dictionary, seenFields: &seenFields, key: key, in: context)
+        }
     }
 
 }

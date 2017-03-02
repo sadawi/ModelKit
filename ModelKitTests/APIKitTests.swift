@@ -324,6 +324,30 @@ class APIKitTests: XCTestCase {
 //        self.waitForExpectationsWithTimeout(1, handler:nil)
 //        
 //    }
+}
 
-    
+private class Parent: Model {
+    let id = Field<String>()
+    let name = Field<String>(value: "parent name")
+    let children = ModelField<Child>()*
+}
+
+private class Child: Model {
+    let id = Field<String>()
+    let name = Field<String>(value: "child name")
+    let parent = ModelField<Parent>(inverse: { $0.children })
+}
+
+extension APIKitTests {
+    func testBidirectionalRelationshipSerializationCycles() {
+        let parent = Parent()
+        parent.id.value = "pid"
+        let child = Child()
+        child.id.value = "cid"
+        
+        child.parent.value = parent
+        let dict = child.dictionaryValue()
+        print(dict)
+        XCTAssert(dict.count > 0)
+    }
 }

@@ -129,6 +129,8 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
     }
     
     open override func writeUnseenValue(to dictionary: inout AttributeDictionary, seenFields: inout [FieldType], key: String, in context: ValueTransformerContext) {
+        print("writing unseen: \(self)")
+        print("seen: \(seenFields)")
         if let modelValueTransformer = self.valueTransformer() as? ModelValueTransformer<T> {
             dictionary[key] = modelValueTransformer.exportValue(self.value, seenFields: &seenFields, in: context)
         } else { 
