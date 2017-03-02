@@ -43,11 +43,11 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
         self.findInverse = inverse ?? field.findInverse
     }
     
-    public func contains(_ value: T) -> Bool {
+    public func hasMemberWithIdentifier(of value: T) -> Bool? {
         if let identifier = value.identifier {
             return self.modelLookup[identifier] != nil
         } else {
-            return false
+            return nil
         }
     }
     
@@ -73,14 +73,20 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
     
     // MARK: - ModelFieldType
     
+    /**
+     Handle the event where this field's inverse field had a new value added.
+     */
     open func inverseValueAdded(_ value: Model?) {
-        if let value = value as? T, !self.contains(value){
+        // We're checking containment by id. If we can't do that, don't do anything.
+        guard value?.identifier != nil else { return }
+        
+        if let value = value as? T, self.hasMemberWithIdentifier(of: value) == false {
             self.append(value)
         }
     }
     
     open func inverseValueRemoved(_ value: Model?) {
-        if let value = value as? T, self.contains(value) {
+        if let value = value as? T, self.hasMemberWithIdentifier(of: value) == true {
             self.removeFirst(value)
         }
     }

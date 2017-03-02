@@ -39,9 +39,14 @@ class ModelTests: XCTestCase {
     }
     
     fileprivate class Person: Model {
+        let id = Field<String>()
         let name = Field<String>()
         let company = ModelField<Company>(inverse: { company in return company.employees })
         let profile = ModelField<Profile>(inverse: { $0.person })
+
+        override var identifierField: FieldType? {
+            return id
+        }
     }
     
     fileprivate class Item: Model {
@@ -57,6 +62,18 @@ class ModelTests: XCTestCase {
     fileprivate class Club: Model {
         let name = Field<String>()
         let members = ModelField<Person>()*
+    }
+    
+    func testModelArrayFields() {
+        let a = Company()
+        a.id.value = "1"
+        a.name.value = "Apple"
+        
+        let person = Person()
+        person.name.value = "Bob"
+        a.employees.value = [person]
+        
+        XCTAssertEqual(a.employees.value?.count, 1)
     }
     
     func testFieldModel() {
@@ -139,6 +156,8 @@ class ModelTests: XCTestCase {
     
     func testInverseFields() {
         let person1 = Person()
+        person1.id.value = "p1"
+        
         let profileA = Profile()
         let profileB = Profile()
         
@@ -153,7 +172,9 @@ class ModelTests: XCTestCase {
         XCTAssertNil(profileA.person.value)
         
         let company1 = Company()
+        company1.id.value = "c1"
         let company2 = Company()
+        company2.id.value = "c2"
 
         person1.company.value = company1
         XCTAssertEqual(1, company1.employees.value?.count)
