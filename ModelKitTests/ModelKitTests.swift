@@ -150,7 +150,6 @@ extension ModelKitTests {
         XCTAssertFalse(e.matches(a))
         
         // TODO: prefixes might be wrong! If I'm observing geometry/corner/left and I set a whole new geometry, it should be triggered!
-
     }
 }
 
