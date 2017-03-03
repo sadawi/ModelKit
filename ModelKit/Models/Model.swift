@@ -114,9 +114,12 @@ open class Model: NSObject, NSCopying, Observable {
      Creates a clone of this model.  It won't exist in the registry.
      */
     open func copy(with zone: NSZone?) -> Any {
-        return type(of: self).from(dictionaryValue: self.dictionaryValue())!
+        return self.copy(fields: nil)
     }
 
+    open func copy(fields: [FieldType]?) -> Any {
+        return type(of: self).from(dictionaryValue: self.dictionaryValue(fields: fields))!
+    }
     
     /**
      Which field should be treated as the identifier?

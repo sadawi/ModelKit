@@ -64,6 +64,18 @@ class ModelTests: XCTestCase {
         let members = ModelField<Person>()*
     }
     
+    func testCopySomeFields() {
+        let company = Company()
+        company.id.value = "c1"
+        company.name.value = "Apple"
+
+        XCTAssertNotNil(company.id.value)
+        
+        let company2 = company.copy(fields: [company.name]) as! Company
+        XCTAssertEqual(company2.name.value, "Apple")
+        XCTAssertNil(company2.id.value)
+    }
+    
     func testModelArrayFields() {
         let a = Company()
         a.id.value = "1"
