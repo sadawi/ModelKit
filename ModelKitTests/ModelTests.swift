@@ -43,7 +43,7 @@ class ModelTests: XCTestCase {
         let name = Field<String>()
         let company = ModelField<Company>(inverse: { company in return company.employees })
         let profile = ModelField<Profile>(inverse: { $0.person })
-
+        
         override var identifierField: FieldType? {
             return id
         }
@@ -114,7 +114,7 @@ class ModelTests: XCTestCase {
     func testArrayFields() {
         let a = Person()
         a.name.value = "Alice"
-
+        
         let b = Person()
         b.name.value = "Bob"
         
@@ -154,6 +154,42 @@ class ModelTests: XCTestCase {
         item1.item.value = item2
     }
     
+    func testCopy() {
+        let a = Company()
+        a.id.value = "1"
+        a.name.value = "Apple"
+        
+        let person0 = Person()
+        person0.id.value = "p0"
+        person0.name.value = "Bob"
+        a.employees.value = [person0]
+        
+        let person1 = Person()
+        person1.id.value = "p1"
+        person1.company.value = a
+        
+        XCTAssertEqual(a.employees.value?.count, 2)
+        
+        let b = a.copy() as! Company
+        
+        XCTAssertFalse(a === b)
+        XCTAssertEqual(b.id.value, a.id.value)
+        XCTAssertEqual(b.employees.value?.count, 2)
+        XCTAssertEqual(a.employees.value?.count, 2)
+        XCTAssert(b.employees.value![0].company.value === b)
+        
+        b.name.value = "Microsoft"
+        
+        XCTAssertEqual(a.name.value, "Apple")
+        
+        let person2 = Person()
+        person2.id.value = "p2"
+        person2.company.value = b
+        
+        XCTAssertEqual(b.employees.value?.count, 3)
+        XCTAssertEqual(a.employees.value?.count, 2)
+    }
+    
     func testInverseFields() {
         let person1 = Person()
         person1.id.value = "p1"
@@ -168,14 +204,14 @@ class ModelTests: XCTestCase {
         // Set side B of 1:1 field. Should also set new side A, and nil out original side A.
         profileB.person.value = person1
         XCTAssertEqual(person1.profile.value, profileB)
-
+        
         XCTAssertNil(profileA.person.value)
         
         let company1 = Company()
         company1.id.value = "c1"
         let company2 = Company()
         company2.id.value = "c2"
-
+        
         person1.company.value = company1
         XCTAssertEqual(1, company1.employees.value?.count)
         
@@ -217,14 +253,14 @@ class ModelTests: XCTestCase {
     func testCustomSubclass() {
         let a = Letter.from(dictionaryValue: ["letter": "a"])
         XCTAssert(a is A)
-
+        
         let b = Letter.from(dictionaryValue: ["letter": "b"])
         XCTAssert(b is B)
         
         // We didn't define the case for "c", so it falls back to Letter.
         let c = Letter.from(dictionaryValue: ["letter": "c"])
         XCTAssert(type(of: c!) == Letter.self)
-
+        
         // Note that the unrelated type falls back to Letter!
         let x = Letter.from(dictionaryValue: ["letter": "x"])
         XCTAssert(type(of: x!) == Letter.self)
@@ -248,10 +284,10 @@ class ModelTests: XCTestCase {
     
     fileprivate class Component: Model {
         let id = Field<String>()
-
+        
         let name = Field<String>().requireNotNil()
         let age = Field<String>().requireNotNil()
-
+        
         override var identifierField: FieldType? {
             return self.id
         }
@@ -269,7 +305,7 @@ class ModelTests: XCTestCase {
         XCTAssertTrue(object.validate().isInvalid)
         
         object.name.value = "Widget"
-
+        
         // Object is still missing a valid EssentialComponent
         XCTAssertFalse(object.validate().isValid)
         
@@ -287,37 +323,37 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(state, ValidationState.invalid(["is required"]))
     }
     
-//    func testCascadeDelete() {
-//        let memory = MemoryModelStore()
-//
-////        Model.registry = MemoryRegistry(modelStore: memory)
-//        let didSave = expectationWithDescription("save")
-//        let didDelete = expectationWithDescription("delete")
-//        let object = Object()
-//        let component = Component()
-//        object.component.value = component
-//        
-//        when(memory.save(object), memory.save(component)).then { _ in
-//            memory.list(Object.self).then { objects -> () in
-//                XCTAssertEqual(objects.count, 1)
-//                }.then {
-//                    memory.list(Component.self).then { components -> () in
-//                        XCTAssertEqual(components.count, 1)
-//                        didSave.fulfill()
-//                        }
-//
-//                }.then {
-//                    memory.delete(object).then { _ in
-//                        memory.list(Component.self).then { components -> () in
-//                            XCTAssertEqual(components.count, 0)
-//                            didDelete.fulfill()
-//                        }
-//                    }
-//            }
-//        }
-//        
-//        self.waitForExpectationsWithTimeout(1, handler: nil)
-//    }
+    //    func testCascadeDelete() {
+    //        let memory = MemoryModelStore()
+    //
+    ////        Model.registry = MemoryRegistry(modelStore: memory)
+    //        let didSave = expectationWithDescription("save")
+    //        let didDelete = expectationWithDescription("delete")
+    //        let object = Object()
+    //        let component = Component()
+    //        object.component.value = component
+    //
+    //        when(memory.save(object), memory.save(component)).then { _ in
+    //            memory.list(Object.self).then { objects -> () in
+    //                XCTAssertEqual(objects.count, 1)
+    //                }.then {
+    //                    memory.list(Component.self).then { components -> () in
+    //                        XCTAssertEqual(components.count, 1)
+    //                        didSave.fulfill()
+    //                        }
+    //
+    //                }.then {
+    //                    memory.delete(object).then { _ in
+    //                        memory.list(Component.self).then { components -> () in
+    //                            XCTAssertEqual(components.count, 0)
+    //                            didDelete.fulfill()
+    //                        }
+    //                    }
+    //            }
+    //        }
+    //
+    //        self.waitForExpectationsWithTimeout(1, handler: nil)
+    //    }
     
     func testExplicitNulls() {
         let model = Company()
@@ -332,19 +368,19 @@ class ModelTests: XCTestCase {
         var parentDictionary = d0["parentCompany"] as? AttributeDictionary
         XCTAssertNotNil(parentDictionary)
         XCTAssertNil(parentDictionary?["name"])
-
+        
         context.explicitNull = true
-
+        
         d0 = model.dictionaryValue(in: context)
         parentDictionary = d0["parentCompany"] as? AttributeDictionary
         XCTAssertNotNil(parentDictionary?["name"])
         // TODO
-//        XCTAssertEqual(parentDictionary?["name"] is NSNull)
-
+        //        XCTAssertEqual(parentDictionary?["name"] is NSNull)
+        
         // We haven't set any values, so nothing will be serialized anyway
         let d = model.dictionaryValue(in: context)
         XCTAssert(d["name"] == nil)
-
+        
         // Now, set a value explicitly, and it should appear in the dictionary
         model.name.value = nil
         let d2 = model.dictionaryValue(in: context)
@@ -364,7 +400,7 @@ class ModelTests: XCTestCase {
         model.merge(from: model2, exclude: [model.id])
         XCTAssertEqual(model.name.value, "Google")
         XCTAssertEqual(model.identifier, "1")
-
+        
         model.merge(from: model2)
         XCTAssertEqual(model.identifier, "2")
     }
@@ -372,7 +408,7 @@ class ModelTests: XCTestCase {
     func testMergingUnsetFields() {
         let model = Company()
         let model2 = Company()
-
+        
         model.id.value = "1"
         model.merge(from: model2)
         XCTAssertEqual(model.id.value, "1")
