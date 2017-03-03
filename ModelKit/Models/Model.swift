@@ -153,6 +153,8 @@ open class Model: NSObject, NSCopying, Observable {
                 } else if let intField = self.identifierField as? Field<Int> {
                     intField.value = Int(id)
                 }
+            } else {
+                self.identifierField?.anyValue = nil
             }
         }
     }
