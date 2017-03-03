@@ -288,11 +288,16 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
             return Promise(error: RemoteModelStoreError.noModelPath(model: model))
         }
     }
-    open func lookup<T: Model>(_ modelClass:T.Type, identifier:String) -> Promise<T> {
-        return self.lookup(modelClass, identifier: identifier, parameters: nil)
+    
+    open func read<T : Model>(_ model: T) -> Promise<T> {
+        if let path = self.router.instancePath(for: model) {
+            return self.read(T.self, path: path)
+        } else {
+            return Promise(error: RemoteModelStoreError.noModelPath(model: model))
+        }
     }
     
-    open func lookup<T: Model>(_ modelClass:T.Type, identifier:String, parameters: Parameters?) -> Promise<T> {
+    open func read<T: Model>(_ modelClass:T.Type, identifier:String, parameters: Parameters?) -> Promise<T> {
         let model = modelClass.init() as T
         model.identifier = identifier
         if let path = self.router.instancePath(for: model) {
@@ -307,14 +312,6 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
      */
     open func read<T: Model>(_ modelClass: T.Type, path: String, parameters: Parameters?=nil) -> Promise<T> {
         return self.request(.get, path: path, parameters: parameters).then(on: .global(), execute: self.instantiateModel(modelClass))
-    }
-    
-    open func refresh<T:Model>(_ model:T, parameters:Parameters?=nil) -> Promise<T> {
-        if let identifier = model.identifier {
-            return self.lookup(T.self, identifier: identifier, parameters: parameters)
-        } else {
-            return Promise(error: RemoteModelStoreError.noModelPath(model: model))
-        }
     }
     
     public func list<T: Model>(_ modelClass:T.Type) -> Promise<[T]> {

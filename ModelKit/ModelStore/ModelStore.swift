@@ -19,6 +19,18 @@ public protocol ListableModelStore {
     func list<T : Model>(_ field: ModelArrayField<T>) -> Promise<[T]>
 }
 
+public enum ModelStoreError: Error {
+    case noIdentifier(model: Model)
+    
+    var description: String {
+        switch(self) {
+        case .noIdentifier(let model):
+            return "No identifier for model of type \(type(of: model))"
+        }
+    }
+}
+
+
 public protocol ModelStore: ListableModelStore {
     /**
      Inserts a record.  May give the object an identifier.
@@ -38,9 +50,9 @@ public protocol ModelStore: ListableModelStore {
     func delete<T:Model>(_ model:T) -> Promise<T>
     
     /**
-     Retrieves a record with the specified identifier.  The Promise should fail if the record can't be found.
+     Loads updated data for a model.
      */
-    func lookup<T: Model>(_ modelClass:T.Type, identifier:String) -> Promise<T>
+    func read<T: Model>(_ model: T) -> Promise<T>
     
     var delegate:ModelStoreDelegate? { get set }
 }
@@ -84,6 +96,15 @@ public extension ModelStore {
                 return self.create(model, fields: fields)
             }
         }
+    }
+    
+    /**
+     Retrieves a record with the specified identifier.  The Promise should fail if the record can't be found.
+     */
+    func read<T: Model>(_ modelClass:T.Type, identifier:String) -> Promise<T> {
+        let model = modelClass.init() as T
+        model.identifier = identifier
+        return self.read(model)
     }
 }
 

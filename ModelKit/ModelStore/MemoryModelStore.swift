@@ -19,6 +19,7 @@ import Foundation
 import PromiseKit
 
 open class MemoryModelStore: ModelStore, ListableModelStore, ClearableModelStore {
+
     open static let sharedInstance = MemoryModelStore()
     
     // of the form [class name: [id: Model]]
@@ -94,7 +95,7 @@ open class MemoryModelStore: ModelStore, ListableModelStore, ClearableModelStore
     /**
      A synchronous variant of lookup that does not return a promise.
      */
-    open func lookupImmediately<T: Model>(_ modelClass:T.Type, identifier:String) -> T? {
+    open func readImmediately<T: Model>(_ modelClass:T.Type, identifier:String) -> T? {
         let collection = self.collectionForClass(modelClass)
         return collection?[identifier] as? T
     }
@@ -108,9 +109,20 @@ open class MemoryModelStore: ModelStore, ListableModelStore, ClearableModelStore
         return model
     }
     
-    open func lookup<T: Model>(_ modelClass:T.Type, identifier:String) -> Promise<T> {
+    /**
+     Loads updated data for a model.
+     */
+    public func read<T : Model>(_ model: T) -> Promise<T> {
+        if let identifier = model.identifier {
+            return self.read(T.self, identifier: identifier)
+        } else {
+            return Promise(error: ModelStoreError.noIdentifier(model: model))
+        }
+    }
+
+    open func read<T: Model>(_ modelClass:T.Type, identifier:String) -> Promise<T> {
         return Promise { fulfill, reject in
-            if let result = self.lookupImmediately(modelClass, identifier: identifier) {
+            if let result = self.readImmediately(modelClass, identifier: identifier) {
                 fulfill(result)
             } else {
                 reject(NSError(domain: ModelStoreErrorDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Model not found with id \(identifier)"]))

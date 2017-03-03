@@ -202,7 +202,7 @@ class APIKitTests: XCTestCase {
             XCTAssertNotNil(model.identifier)
             didSave.fulfill()
             let id = model.identifier!
-            return ModelManager.sharedInstance.modelStore.lookup(type(of: a), identifier: id)
+            return ModelManager.sharedInstance.modelStore.read(type(of: a), identifier: id)
             }.then { model -> () in
                 XCTAssertNotNil(model)
                 XCTAssert(model === a)

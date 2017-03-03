@@ -30,7 +30,7 @@ public struct MemoryRegistry: ModelRegistry {
     
     public func canonicalModel<T:Model>(for model: T) -> T? {
         if let identifier = model.identifier {
-            return self.memory.lookupImmediately(T.self, identifier: identifier)
+            return self.memory.readImmediately(T.self, identifier: identifier)
         } else {
             return nil
         }
