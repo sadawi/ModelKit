@@ -289,6 +289,19 @@ open class RemoteModelStore: ModelStore, ListableModelStore {
         }
     }
     
+    open func deleteAll<T : Model>(_ field: ModelArrayField<T>) -> Promise<Void> {
+        if let path = self.router.path(to: field) {
+            return self.request(.delete, path: path).then(on: .global()) { (response:Response<T>) -> Promise<Void> in
+                for model in field.value ?? [] {
+                    model.afterDelete()
+                }
+                return Promise(value: ())
+            }
+        } else {
+            return Promise(error: RemoteModelStoreError.noModelCollectionPath(modelClass: T.self))
+        }
+    }
+    
     open func read<T : Model>(_ model: T) -> Promise<T> {
         if let path = self.router.instancePath(for: model) {
             return self.read(T.self, path: path)

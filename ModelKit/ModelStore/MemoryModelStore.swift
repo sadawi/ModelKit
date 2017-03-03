@@ -87,6 +87,11 @@ open class MemoryModelStore: ModelStore, ListableModelStore, ClearableModelStore
         return Promise<Void>(value: ())
     }
     
+    public func deleteAll<T : Model>(_ field: ModelArrayField<T>) -> Promise<Void> {
+        field.value = []
+        return Promise(value: ())
+    }
+    
     open func deleteAll() -> Promise<Void> {
         self.data.removeAllObjects()
         return Promise<Void>(value: ())

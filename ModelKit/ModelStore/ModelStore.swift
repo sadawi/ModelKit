@@ -50,10 +50,15 @@ public protocol ModelStore: ListableModelStore {
     func delete<T:Model>(_ model:T) -> Promise<T>
     
     /**
+     Deletes all dependent records of another record.
+     */
+    func deleteAll<T : Model>(_ field: ModelArrayField<T>) -> Promise<Void>
+    
+    /**
      Loads updated data for a model.
      */
     func read<T: Model>(_ model: T) -> Promise<T>
-    
+
     var delegate:ModelStoreDelegate? { get set }
 }
 

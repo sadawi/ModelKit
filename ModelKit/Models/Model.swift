@@ -85,7 +85,9 @@ open class Model: NSObject, NSCopying, Observable {
     open func afterInit()     { }
     open func afterCreate()   { }
     open func beforeSave()    { }
-    open func afterDelete()   { }
+    open func afterDelete()   {
+        self.identifier = nil
+    }
 
     /**
      Returns a unique instance of this class for an identifier. If a matching instance is already registered, returns that. Otherwise, returns a new instance.
