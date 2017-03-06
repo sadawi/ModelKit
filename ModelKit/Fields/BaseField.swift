@@ -223,6 +223,17 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
         self.updatedAt = Date()
         self.processNewValue(value)
         self.valueUpdatedHandler?(newValue)
+        
+        if self.isChange(oldValue: oldValue, newValue: newValue) {
+            self.changedAt = Date()
+            self.notifyObservers(valueChanged: true)
+        } else {
+            self.notifyObservers(valueChanged: false)
+        }
+    }
+    
+    open func isChange(oldValue: T?, newValue: T?) -> Bool {
+        return false
     }
     
     open func processNewValue(_ value: T?) {
@@ -328,11 +339,6 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     @discardableResult open func require(_ rules: [ValidationRule<T>]) -> Self {
         self.validationRules.append(contentsOf: rules)
         return self
-    }
-    
-    internal func valueChanged() {
-        self.changedAt = Date()
-        self.notifyObservers()
     }
     
     // MARK: - Observation

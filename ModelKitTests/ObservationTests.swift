@@ -61,6 +61,37 @@ class ObservationTests: XCTestCase {
         XCTAssertEqual(changedValue ?? [], ["red", "green", "yellow"])
     }
     
+    func testValueChangedParameter() {
+        let entity = Entity()
+        entity.name.value = "Bob"
+        
+        var changed = false
+        entity.name.addObserver(requiresChange: true) { oldValue, newValue in
+            changed = true
+        }
+
+        var updated = false
+        entity.name.addObserver(requiresChange: false) { oldValue, newValue in
+            updated = true
+        }
+
+        XCTAssertFalse(changed)
+        XCTAssertFalse(updated)
+        
+        entity.name.value = "Bob"
+
+        XCTAssertFalse(changed)
+        XCTAssertTrue(updated)
+
+        updated = false
+        changed = false
+        
+        entity.name.value = "Alice"
+        
+        XCTAssertTrue(changed)
+        XCTAssertTrue(updated)
+    }
+    
     func testObservation() {
         let view = View()
         let entity = Entity()

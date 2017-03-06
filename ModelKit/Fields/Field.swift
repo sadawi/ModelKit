@@ -13,11 +13,8 @@ open class Field<T:Equatable>: BaseField<T> {
         super.init(value: value, name: name, priority: priority, key: key)
     }
     
-    open override func valueUpdated(oldValue:T?, newValue: T?) {
-        super.valueUpdated(oldValue: oldValue, newValue: newValue)
-        if oldValue != self.value {
-            self.valueChanged()
-        }
+    open override func isChange(oldValue: T?, newValue: T?) -> Bool {
+        return oldValue != self.value
     }
     
     open func arrayField(value: [T]?=[], name: String?=nil, priority: Int?=nil, key: String?=nil) -> ArrayField<T> {

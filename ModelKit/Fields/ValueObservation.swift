@@ -22,6 +22,7 @@ import Foundation
  */
 open class ValueObservation<T>: Observation {
     public typealias Action = ((T?, T?) -> Void)
+    public var requiresChange: Bool = true
     public var uuid = UUID()
     
     public typealias ObservedValueType = T

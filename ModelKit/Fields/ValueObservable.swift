@@ -27,8 +27,9 @@ public extension ValueObservable {
      
      - parameter observer: an Observer object that will receive change notifications
      */
-    @discardableResult public func addObserver<U:ValueObserver>(_ observer:U, updateImmediately: Bool = false) -> U where U.ObservedValueType==ObservedValueType {
+    @discardableResult public func addObserver<U:ValueObserver>(_ observer:U, requiresChange: Bool = true, updateImmediately: Bool = false) -> U where U.ObservedValueType==ObservedValueType {
         let observation = ValueObservation<ObservedValueType>()
+        observation.requiresChange = requiresChange
         observation.action = { (oldValue:ObservedValueType?, newValue:ObservedValueType?) -> Void in
             observer.observedValueChanged(from: oldValue, to: newValue, observable:self)
         }
@@ -38,9 +39,13 @@ public extension ValueObservable {
         self.observations.add(observation, for: observer)
         return observer
     }
-    
+
     @discardableResult public func addObserver(updateImmediately: Bool, action:@escaping ((Void) -> Void)) {
-        self.addObserver { (oldValue: ObservedValueType?, newValue: ObservedValueType?) in
+        return self.addObserver(requiresChange: true, updateImmediately: updateImmediately, action: action)
+    }
+    
+    @discardableResult public func addObserver(requiresChange: Bool, updateImmediately: Bool, action:@escaping ((Void) -> Void)) {
+        self.addObserver(requiresChange: requiresChange) { (oldValue: ObservedValueType?, newValue: ObservedValueType?) in
             action()
         }
     }
@@ -50,8 +55,8 @@ public extension ValueObservable {
      
      - parameter action: A closure to be run when the value changes
      */
-    @discardableResult public func addObserver(updateImmediately: Bool = false, action:@escaping ((ObservedValueType?, ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
-        let observation = self.createClosureObservation(action: action)
+    @discardableResult public func addObserver(requiresChange: Bool = true, updateImmediately: Bool = false, action:@escaping ((ObservedValueType?, ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
+        let observation = self.createClosureObservation(requiresChange: requiresChange, action: action)
         if updateImmediately {
             observation.perform(oldValue: nil, newValue: self.value)
         }
@@ -65,8 +70,8 @@ public extension ValueObservable {
      - parameter owner: The observation owner, used only as a key for registering the action
      - parameter action: A closure to be run when the value changes
      */
-    @discardableResult public func addObserver<U: AnyObject>(_ owner:U, updateImmediately: Bool = false, action:@escaping ((ObservedValueType?, ObservedValueType?) -> Void)) -> U {
-        let observation = self.createClosureObservation(action: action)
+    @discardableResult public func addObserver<U: AnyObject>(_ owner:U, requiresChange: Bool = true, updateImmediately: Bool = false, action:@escaping ((ObservedValueType?, ObservedValueType?) -> Void)) -> U {
+        let observation = self.createClosureObservation(requiresChange: requiresChange, action: action)
         if updateImmediately {
             observation.perform(oldValue: nil, newValue: self.value)
         }
@@ -74,15 +79,18 @@ public extension ValueObservable {
         return owner
     }
     
-    private func createClosureObservation(action:@escaping ((ObservedValueType?, ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
+    private func createClosureObservation(requiresChange: Bool, action:@escaping ((ObservedValueType?, ObservedValueType?) -> Void)) -> ValueObservation<ObservedValueType> {
         let observation = ValueObservation<ObservedValueType>()
+        observation.requiresChange = requiresChange
         observation.action = action
         return observation
     }
     
-    public func notifyObservers() {
+    public func notifyObservers(valueChanged: Bool = true) {
         self.observations.forEach { observation in
-            observation.perform(oldValue: nil, newValue: self.value)
+            if !observation.requiresChange || valueChanged {
+                observation.perform(oldValue: nil, newValue: self.value)
+            }
         }
     }
     
