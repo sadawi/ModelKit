@@ -431,10 +431,23 @@ extension FieldTests {
         XCTAssertFalse(a.contains("yellow"))
         XCTAssertTrue(a.contains("red"))
         
-        let b = ContinuousValueDomain<Int>(lowerBound: 0, upperBound: 12)
+        let b = RangeValueDomain<Int>(lowerBound: 0, upperBound: 12)
         XCTAssertFalse(b.contains(-1))
         XCTAssertFalse(b.contains(13))
         XCTAssertTrue(b.contains(12))
         XCTAssertTrue(b.contains(0))
+    }
+    
+    func testFieldValueDomains() {
+        let name = Field<String>().constrain(to: ["John", "Alice"])
+        name.value = "Bob"
+        XCTAssertNil(name.value)
+        name.value = "Alice"
+        XCTAssertEqual(name.value, "Alice")
+        
+        let count = Field<Int>().constrain(to: 0...10)
+        count.value = 11
+        XCTAssertEqual(count.value, 10)
+        
     }
 }

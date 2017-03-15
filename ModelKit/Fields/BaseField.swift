@@ -184,7 +184,15 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
         return _value
     }
     
+    /**
+     Processes an incoming value and transforms it to a suitable value.
+     */
+    open func clampValue(_ value: T?) -> T? {
+        return value
+    }
+    
     open func setValue(_ newValue: T?) {
+        let newValue = self.clampValue(newValue)
         let oldValue = _value
         _value = newValue
         self.valueUpdated(oldValue: oldValue, newValue: newValue)

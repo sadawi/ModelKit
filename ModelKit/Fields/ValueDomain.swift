@@ -12,27 +12,57 @@ open class ValueDomain<T: Equatable> {
     open func contains(_ value: T) -> Bool {
         return true
     }
+    
+    open func clamp(_ value: T) -> T? {
+        if self.contains(value) {
+            return value
+        } else {
+            return nil
+        }
+    }
 }
 
-open class ContinuousValueDomain<T: Comparable>: ValueDomain<T> {
+public enum RangeContainment {
+    case within
+    case below
+    case above
+}
+
+open class RangeValueDomain<T: Comparable>: ValueDomain<T> {
     open var lowerBound: T?
     open var upperBound: T?
-
-    open override func contains(_ value: T) -> Bool {
+    
+    public func containment(of value: T) -> RangeContainment {
         if let min = self.lowerBound, value < min {
-            return false
+            return .below
         }
         
         if let max = self.upperBound, value > max {
-            return false
+            return .above
         }
         
-        return true
+        return .within
+    }
+    
+    open override func contains(_ value: T) -> Bool {
+        return self.containment(of: value) == .within
     }
     
     public required init(lowerBound: T? = nil, upperBound: T? = nil) {
         self.lowerBound = lowerBound
         self.upperBound = upperBound
+    }
+
+    public convenience init(_ range: ClosedRange<T>) {
+        self.init(lowerBound: range.lowerBound, upperBound: range.upperBound)
+    }
+    
+    open override func clamp(_ value: T) -> T? {
+        switch self.containment(of: value) {
+        case .below: return self.lowerBound
+        case .above: return self.upperBound
+        case .within: return value
+        }
     }
 }
 

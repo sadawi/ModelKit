@@ -28,4 +28,26 @@ open class Field<T:Equatable>: BaseField<T> {
         return copy
     }
 
+    open func constrain(to domain: ValueDomain<T>) -> Self {
+        self.domain = domain
+        return self
+    }
+
+    open func constrain(to domainValues: [T]) -> Self {
+        return self.constrain(to: DiscreteValueDomain(domainValues))
+    }
+    
+    open override func clampValue(_ value: T?) -> T? {
+        if let value = value {
+            return self.domain.clamp(value)
+        } else {
+            return value
+        }
+    }
+}
+
+extension Field where T: Comparable {
+    open func constrain(to domainValues: ClosedRange<T>) -> Self {
+        return self.constrain(to: RangeValueDomain(domainValues))
+    }
 }
