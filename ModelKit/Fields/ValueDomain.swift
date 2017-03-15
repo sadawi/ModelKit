@@ -8,21 +8,17 @@
 
 import Foundation
 
-public protocol ValueDomain {
-    associatedtype Value: Equatable
-    
-    func contains(_ value: Value) -> Bool
+open class ValueDomain<T: Equatable> {
+    open func contains(_ value: T) -> Bool {
+        return true
+    }
 }
 
-public protocol ContinuousValueDomain: ValueDomain {
-    associatedtype Value: Comparable
-    
-    var minimum: Value? { get }
-    var maximum: Value? { get }
-}
+open class ContinuousValueDomain<T: Comparable>: ValueDomain<T> {
+    open var minimum: T?
+    open var maximum: T?
 
-public extension ContinuousValueDomain {
-    func contains(_ value: Self.Value) -> Bool {
+    open override func contains(_ value: T) -> Bool {
         if let min = self.minimum, value < min {
             return false
         }
@@ -35,12 +31,61 @@ public extension ContinuousValueDomain {
     }
 }
 
-public protocol DiscreteValueDomain: ValueDomain {
-    var values: [Value] { get }
-}
-
-public extension DiscreteValueDomain {
-    func contains(_ value: Self.Value) -> Bool {
+open class DiscreteValueDomain<T: Equatable>: ValueDomain<T> {
+    open var values: [T] = []
+    
+    open override func contains(_ value: T) -> Bool {
         return self.values.contains(value)
     }
 }
+
+
+
+//public protocol ValueDomain {
+//    associatedtype Value: Equatable
+//    
+//    func contains(_ value: Value) -> Bool
+//}
+//
+//public protocol ContinuousValueDomain: ValueDomain {
+//    associatedtype Value: Comparable
+//    
+//    var minimum: Value? { get }
+//    var maximum: Value? { get }
+//}
+//
+//public extension ContinuousValueDomain {
+//    func contains(_ value: Self.Value) -> Bool {
+//        if let min = self.minimum, value < min {
+//            return false
+//        }
+//        
+//        if let max = self.maximum, value < max {
+//            return false
+//        }
+//        
+//        return true
+//    }
+//}
+//
+//public protocol DiscreteValueDomain: ValueDomain {
+//    var values: [Value] { get }
+//}
+//
+//public extension DiscreteValueDomain {
+//    func contains(_ value: Self.Value) -> Bool {
+//        return self.values.contains(value)
+//    }
+//}
+//
+//
+//extension ClosedRange: ContinuousValueDomain {
+//    public typealias Value = Bound
+//    
+//    public var minimum: Value? {
+//        return self.lowerBound
+//    }
+//    public var maximum: Value? {
+//        return self.upperBound
+//    }
+//}

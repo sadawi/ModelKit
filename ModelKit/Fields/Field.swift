@@ -9,6 +9,8 @@
 import Foundation
 
 open class Field<T:Equatable>: BaseField<T> {
+    var domain: ValueDomain<T> = ValueDomain()
+    
     public required override init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
     }
