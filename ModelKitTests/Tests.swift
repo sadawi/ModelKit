@@ -11,9 +11,13 @@ import UIKit
 import XCTest
 import ModelKit
 
-enum Color: String {
-    case Red = "red"
-    case Blue = "blue"
+enum Color: String, Enumerable {
+    case red
+    case blue
+    
+    static func allValues() -> [Color] {
+        return [.red, .blue]
+    }
 }
 
 fileprivate  class Entity {
@@ -52,7 +56,7 @@ class FieldTests: XCTestCase {
     
     func testEnums() {
         let entity = Entity()
-        entity.color.value = .Blue
+        entity.color.value = .blue
 
         var dict:AttributeDictionary = [:]
         
@@ -61,7 +65,7 @@ class FieldTests: XCTestCase {
         
         dict["color"] = "blue"
         entity.color.read(from: dict)
-        XCTAssertEqual(entity.color.value, Color.Blue)
+        XCTAssertEqual(entity.color.value, Color.blue)
 
         dict["color"] = "yellow"
         entity.color.read(from: dict)
