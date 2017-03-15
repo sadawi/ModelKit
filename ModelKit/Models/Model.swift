@@ -9,7 +9,6 @@
 import Foundation
 
 public typealias Identifier = String
-public typealias Interface = [String:FieldType]
 
 open class ModelValueTransformerContext: ValueTransformerContext {
     /**
@@ -170,7 +169,7 @@ open class Model: NSObject, NSCopying, Observable {
      Removes all data from this instance except its identifier, and sets the loadState to .incomplete.
      */
     open func unload() {
-        for (_, field) in self.interface where field.key != self.identifierField?.key {
+        for field in self.interface.fields where field.key != self.identifierField?.key {
             field.anyValue = nil
         }
         self.loadState = .incomplete
@@ -255,14 +254,14 @@ open class Model: NSObject, NSCopying, Observable {
      By default, includes all of them.
      */
     open func defaultFieldsForDictionaryValue() -> [FieldType] {
-        return Array(self.interface.values)
+        return self.interface.fields
     }
     
     /**
      Look at the instance's fields, do some introspection and processing.
      */
     internal func buildFields() {
-        for (key, field) in self.staticFields {
+        for (key, field) in self.staticFields.fieldsByKey {
             if field.key == nil {
                 field.key = key
             }
@@ -312,7 +311,7 @@ open class Model: NSObject, NSCopying, Observable {
      with an explicit mapping of keys to fields.
      */
     private func buildStaticFields() -> Interface {
-        var result = Interface()
+        let result = Interface()
         let mirror = Mirror(reflecting: self)
         mirror.eachChild { child in
             if let label = child.label, let value = child.value as? FieldType {
@@ -369,7 +368,7 @@ open class Model: NSObject, NSCopying, Observable {
         
         seenModels.insert(self)
         
-        for (_, field) in self.interface {
+        for field in self.interface.fields {
             
             action(field)
             
@@ -397,7 +396,7 @@ open class Model: NSObject, NSCopying, Observable {
 
         seenModels.insert(self)
 
-        for (_, field) in self.interface {
+        for field in self.interface.fields {
             
             action(field.anyValue)
             
@@ -441,7 +440,7 @@ open class Model: NSObject, NSCopying, Observable {
         
         var result:AttributeDictionary = [:]
         let include = fields
-        for (_, field) in self.interface {
+        for field in self.interface.fields {
             if include.contains(where: { $0 === field }) && includeField?(field) != false {
                 field.write(to: &result, seenFields: &seenFields, in: context)
             }
@@ -459,7 +458,7 @@ open class Model: NSObject, NSCopying, Observable {
      */
     open func readDictionaryValue(_ dictionaryValue: AttributeDictionary, fields:[FieldType]?=nil, in context: ValueTransformerContext=ValueTransformerContext.defaultContext) {
         let fields = (fields ?? self.defaultFieldsForDictionaryValue())
-        for (_, field) in self.interface {
+        for field in self.interface.fields {
             if fields.contains(where: { $0 === field }) {
                 field.read(from: dictionaryValue, in: context)
             }
@@ -547,7 +546,7 @@ open class Model: NSObject, NSCopying, Observable {
      */
 
     public func merge(from model: Model) {
-        self.merge(from: model, include: Array(self.interface.values))
+        self.merge(from: model, include: self.interface.fields)
     }
 
     public func merge(from model: Model, exclude excludedFields: [FieldType]) {
@@ -557,7 +556,7 @@ open class Model: NSObject, NSCopying, Observable {
     }
     
     public func merge(from model: Model, if condition: @escaping ((FieldType, FieldType)->Bool)) {
-        let fields = Array(self.interface.values)
+        let fields = self.interface.fields
         merge(from: model, include: fields, if: condition)
     }
 

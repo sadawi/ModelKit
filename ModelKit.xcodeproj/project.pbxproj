@@ -62,6 +62,7 @@
 		22A1F2F31DFD2ED600241434 /* ModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1F2F21DFD2ED600241434 /* ModelObserver.swift */; };
 		22A1F2F51DFD2FB700241434 /* FieldPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1F2F41DFD2FB700241434 /* FieldPath.swift */; };
 		22B82C331E78F18300E3EA54 /* ValueDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B82C321E78F18300E3EA54 /* ValueDomain.swift */; };
+		22B82C3D1E79B56500E3EA54 /* Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B82C3C1E79B56500E3EA54 /* Interface.swift */; };
 		22DAC6B61DF7FCDD00108441 /* NumericValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */; };
 		22DAC6B81DF7FCF100108441 /* SimpleValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */; };
 		22DBA5871E24338900E904A4 /* ValueObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBA5861E24338900E904A4 /* ValueObservation.swift */; };
@@ -139,6 +140,7 @@
 		22A1F2F21DFD2ED600241434 /* ModelObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelObserver.swift; path = Models/ModelObserver.swift; sourceTree = "<group>"; };
 		22A1F2F41DFD2FB700241434 /* FieldPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FieldPath.swift; path = Models/FieldPath.swift; sourceTree = "<group>"; };
 		22B82C321E78F18300E3EA54 /* ValueDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueDomain.swift; path = Fields/ValueDomain.swift; sourceTree = "<group>"; };
+		22B82C3C1E79B56500E3EA54 /* Interface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Interface.swift; path = Models/Interface.swift; sourceTree = "<group>"; };
 		22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NumericValueTransformer.swift; path = Fields/NumericValueTransformer.swift; sourceTree = "<group>"; };
 		22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleValueTransformer.swift; path = Fields/SimpleValueTransformer.swift; sourceTree = "<group>"; };
 		22DBA5861E24338900E904A4 /* ValueObservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueObservation.swift; path = Fields/ValueObservation.swift; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				220EF8F51DF09D7700B702CC /* DictionarySerializable.swift */,
 				220EF8CD1DF09C1600B702CC /* Model.swift */,
 				2249CC401DF23A4500FD3ABD /* HasOwnerField.swift */,
+				22B82C3C1E79B56500E3EA54 /* Interface.swift */,
 			);
 			name = core;
 			sourceTree = "<group>";
@@ -679,6 +682,7 @@
 				22450CFC1DF785E900614CC9 /* TypeDictionary.swift in Sources */,
 				22450D021DF7880600614CC9 /* RequestEncoder.swift in Sources */,
 				220EF8DA1DF09C3800B702CC /* Field.swift in Sources */,
+				22B82C3D1E79B56500E3EA54 /* Interface.swift in Sources */,
 				22A1F2F31DFD2ED600241434 /* ModelObserver.swift in Sources */,
 				220EF8D21DF09C1600B702CC /* ModelField.swift in Sources */,
 				220EF8E11DF09C7100B702CC /* ModelStore.swift in Sources */,
