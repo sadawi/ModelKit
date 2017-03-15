@@ -13,6 +13,9 @@ open class ValueDomain<T: Equatable> {
         return true
     }
     
+    /**
+     Returns a value ensured to be contained within this domain, or nil.
+     */
     open func clamp(_ value: T) -> T? {
         if self.contains(value) {
             return value
