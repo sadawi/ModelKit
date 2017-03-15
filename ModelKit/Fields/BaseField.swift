@@ -166,6 +166,8 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
      */
     open var key:String?
     
+    // MARK:- Value
+
     /**
      The value contained in this field.  Note: it's always Optional.
      Delegates to setValue/getValue methods.
@@ -185,10 +187,29 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     }
     
     /**
+     A description of the possible values this field can have.
+     The field is guaranteed never to have a non-nil value outside this domain.
+     Note: attempting to set a value outside the domain will *not* yield a validation error; the value will either be clamped to the domain or nil.
+     */
+    open var domain: ValueDomain<T> = ValueDomain()
+    
+    /**
+     Sets the field's domain to an explicit ValueDomain instance
+     */
+    open func constrain(to domain: ValueDomain<T>) -> Self {
+        self.domain = domain
+        return self
+    }
+    
+    /**
      Processes an incoming value and transforms it to a suitable value.
      */
     open func clampValue(_ value: T?) -> T? {
-        return value
+        if let value = value {
+            return self.domain.clamp(value)
+        } else {
+            return value
+        }
     }
     
     open func setValue(_ newValue: T?) {
@@ -459,6 +480,23 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
             }
         }
     }
+}
 
-    
+extension BaseField where T: Equatable {
+    /**
+     Sets the field's domain to a list of values.
+     */
+    open func constrain(to domainValues: [T]) -> Self {
+        return self.constrain(to: DiscreteValueDomain(domainValues))
+    }
+}
+
+
+extension BaseField where T: Comparable {
+    /**
+     Sets the field's domain to a continuous range domain.
+     */
+    open func constrain(to domainValues: ClosedRange<T>) -> Self {
+        return self.constrain(to: RangeValueDomain(domainValues))
+    }
 }

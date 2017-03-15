@@ -449,5 +449,6 @@ extension FieldTests {
         count.value = 11
         XCTAssertEqual(count.value, 10)
         
+        let names = Field<String>().constrain(to: ["John", "Alice"]).arrayField()
     }
 }

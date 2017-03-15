@@ -9,13 +9,6 @@
 import Foundation
 
 open class Field<T:Equatable>: BaseField<T> {
-    /**
-     A description of the possible values this field can have.
-     The field is guaranteed never to have a non-nil value outside this domain.
-     Note: attempting to set a value outside the domain will *not* yield a validation error; the value will either be clamped to the domain or nil.
-     */
-    open var domain: ValueDomain<T> = ValueDomain()
-    
     public required override init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
     }
@@ -32,36 +25,5 @@ open class Field<T:Equatable>: BaseField<T> {
         let copy = type(of: self).init(value: self.value, name: self.name, priority: self.priority, key: self.key)
         return copy
     }
-
-    /**
-     Sets the field's domain to an explicit ValueDomain instance
-     */
-    open func constrain(to domain: ValueDomain<T>) -> Self {
-        self.domain = domain
-        return self
-    }
-
-    /**
-     Sets the field's domain to a list of values.
-     */
-    open func constrain(to domainValues: [T]) -> Self {
-        return self.constrain(to: DiscreteValueDomain(domainValues))
-    }
     
-    open override func clampValue(_ value: T?) -> T? {
-        if let value = value {
-            return self.domain.clamp(value)
-        } else {
-            return value
-        }
-    }
-}
-
-extension Field where T: Comparable {
-    /**
-     Sets the field's domain to a continuous range domain.
-     */
-    open func constrain(to domainValues: ClosedRange<T>) -> Self {
-        return self.constrain(to: RangeValueDomain(domainValues))
-    }
 }

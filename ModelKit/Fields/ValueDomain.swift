@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class ValueDomain<T: Equatable> {
+open class ValueDomain<T> {
     open func contains(_ value: T) -> Bool {
         return true
     }
