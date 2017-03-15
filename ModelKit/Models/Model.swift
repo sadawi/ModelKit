@@ -170,7 +170,7 @@ open class Model: NSObject, NSCopying, Observable {
      Removes all data from this instance except its identifier, and sets the loadState to .incomplete.
      */
     open func unload() {
-        for (_, field) in self.fields where field.key != self.identifierField?.key {
+        for (_, field) in self.interface where field.key != self.identifierField?.key {
             field.anyValue = nil
         }
         self.loadState = .incomplete
@@ -208,9 +208,9 @@ open class Model: NSObject, NSCopying, Observable {
         
         guard let firstComponent = path.shift() else { return nil }
         
-        let fields = self.fields
+        let interface = self.interface
         
-        if let firstField = fields[firstComponent] {
+        if let firstField = interface[firstComponent] {
             if path.length == 0 {
                 // No more components.  Just return the field
                 return firstField
@@ -248,14 +248,14 @@ open class Model: NSObject, NSCopying, Observable {
         }
     }
     
-    public var fields = Interface()
+    public var interface = Interface()
     
     /**
      Which fields should we include in the dictionaryValue?
      By default, includes all of them.
      */
     open func defaultFieldsForDictionaryValue() -> [FieldType] {
-        return Array(self.fields.values)
+        return Array(self.interface.values)
     }
     
     /**
@@ -267,7 +267,7 @@ open class Model: NSObject, NSCopying, Observable {
                 field.key = key
             }
             self.initializeField(field)
-            self.fields[key] = field
+            self.interface[key] = field
         }
     }
     
@@ -279,7 +279,7 @@ open class Model: NSObject, NSCopying, Observable {
         guard let key = field.key else { return }
 
         self.initializeField(field)
-        self.fields[key] = field
+        self.interface[key] = field
     }
     
     open subscript (key: String) -> Any? {
@@ -369,7 +369,7 @@ open class Model: NSObject, NSCopying, Observable {
         
         seenModels.insert(self)
         
-        for (_, field) in self.fields {
+        for (_, field) in self.interface {
             
             action(field)
             
@@ -397,7 +397,7 @@ open class Model: NSObject, NSCopying, Observable {
 
         seenModels.insert(self)
 
-        for (_, field) in self.fields {
+        for (_, field) in self.interface {
             
             action(field.anyValue)
             
@@ -441,7 +441,7 @@ open class Model: NSObject, NSCopying, Observable {
         
         var result:AttributeDictionary = [:]
         let include = fields
-        for (_, field) in self.fields {
+        for (_, field) in self.interface {
             if include.contains(where: { $0 === field }) && includeField?(field) != false {
                 field.write(to: &result, seenFields: &seenFields, in: context)
             }
@@ -459,7 +459,7 @@ open class Model: NSObject, NSCopying, Observable {
      */
     open func readDictionaryValue(_ dictionaryValue: AttributeDictionary, fields:[FieldType]?=nil, in context: ValueTransformerContext=ValueTransformerContext.defaultContext) {
         let fields = (fields ?? self.defaultFieldsForDictionaryValue())
-        for (_, field) in self.fields {
+        for (_, field) in self.interface {
             if fields.contains(where: { $0 === field }) {
                 field.read(from: dictionaryValue, in: context)
             }
@@ -547,7 +547,7 @@ open class Model: NSObject, NSCopying, Observable {
      */
 
     public func merge(from model: Model) {
-        self.merge(from: model, include: Array(self.fields.values))
+        self.merge(from: model, include: Array(self.interface.values))
     }
 
     public func merge(from model: Model, exclude excludedFields: [FieldType]) {
@@ -557,12 +557,12 @@ open class Model: NSObject, NSCopying, Observable {
     }
     
     public func merge(from model: Model, if condition: @escaping ((FieldType, FieldType)->Bool)) {
-        let fields = Array(self.fields.values)
+        let fields = Array(self.interface.values)
         merge(from: model, include: fields, if: condition)
     }
 
     open func merge(from model: Model, include includedFields: [FieldType], if condition: ((FieldType, FieldType) -> Bool)? = nil) {
-        let otherFields = model.fields
+        let otherFields = model.interface
         
         for field in includedFields {
             if let key = field.key, let otherField = otherFields[key] {
