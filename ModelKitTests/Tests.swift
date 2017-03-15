@@ -450,5 +450,8 @@ extension FieldTests {
         XCTAssertEqual(count.value, 10)
         
         let names = Field<String>().constrain(to: ["John", "Alice"]).arrayField()
+        names.value = ["Alice", "Bob", "Alice"]
+        // Elements not in the domain are removed from array.
+        XCTAssertEqual(names.value!, ["Alice", "Alice"])
     }
 }

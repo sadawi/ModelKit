@@ -66,6 +66,10 @@ public postfix func *<T>(right:Field<T>) -> ArrayField<T> {
     return right.arrayField()
 }
 
+/**
+ A field that wraps another field. That is, it has both its own value (U) and an inner field and value (T).
+ U and T may be related by some transformation -- for example, an ArrayField<T> wraps an inner field of type T, and has U = [T].
+ */
 open class WrapperField<T: Equatable, U>: BaseField<U> {
     /**
      A field describing how individual values will be transformed and validated.
@@ -100,14 +104,24 @@ open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
         super.init(field, value: value, name: name, priority: priority, key: key)
     }
     
-    // Consider any update a change
+    open override func clampValue(_ value: Array<T>?) -> Array<T>? {
+        if let value = value {
+            return value.flatMap { self.field.clampValue($0) }
+        } else {
+            return value
+        }
+    }
+    
     open override func isChange(oldValue: [T]?, newValue: [T]?) -> Bool {
+        // Consider any update a change
         return true
     }
 
     open func append(_ value:T) {
-        self.value?.append(value)
-        self.valueAdded(value)
+        if let value = self.field.clampValue(value) {
+            self.value?.append(value)
+            self.valueAdded(value)
+        }
     }
     
     open func removeFirst(_ value:T) {
