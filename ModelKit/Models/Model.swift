@@ -21,7 +21,7 @@ public extension ValueTransformerContext {
     static let defaultModelContext = ModelValueTransformerContext(name: "model")
 }
 
-open class Model: NSObject, NSCopying, Observable {
+open class Model: NSObject, NSCopying, Observable, Blankable {
     /**
      The class to instantiate, based on a dictionary value.  For example, your dictionary might include a "type" string.
      
@@ -620,6 +620,22 @@ open class Model: NSObject, NSCopying, Observable {
 
     public func removeAllObservers() {
         self.observations.clear()
+    }
+    
+    // MARK: - Blankable
+    
+    public var isBlank: Bool {
+        for field in self.interface.fields {
+            let value = field.anyValue
+            if let blankable = value as? Blankable {
+                if !blankable.isBlank {
+                    return false
+                }
+            } else if value != nil {
+                return false
+            }
+        }
+        return true
     }
 
 }

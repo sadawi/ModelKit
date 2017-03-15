@@ -177,6 +177,22 @@ extension ModelKitTests {
 //        
 //        XCTAssertEqual(entity.interface.fields.map{$0.key!}, ["id", "possessions", "name", "group", "size"])
     }
+    
+    func testBlankable() {
+        let entity = Entity()
+        XCTAssert(entity.isBlank)
+        entity.name.value = "Test"
+        XCTAssertFalse(entity.isBlank)
+        
+        // Model blankness is recursive: all related models must also be blank or nil.
+        let entity2 = Entity()
+        let group = Group()
+        XCTAssert(group.isBlank)
+        entity2.group.value = group
+        XCTAssert(entity2.isBlank)
+        group.id.value = "1234"
+        XCTAssertFalse(entity2.isBlank)
+    }
 }
 
 
