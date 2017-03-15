@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'ModelKit'
-    s.version          = '0.3.0'
+    s.version          = '0.4.0'
     s.summary          = 'A collection of utilities for working with model objects'
     s.homepage         = 'https://github.com/sadawi/ModelKit'
     s.license          = 'MIT'
