@@ -8,12 +8,14 @@
 
 import Foundation
 
-
+public protocol Enumerable: RawRepresentable, Equatable {
+    static func allValues() -> [Self]
+}
 
 /**
  A value transformer that attempts to convert between raw values and enums.
  */
-open class EnumValueTransformer<E:RawRepresentable>: ValueTransformer<E> {
+open class EnumValueTransformer<E:Enumerable>: ValueTransformer<E> {
     
     public required init() {
         super.init()
@@ -33,11 +35,12 @@ open class EnumValueTransformer<E:RawRepresentable>: ValueTransformer<E> {
 }
 
 /**
- A field whose value is a RawRepresentable
+ A field whose value is Enumerable
  */
-open class EnumField<T>: Field<T> where T:RawRepresentable, T:Equatable {
+open class EnumField<T>: Field<T> where T:Enumerable {
     public required init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
+        self.domain = DiscreteValueDomain(T.allValues())
     }
     
     open override func defaultValueTransformer(in context: ValueTransformerContext) -> ValueTransformer<T> {

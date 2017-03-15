@@ -25,5 +25,5 @@ open class Field<T:Equatable>: BaseField<T> {
         let copy = type(of: self).init(value: self.value, name: self.name, priority: self.priority, key: self.key)
         return copy
     }
-
+    
 }

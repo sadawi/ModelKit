@@ -11,9 +11,13 @@ import UIKit
 import XCTest
 import ModelKit
 
-enum Color: String {
-    case Red = "red"
-    case Blue = "blue"
+enum Color: String, Enumerable {
+    case red
+    case blue
+    
+    static func allValues() -> [Color] {
+        return [.red, .blue]
+    }
 }
 
 fileprivate  class Entity {
@@ -52,7 +56,7 @@ class FieldTests: XCTestCase {
     
     func testEnums() {
         let entity = Entity()
-        entity.color.value = .Blue
+        entity.color.value = .blue
 
         var dict:AttributeDictionary = [:]
         
@@ -61,7 +65,7 @@ class FieldTests: XCTestCase {
         
         dict["color"] = "blue"
         entity.color.read(from: dict)
-        XCTAssertEqual(entity.color.value, Color.Blue)
+        XCTAssertEqual(entity.color.value, Color.blue)
 
         dict["color"] = "yellow"
         entity.color.read(from: dict)
@@ -418,5 +422,36 @@ extension FieldTests {
         
         a.value = 100
         XCTAssertEqual(copy.value, 10)
+    }
+}
+
+extension FieldTests {
+    func testDomains() {
+        let a: DiscreteValueDomain<String> = ["red", "green"]
+        XCTAssertFalse(a.contains("yellow"))
+        XCTAssertTrue(a.contains("red"))
+        
+        let b = RangeValueDomain<Int>(lowerBound: 0, upperBound: 12)
+        XCTAssertFalse(b.contains(-1))
+        XCTAssertFalse(b.contains(13))
+        XCTAssertTrue(b.contains(12))
+        XCTAssertTrue(b.contains(0))
+    }
+    
+    func testFieldValueDomains() {
+        let name = Field<String>().constrain(to: ["John", "Alice"])
+        name.value = "Bob"
+        XCTAssertNil(name.value)
+        name.value = "Alice"
+        XCTAssertEqual(name.value, "Alice")
+        
+        let count = Field<Int>().constrain(to: 0...10)
+        count.value = 11
+        XCTAssertEqual(count.value, 10)
+        
+        let names = Field<String>().constrain(to: ["John", "Alice"]).arrayField()
+        names.value = ["Alice", "Bob", "Alice"]
+        // Elements not in the domain are removed from array.
+        XCTAssertEqual(names.value!, ["Alice", "Alice"])
     }
 }

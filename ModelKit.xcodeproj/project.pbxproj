@@ -61,6 +61,7 @@
 		224F98461DF09642001E851F /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 224F98451DF09642001E851F /* Podfile */; };
 		22A1F2F31DFD2ED600241434 /* ModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1F2F21DFD2ED600241434 /* ModelObserver.swift */; };
 		22A1F2F51DFD2FB700241434 /* FieldPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1F2F41DFD2FB700241434 /* FieldPath.swift */; };
+		22B82C331E78F18300E3EA54 /* ValueDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B82C321E78F18300E3EA54 /* ValueDomain.swift */; };
 		22DAC6B61DF7FCDD00108441 /* NumericValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */; };
 		22DAC6B81DF7FCF100108441 /* SimpleValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */; };
 		22DBA5871E24338900E904A4 /* ValueObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBA5861E24338900E904A4 /* ValueObservation.swift */; };
@@ -137,6 +138,7 @@
 		224F98451DF09642001E851F /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		22A1F2F21DFD2ED600241434 /* ModelObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelObserver.swift; path = Models/ModelObserver.swift; sourceTree = "<group>"; };
 		22A1F2F41DFD2FB700241434 /* FieldPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FieldPath.swift; path = Models/FieldPath.swift; sourceTree = "<group>"; };
+		22B82C321E78F18300E3EA54 /* ValueDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueDomain.swift; path = Fields/ValueDomain.swift; sourceTree = "<group>"; };
 		22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NumericValueTransformer.swift; path = Fields/NumericValueTransformer.swift; sourceTree = "<group>"; };
 		22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleValueTransformer.swift; path = Fields/SimpleValueTransformer.swift; sourceTree = "<group>"; };
 		22DBA5861E24338900E904A4 /* ValueObservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueObservation.swift; path = Fields/ValueObservation.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				220EF8D51DF09C3800B702CC /* EnumField.swift */,
 				220EF8D61DF09C3800B702CC /* Field.swift */,
 				220EF8DB1DF09C4400B702CC /* ValueTransformable.swift */,
+				22B82C321E78F18300E3EA54 /* ValueDomain.swift */,
 			);
 			name = fields;
 			sourceTree = "<group>";
@@ -696,6 +699,7 @@
 				220EF8D01DF09C1600B702CC /* Model.swift in Sources */,
 				220EF8EC1DF09C9400B702CC /* ValueObservable.swift in Sources */,
 				220EF8E21DF09C7100B702CC /* ModelStoreDelegate.swift in Sources */,
+				22B82C331E78F18300E3EA54 /* ValueDomain.swift in Sources */,
 				220EF91E1DF0A2F700B702CC /* ModelRegistry.swift in Sources */,
 				220EF8FC1DF09DC600B702CC /* DateTransformer.swift in Sources */,
 				220EF8D91DF09C3800B702CC /* EnumField.swift in Sources */,
