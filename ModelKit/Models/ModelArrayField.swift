@@ -37,7 +37,7 @@ open class ModelArrayField<T: Model>: ArrayField<T>, ModelArrayFieldType {
         }
     }
     
-    public init(_ field:ModelField<T>, value:[T]?=[], name:String?=nil, priority:Int=Int.max, key:String?=nil, inverse: ((T)->ModelFieldType)?=nil) {
+    public init(_ field:ModelField<T>, value:[T]?=[], name:String?=nil, priority:Int?=nil, key:String?=nil, inverse: ((T)->ModelFieldType)?=nil) {
         super.init(field, value: value, name: name, priority: priority, key: key)
         self.foreignKey = field.foreignKey
         self.findInverse = inverse ?? field.findInverse

@@ -26,7 +26,7 @@ public class Interface {
     }
     
     private func buildSortedFields() -> [FieldType] {
-        let sorted = Array(self.fieldsByKey.values).sorted { $0.priority < $1.priority }
+        let sorted = Array(self.fieldsByKey.values).sorted { ($0.priority ?? Int.max) < ($1.priority ?? Int.max) }
         self.sortedFields = sorted
         return sorted
     }

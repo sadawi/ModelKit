@@ -301,7 +301,7 @@ open class Model: NSObject, NSCopying, Observable {
         }
     }
 
-    lazy open var staticFields:Interface = {
+    lazy open var staticFields: Interface = {
        return self.buildStaticFields()
     }()
 
@@ -313,8 +313,16 @@ open class Model: NSObject, NSCopying, Observable {
     private func buildStaticFields() -> Interface {
         let result = Interface()
         let mirror = Mirror(reflecting: self)
+        
+        var priority:Int = Int(mirror.children.count)
+        
         mirror.eachChild { child in
             if let label = child.label, let value = child.value as? FieldType {
+                if value.priority == nil {
+                    value.priority = priority
+                    priority += 1
+                }
+                
                 // If the field has its key defined, use that; otherwise fall back to the property name.
                 let key = value.key ?? label
                 result[key] = value

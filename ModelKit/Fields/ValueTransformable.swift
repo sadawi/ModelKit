@@ -20,7 +20,7 @@ public protocol ValueTransformable {
  */
 
 open class AutomaticField<T>: Field<T> where T:ValueTransformable, T:Equatable {
-    public required init(value:T?=nil, name:String?=nil, priority:Int=Int.max, key:String?=nil) {
+    public required init(value:T?=nil, name:String?=nil, priority:Int? = nil, key:String?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
     }
 

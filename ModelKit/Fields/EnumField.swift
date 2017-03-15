@@ -38,7 +38,7 @@ open class EnumValueTransformer<E:Enumerable>: ValueTransformer<E> {
  A field whose value is Enumerable
  */
 open class EnumField<T>: Field<T> where T:Enumerable {
-    public required init(value:T?=nil, name:String?=nil, priority:Int=Int.max, key:String?=nil) {
+    public required init(value:T?=nil, name:String?=nil, priority:Int? = nil, key:String?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
         self.domain = DiscreteValueDomain(T.allValues())
     }

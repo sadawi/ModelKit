@@ -34,7 +34,9 @@ fileprivate class Group: Model {
 fileprivate class Entity: Model, HasOwnerField {
     let id          = Field<Identifier>()
     let possessions = ModelField<Possession>()*
+    let name        = Field<String>()
     let group       = ModelField<Group>(inverse: { $0.entities })
+    let size        = Field<Int>()
     
     override var identifierField: FieldType? {
         return self.id
@@ -164,6 +166,12 @@ extension ModelKitTests {
         
         XCTAssertEqual(model.interface.fields.map{$0.key!}, ["name", "age", "rank"])
         
+        let entity = Entity()
+        
+        let count = entity.interface.fields.count
+        XCTAssertEqual(entity.id.priority, count)
+        
+        XCTAssertEqual(entity.interface.fields.map{$0.key!}, ["id", "possessions", "name", "group", "size"])
     }
 }
 
