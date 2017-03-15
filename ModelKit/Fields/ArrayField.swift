@@ -104,9 +104,9 @@ open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
         super.init(field, value: value, name: name, priority: priority, key: key)
     }
     
-    open override func clampValue(_ value: Array<T>?) -> Array<T>? {
+    open override func constrain(_ value: Array<T>?) -> Array<T>? {
         if let value = value {
-            return value.flatMap { self.field.clampValue($0) }
+            return value.flatMap { self.field.constrain($0) }
         } else {
             return value
         }
@@ -118,7 +118,7 @@ open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
     }
 
     open func append(_ value:T) {
-        if let value = self.field.clampValue(value) {
+        if let value = self.field.constrain(value) {
             self.value?.append(value)
             self.valueAdded(value)
         }

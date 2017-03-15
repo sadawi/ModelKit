@@ -204,7 +204,7 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     /**
      Processes an incoming value and transforms it to a suitable value.
      */
-    open func clampValue(_ value: T?) -> T? {
+    open func constrain(_ value: T?) -> T? {
         if let value = value {
             return self.domain.clamp(value)
         } else {
@@ -213,7 +213,7 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     }
     
     open func setValue(_ newValue: T?) {
-        let newValue = self.clampValue(newValue)
+        let newValue = self.constrain(newValue)
         let oldValue = _value
         _value = newValue
         self.valueUpdated(oldValue: oldValue, newValue: newValue)
