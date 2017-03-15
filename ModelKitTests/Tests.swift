@@ -424,3 +424,17 @@ extension FieldTests {
         XCTAssertEqual(copy.value, 10)
     }
 }
+
+extension FieldTests {
+    func testDomains() {
+        let a: DiscreteValueDomain<String> = ["red", "green"]
+        XCTAssertFalse(a.contains("yellow"))
+        XCTAssertTrue(a.contains("red"))
+        
+        let b = ContinuousValueDomain<Int>(lowerBound: 0, upperBound: 12)
+        XCTAssertFalse(b.contains(-1))
+        XCTAssertFalse(b.contains(13))
+        XCTAssertTrue(b.contains(12))
+        XCTAssertTrue(b.contains(0))
+    }
+}

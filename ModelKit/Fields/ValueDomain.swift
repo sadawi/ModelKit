@@ -23,7 +23,7 @@ open class ContinuousValueDomain<T: Comparable>: ValueDomain<T> {
             return false
         }
         
-        if let max = self.upperBound, value < max {
+        if let max = self.upperBound, value > max {
             return false
         }
         
