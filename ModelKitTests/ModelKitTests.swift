@@ -151,6 +151,20 @@ extension ModelKitTests {
         
         // TODO: prefixes might be wrong! If I'm observing geometry/corner/left and I set a whole new geometry, it should be triggered!
     }
+    
+    func testInterface() {
+        let model = Model()
+        let name = Field<String>(priority: 0, key: "name")
+        let age = Field<Int>(priority: 1, key: "age")
+        let rank = Field<Int>(key: "rank")
+        
+        model << age
+        model << rank
+        model << name
+        
+        XCTAssertEqual(model.interface.fields.map{$0.key!}, ["name", "age", "rank"])
+        
+    }
 }
 
 

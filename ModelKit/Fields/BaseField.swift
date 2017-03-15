@@ -159,7 +159,7 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     /**
      Desired position in forms
      */
-    open var priority:Int = 0
+    open var priority:Int = Int.max
     
     /**
      An internal identifier (e.g., for identifying form fields)
@@ -285,7 +285,7 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     /**
      Initialize a new field.
      */
-    public init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
+    public init(value:T?=nil, name:String?=nil, priority:Int=Int.max, key:String?=nil) {
         if let value = value {
             self.value = value
         }
