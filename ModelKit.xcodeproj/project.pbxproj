@@ -63,6 +63,11 @@
 		22A1F2F51DFD2FB700241434 /* FieldPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1F2F41DFD2FB700241434 /* FieldPath.swift */; };
 		22B82C331E78F18300E3EA54 /* ValueDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B82C321E78F18300E3EA54 /* ValueDomain.swift */; };
 		22B82C3D1E79B56500E3EA54 /* Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B82C3C1E79B56500E3EA54 /* Interface.swift */; };
+		22B82C421E79E6AC00E3EA54 /* RangeRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B82C411E79E6AC00E3EA54 /* RangeRule.swift */; };
+		22B82C441E79E6C100E3EA54 /* TransformerRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B82C431E79E6C100E3EA54 /* TransformerRule.swift */; };
+		22B82C461E79E6D300E3EA54 /* LengthRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B82C451E79E6D300E3EA54 /* LengthRule.swift */; };
+		22B82C481E79E6E400E3EA54 /* CharacterSetRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B82C471E79E6E400E3EA54 /* CharacterSetRule.swift */; };
+		22B82C4A1E79E6F300E3EA54 /* NotBlankRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B82C491E79E6F300E3EA54 /* NotBlankRule.swift */; };
 		22DAC6B61DF7FCDD00108441 /* NumericValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */; };
 		22DAC6B81DF7FCF100108441 /* SimpleValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */; };
 		22DBA5871E24338900E904A4 /* ValueObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBA5861E24338900E904A4 /* ValueObservation.swift */; };
@@ -141,6 +146,11 @@
 		22A1F2F41DFD2FB700241434 /* FieldPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FieldPath.swift; path = Models/FieldPath.swift; sourceTree = "<group>"; };
 		22B82C321E78F18300E3EA54 /* ValueDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueDomain.swift; path = Fields/ValueDomain.swift; sourceTree = "<group>"; };
 		22B82C3C1E79B56500E3EA54 /* Interface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Interface.swift; path = Models/Interface.swift; sourceTree = "<group>"; };
+		22B82C411E79E6AC00E3EA54 /* RangeRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RangeRule.swift; path = Fields/RangeRule.swift; sourceTree = "<group>"; };
+		22B82C431E79E6C100E3EA54 /* TransformerRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransformerRule.swift; path = Fields/TransformerRule.swift; sourceTree = "<group>"; };
+		22B82C451E79E6D300E3EA54 /* LengthRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LengthRule.swift; path = Fields/LengthRule.swift; sourceTree = "<group>"; };
+		22B82C471E79E6E400E3EA54 /* CharacterSetRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CharacterSetRule.swift; path = Fields/CharacterSetRule.swift; sourceTree = "<group>"; };
+		22B82C491E79E6F300E3EA54 /* NotBlankRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotBlankRule.swift; path = Fields/NotBlankRule.swift; sourceTree = "<group>"; };
 		22DAC6B51DF7FCDD00108441 /* NumericValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NumericValueTransformer.swift; path = Fields/NumericValueTransformer.swift; sourceTree = "<group>"; };
 		22DAC6B71DF7FCF100108441 /* SimpleValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleValueTransformer.swift; path = Fields/SimpleValueTransformer.swift; sourceTree = "<group>"; };
 		22DBA5861E24338900E904A4 /* ValueObservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueObservation.swift; path = Fields/ValueObservation.swift; sourceTree = "<group>"; };
@@ -211,6 +221,11 @@
 			isa = PBXGroup;
 			children = (
 				220EF8FD1DF09DE000B702CC /* ValidationRule.swift */,
+				22B82C411E79E6AC00E3EA54 /* RangeRule.swift */,
+				22B82C431E79E6C100E3EA54 /* TransformerRule.swift */,
+				22B82C451E79E6D300E3EA54 /* LengthRule.swift */,
+				22B82C471E79E6E400E3EA54 /* CharacterSetRule.swift */,
+				22B82C491E79E6F300E3EA54 /* NotBlankRule.swift */,
 			);
 			name = validation;
 			sourceTree = "<group>";
@@ -665,7 +680,9 @@
 			files = (
 				220EF8D71DF09C3800B702CC /* ArrayField.swift in Sources */,
 				220EF91D1DF0A2F700B702CC /* MemoryRegistry.swift in Sources */,
+				22B82C481E79E6E400E3EA54 /* CharacterSetRule.swift in Sources */,
 				220EF9001DF09DEE00B702CC /* ValueTransformer.swift in Sources */,
+				22B82C4A1E79E6F300E3EA54 /* NotBlankRule.swift in Sources */,
 				220EF9021DF09DFD00B702CC /* Mirror+Super.swift in Sources */,
 				220EF8EE1DF09C9400B702CC /* ValueObserver.swift in Sources */,
 				22DAC6B81DF7FCF100108441 /* SimpleValueTransformer.swift in Sources */,
@@ -673,11 +690,13 @@
 				22450D041DF7880600614CC9 /* Router.swift in Sources */,
 				220EF8D11DF09C1600B702CC /* ModelArrayField.swift in Sources */,
 				220EF90E1DF09FF200B702CC /* Array+Difference.swift in Sources */,
+				22B82C421E79E6AC00E3EA54 /* RangeRule.swift in Sources */,
 				220EF9101DF0A01F00B702CC /* DictionaryExtension.swift in Sources */,
 				22DBA58C1E24531A00E904A4 /* Observable.swift in Sources */,
 				22DBA5871E24338900E904A4 /* ValueObservation.swift in Sources */,
 				220EF8DC1DF09C4400B702CC /* ValueTransformable.swift in Sources */,
 				220EF9071DF09E3100B702CC /* TransformerCache.swift in Sources */,
+				22B82C461E79E6D300E3EA54 /* LengthRule.swift in Sources */,
 				220EF8ED1DF09C9400B702CC /* Observation.swift in Sources */,
 				22450CFC1DF785E900614CC9 /* TypeDictionary.swift in Sources */,
 				22450D021DF7880600614CC9 /* RequestEncoder.swift in Sources */,
@@ -695,6 +714,7 @@
 				220EF8F61DF09D7700B702CC /* DictionarySerializable.swift in Sources */,
 				22450D011DF7880600614CC9 /* RemoteModelStore.swift in Sources */,
 				22DAC6B61DF7FCDD00108441 /* NumericValueTransformer.swift in Sources */,
+				22B82C441E79E6C100E3EA54 /* TransformerRule.swift in Sources */,
 				22A1F2F51DFD2FB700241434 /* FieldPath.swift in Sources */,
 				22419E2D1E4A3F0B0063A0C2 /* CharacterSet+extensions.swift in Sources */,
 				220EF8CC1DF09BEE00B702CC /* ArchiveModelStore.swift in Sources */,
