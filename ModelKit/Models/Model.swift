@@ -314,15 +314,8 @@ open class Model: NSObject, NSCopying, Observable {
         let result = Interface()
         let mirror = Mirror(reflecting: self)
         
-        var priority:Int = Int(mirror.children.count)
-        
         mirror.eachChild { child in
             if let label = child.label, let value = child.value as? FieldType {
-                if value.priority == nil {
-                    value.priority = priority
-                    priority += 1
-                }
-                
                 // If the field has its key defined, use that; otherwise fall back to the property name.
                 let key = value.key ?? label
                 result[key] = value

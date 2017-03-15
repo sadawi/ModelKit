@@ -9,6 +9,14 @@
 import Foundation
 
 public class Interface {
+    public static let defaultPriorityOffset = 1000
+    
+    /**
+     The priority that will be assigned to new fields without their own priority. 
+     This value will start at a large number (Interface.defaultPriorityOffset) and increase as they are added.
+     */
+    public var defaultPriority = Interface.defaultPriorityOffset
+    
     public var fieldsByKey = [String: FieldType]() {
         didSet {
             self.sortedFields = nil
@@ -21,6 +29,10 @@ public class Interface {
             return self.fieldsByKey[key]
         }
         set {
+            if newValue?.priority == nil {
+                newValue?.priority = self.defaultPriority
+                self.defaultPriority += 1
+            }
             self.fieldsByKey[key] = newValue
         }
     }

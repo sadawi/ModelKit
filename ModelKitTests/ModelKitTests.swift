@@ -164,14 +164,18 @@ extension ModelKitTests {
         model << rank
         model << name
         
+        XCTAssertEqual(rank.priority, Interface.defaultPriorityOffset)
+        
         XCTAssertEqual(model.interface.fields.map{$0.key!}, ["name", "age", "rank"])
         
-        let entity = Entity()
-        
-        let count = entity.interface.fields.count
-        XCTAssertEqual(entity.id.priority, count)
-        
-        XCTAssertEqual(entity.interface.fields.map{$0.key!}, ["id", "possessions", "name", "group", "size"])
+//        let entity = Entity()
+//        
+//        // Note: this is assuming that reflection will process fields in the order they're defined in the class.
+//        // That's nice to have, but it's not documented, so this test is commented out.
+//        XCTAssertEqual(entity.id.priority, Interface.defaultPriorityOffset)
+//        XCTAssertEqual(entity.possessions.priority, Interface.defaultPriorityOffset + 1)
+//        
+//        XCTAssertEqual(entity.interface.fields.map{$0.key!}, ["id", "possessions", "name", "group", "size"])
     }
 }
 
