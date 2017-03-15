@@ -40,6 +40,7 @@ open class EnumValueTransformer<E:Enumerable>: ValueTransformer<E> {
 open class EnumField<T>: Field<T> where T:Enumerable {
     public required init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
+        self.domain = DiscreteValueDomain(T.allValues())
     }
     
     open override func defaultValueTransformer(in context: ValueTransformerContext) -> ValueTransformer<T> {

@@ -34,6 +34,10 @@ open class ContinuousValueDomain<T: Comparable>: ValueDomain<T> {
 open class DiscreteValueDomain<T: Equatable>: ValueDomain<T> {
     open var values: [T] = []
     
+    init(_ values: [T]) {
+        self.values = values
+    }
+    
     open override func contains(_ value: T) -> Bool {
         return self.values.contains(value)
     }
