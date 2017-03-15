@@ -50,7 +50,7 @@ public protocol FieldType: Observable {
     var anyValue: Any? { get set }
     var valueType:Any.Type { get }
     var name: String? { get set }
-    var priority: Int { get set }
+    var priority: Int? { get set }
     var key: String? { get set }
     var validationState:ValidationState { get }
     var loadState:LoadState { get }
@@ -159,7 +159,7 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     /**
      Desired position in forms
      */
-    open var priority:Int = 0
+    open var priority:Int?
     
     /**
      An internal identifier (e.g., for identifying form fields)
@@ -285,7 +285,7 @@ open class BaseField<T>: FieldType, ValueObserver, ValueObservable {
     /**
      Initialize a new field.
      */
-    public init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
+    public init(value: T? = nil, name: String? = nil, priority: Int? = nil, key: String? = nil) {
         if let value = value {
             self.value = value
         }

@@ -34,7 +34,9 @@ fileprivate class Group: Model {
 fileprivate class Entity: Model, HasOwnerField {
     let id          = Field<Identifier>()
     let possessions = ModelField<Possession>()*
+    let name        = Field<String>()
     let group       = ModelField<Group>(inverse: { $0.entities })
+    let size        = Field<Int>()
     
     override var identifierField: FieldType? {
         return self.id
@@ -150,6 +152,30 @@ extension ModelKitTests {
         XCTAssertFalse(e.matches(a))
         
         // TODO: prefixes might be wrong! If I'm observing geometry/corner/left and I set a whole new geometry, it should be triggered!
+    }
+    
+    func testInterface() {
+        let model = Model()
+        let name = Field<String>(priority: 0, key: "name")
+        let age = Field<Int>(priority: 1, key: "age")
+        let rank = Field<Int>(key: "rank")
+        
+        model << age
+        model << rank
+        model << name
+        
+        XCTAssertEqual(rank.priority, Interface.defaultPriorityOffset)
+        
+        XCTAssertEqual(model.interface.fields.map{$0.key!}, ["name", "age", "rank"])
+        
+//        let entity = Entity()
+//        
+//        // Note: this is assuming that reflection will process fields in the order they're defined in the class.
+//        // That's nice to have, but it's not documented, so this test is commented out.
+//        XCTAssertEqual(entity.id.priority, Interface.defaultPriorityOffset)
+//        XCTAssertEqual(entity.possessions.priority, Interface.defaultPriorityOffset + 1)
+//        
+//        XCTAssertEqual(entity.interface.fields.map{$0.key!}, ["id", "possessions", "name", "group", "size"])
     }
 }
 

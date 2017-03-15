@@ -9,7 +9,7 @@
 import Foundation
 
 open class Field<T:Equatable>: BaseField<T> {
-    public required override init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil) {
+    public required override init(value:T?=nil, name:String?=nil, priority:Int?=nil, key:String?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
     }
     

@@ -93,7 +93,7 @@ class ModelTests: XCTestCase {
         co.name.value = "The Widget Company"
         co.size.value = 22
         
-        let fields = co.fields
+        let fields = co.interface
         XCTAssertNotNil(fields["name"])
         
         let co2 = Company()

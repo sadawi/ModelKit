@@ -60,13 +60,13 @@ open class ModelField<T: Model>: Field<T>, InvertibleModelFieldType {
     
     public var modelObservations = ObservationRegistry<ModelObservation>()
     
-    public init(value:T?=nil, name:String?=nil, priority:Int=0, key:String?=nil, foreignKey:Bool=false, inverse: ((T)->ModelFieldType)?=nil) {
+    public init(value:T?=nil, name:String?=nil, priority:Int? = nil, key:String?=nil, foreignKey:Bool=false, inverse: ((T)->ModelFieldType)?=nil) {
         super.init(value: value, name: name, priority: priority, key: key)
         self.foreignKey = foreignKey
         self.findInverse = inverse
     }
     
-    public required init(value: T?, name: String?, priority: Int, key: String?) {
+    public required init(value: T?, name: String?, priority: Int? = nil, key: String?) {
         super.init(value: value, name: name, priority: priority, key: key)
     }
     
