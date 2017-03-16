@@ -163,7 +163,7 @@ class FieldTests: XCTestCase {
         let idField = Field<String>().require(LengthRule(minimum: 1, maximum: 3))
         idField.value = "1111"
         let state = idField.validate()
-        XCTAssertEqual(state, ValidationState.invalid(["length must be less than 3"]))
+        XCTAssertEqual(state, ValidationState.invalid(["length must be less than or equal to 3"]))
     }
     
     func testMoreValidators() {
