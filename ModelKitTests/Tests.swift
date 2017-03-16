@@ -122,6 +122,14 @@ class FieldTests: XCTestCase {
         XCTAssertTrue(person.longString.validate().isValid)
     }
     
+    func testRangeValidation() {
+        let field = Field<Int>().require(RangeRule(minimum: 6, maximum: 6))
+        field.value = 6
+        XCTAssertTrue(field.validate().isValid)
+        field.value = 7
+        XCTAssertEqual(ValidationState.invalid(["must be equal to 6"]), field.validate())
+    }
+    
     func testCharacterSetRule() {
         let field = Field<String>().require(CharacterSetRule(characterSet: CharacterSet.uppercaseHexadecimal))
         field.value = "J9"
