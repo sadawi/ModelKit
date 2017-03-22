@@ -17,8 +17,8 @@ open class Field<T:Equatable>: BaseField<T> {
         return oldValue != self.value
     }
     
-    open func arrayField(value: [T]?=[], name: String?=nil, priority: Int?=nil, key: String?=nil) -> ArrayField<T> {
-        return ArrayField(self, value: value, name: name, priority: priority, key: key)
+    open func arrayField(value: [T]?=[], name: String?=nil, priority: Int?=nil, key: String?=nil, allowsDuplicates: Bool = true) -> ArrayField<T> {
+        return ArrayField(self, value: value, name: name, priority: priority, key: key, allowsDuplicates: allowsDuplicates)
     }
 
     open func copy() -> Field<T> {

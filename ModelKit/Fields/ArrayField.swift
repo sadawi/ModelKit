@@ -8,6 +8,16 @@
 
 import Foundation
 
+public extension Sequence where Iterator.Element: Equatable {
+    var uniqueElements: [Iterator.Element] {
+        return self.reduce([]) { uniqueElements, element in
+            uniqueElements.contains(element)
+                ? uniqueElements
+                : uniqueElements + [element]
+        }
+    }
+}
+
 /**
  A transformer that reads and writes an array of values.
  */
@@ -100,13 +110,24 @@ open class WrapperField<T: Equatable, U>: BaseField<U> {
  
  */
 open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
+    open var allowsDuplicates: Bool = true
+    
+    public convenience init(_ field:Field<T>, value:[T]?=[], name:String?=nil, priority:Int?=nil, key:String?=nil, allowsDuplicates: Bool) {
+        self.init(field, value: value, name: name, priority: priority, key: key)
+        self.allowsDuplicates = allowsDuplicates
+    }
+    
     public override init(_ field:Field<T>, value:[T]?=[], name:String?=nil, priority:Int?=nil, key:String?=nil) {
         super.init(field, value: value, name: name, priority: priority, key: key)
     }
     
     open override func constrain(_ value: Array<T>?) -> Array<T>? {
         if let value = value {
-            return value.flatMap { self.field.constrain($0) }
+            var constrainedValue = value.flatMap { self.field.constrain($0) }
+            if !self.allowsDuplicates {
+               constrainedValue = constrainedValue.uniqueElements
+            }
+            return constrainedValue
         } else {
             return value
         }
@@ -117,17 +138,26 @@ open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
         return true
     }
 
-    open func append(_ value:T) {
+    @discardableResult open func append(_ value:T) -> Bool {
         if let value = self.field.constrain(value) {
-            self.value?.append(value)
-            self.valueAdded(value)
+            if !self.allowsDuplicates && self.contains(value) {
+                return false
+            } else {
+                self.value?.append(value)
+                self.valueAdded(value)
+                return true
+            }
         }
+        
+        return false
     }
     
-    open func removeFirst(_ value:T) {
+    @discardableResult open func removeFirst(_ value:T) -> Bool {
         if let index = self.value?.index(of: value) {
             self.removeAtIndex(index)
+            return true
         }
+        return false
     }
     
     open func contains(_ value: T) -> Bool {

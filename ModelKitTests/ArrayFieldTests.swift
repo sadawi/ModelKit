@@ -76,6 +76,23 @@ class ArrayFieldTests: XCTestCase {
             XCTFail()
         }
     }
+    
+    func testUnique() {
+        let field = Field<Int>().arrayField(allowsDuplicates: false)
+        XCTAssert(field.append(0))
+        XCTAssert(field.append(1))
+        XCTAssertFalse(field.append(1))
+        XCTAssertEqual(field.value?.count, 2)
+
+        let field2 = Field<Int>().arrayField()
+        XCTAssert(field2.append(0))
+        XCTAssert(field2.append(1))
+        XCTAssert(field2.append(1))
+        XCTAssertEqual(field2.value?.count, 3)
+        
+        field.value = [1, 1, 2, 3, 9, 9]
+        XCTAssertEqual(field.value!, [1,2,3,9])
+    }
 
 //    func testCustomTransformers() {
 //        let raw: AttributeDictionary = ["ages": [0: 1, 1: 2, 2: 3] as AnyObject]
