@@ -10,9 +10,7 @@ import Foundation
 
 public extension Sequence where Iterator.Element: Equatable {
     var uniqueElements: [Iterator.Element] {
-        return self.reduce([]){
-            uniqueElements, element in
-            
+        return self.reduce([]) { uniqueElements, element in
             uniqueElements.contains(element)
                 ? uniqueElements
                 : uniqueElements + [element]
