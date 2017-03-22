@@ -129,6 +129,10 @@ open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
             self.removeAtIndex(index)
         }
     }
+    
+    open func contains(_ value: T) -> Bool {
+        return self.value?.index(of: value) != nil
+    }
 
     open func removeAtIndex(_ index:Int) {
         let value = self.value?[index]
