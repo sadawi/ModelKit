@@ -100,6 +100,13 @@ open class WrapperField<T: Equatable, U>: BaseField<U> {
  
  */
 open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
+    open var hasUniqueElements: Bool = false
+    
+    public convenience init(_ field:Field<T>, value:[T]?=[], name:String?=nil, priority:Int?=nil, key:String?=nil, hasUniqueElements: Bool) {
+        self.init(field, value: value, name: name, priority: priority, key: key)
+        self.hasUniqueElements = hasUniqueElements
+    }
+    
     public override init(_ field:Field<T>, value:[T]?=[], name:String?=nil, priority:Int?=nil, key:String?=nil) {
         super.init(field, value: value, name: name, priority: priority, key: key)
     }
@@ -117,17 +124,26 @@ open class ArrayField<T:Equatable>: WrapperField<T, [T]> {
         return true
     }
 
-    open func append(_ value:T) {
+    @discardableResult open func append(_ value:T) -> Bool {
         if let value = self.field.constrain(value) {
-            self.value?.append(value)
-            self.valueAdded(value)
+            if self.hasUniqueElements && self.contains(value) {
+                return false
+            } else {
+                self.value?.append(value)
+                self.valueAdded(value)
+                return true
+            }
         }
+        
+        return false
     }
     
-    open func removeFirst(_ value:T) {
+    @discardableResult open func removeFirst(_ value:T) -> Bool {
         if let index = self.value?.index(of: value) {
             self.removeAtIndex(index)
+            return true
         }
+        return false
     }
     
     open func contains(_ value: T) -> Bool {
