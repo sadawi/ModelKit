@@ -9,6 +9,12 @@
 import Foundation
 
 open class ModelValueTransformer<T: Model>: ValueTransformer<T> {
+    var fields: ((T)->[FieldType])?
+    
+    public convenience init(fields: @escaping ((T)->[FieldType])) {
+        self.init()
+        self.fields = fields
+    }
     
     public required init() {
         super.init()
@@ -25,7 +31,11 @@ open class ModelValueTransformer<T: Model>: ValueTransformer<T> {
     
     open override func exportValue(_ value: T?, in context: ValueTransformerContext = .defaultContext) -> Any? {
         var seenFields: [FieldType] = []
-        return self.exportValue(value, seenFields: &seenFields, in: context)
+        var fields: [FieldType]? = nil
+        if let fieldGenerator = self.fields, let model = value {
+            fields = fieldGenerator(model)
+        }
+        return self.exportValue(value, fields: fields, seenFields: &seenFields, in: context)
     }
 
     open func exportValue(_ value: T?, fields: [FieldType]?=nil, seenFields: inout [FieldType], in context: ValueTransformerContext = .defaultContext) -> Any? {
