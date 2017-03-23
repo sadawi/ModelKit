@@ -73,6 +73,7 @@
 		22DBA5871E24338900E904A4 /* ValueObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBA5861E24338900E904A4 /* ValueObservation.swift */; };
 		22DBA5891E243F4300E904A4 /* ObservationRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBA5881E243F4300E904A4 /* ObservationRegistry.swift */; };
 		22DBA58C1E24531A00E904A4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBA58B1E24531A00E904A4 /* Observable.swift */; };
+		22F4C8641E834D450059CE94 /* CountRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F4C8631E834D450059CE94 /* CountRule.swift */; };
 		902751C3FA18C7E0AF33260D /* Pods_ModelKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090DEBA661399D9997A81C45 /* Pods_ModelKitTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -156,6 +157,7 @@
 		22DBA5861E24338900E904A4 /* ValueObservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueObservation.swift; path = Fields/ValueObservation.swift; sourceTree = "<group>"; };
 		22DBA5881E243F4300E904A4 /* ObservationRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationRegistry.swift; path = Fields/ObservationRegistry.swift; sourceTree = "<group>"; };
 		22DBA58B1E24531A00E904A4 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = Fields/Observable.swift; sourceTree = "<group>"; };
+		22F4C8631E834D450059CE94 /* CountRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CountRule.swift; path = Fields/CountRule.swift; sourceTree = "<group>"; };
 		38A05B7372D948352D30FCD1 /* Pods-ModelKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.release.xcconfig"; sourceTree = "<group>"; };
 		B2EB45E0B156254A6D7C8539 /* Pods-ModelKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKit/Pods-ModelKit.debug.xcconfig"; sourceTree = "<group>"; };
 		DC22183A5F54223695D5D378 /* Pods-ModelKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ModelKitTests/Pods-ModelKitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				22B82C451E79E6D300E3EA54 /* LengthRule.swift */,
 				22B82C471E79E6E400E3EA54 /* CharacterSetRule.swift */,
 				22B82C491E79E6F300E3EA54 /* NotBlankRule.swift */,
+				22F4C8631E834D450059CE94 /* CountRule.swift */,
 			);
 			name = validation;
 			sourceTree = "<group>";
@@ -711,6 +714,7 @@
 				220EF8FE1DF09DE000B702CC /* ValidationRule.swift in Sources */,
 				22DBA5891E243F4300E904A4 /* ObservationRegistry.swift in Sources */,
 				220EF8D81DF09C3800B702CC /* BaseField.swift in Sources */,
+				22F4C8641E834D450059CE94 /* CountRule.swift in Sources */,
 				220EF8F61DF09D7700B702CC /* DictionarySerializable.swift in Sources */,
 				22450D011DF7880600614CC9 /* RemoteModelStore.swift in Sources */,
 				22DAC6B61DF7FCDD00108441 /* NumericValueTransformer.swift in Sources */,
