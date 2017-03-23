@@ -77,6 +77,15 @@ class ArrayFieldTests: XCTestCase {
         }
     }
     
+    func testCountRule() {
+        let field = Field<Int>().arrayField().require(CountRule(minimum: 1, maximum: 1))
+        XCTAssert(field.validate().isInvalid)
+        field.value = [1]
+        XCTAssert(field.validate().isValid)
+        field.value = [1, 2]
+        XCTAssert(field.validate().isInvalid)
+    }
+    
     func testUnique() {
         let field = Field<Int>().arrayField(allowsDuplicates: false)
         XCTAssert(field.append(0))
