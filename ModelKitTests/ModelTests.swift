@@ -41,6 +41,7 @@ class ModelTests: XCTestCase {
     fileprivate class Person: Model {
         let id = Field<String>()
         let name = Field<String>()
+        let rank = Field<Int>()
         let company = ModelField<Company>(inverse: { company in return company.employees })
         let profile = ModelField<Profile>(inverse: { $0.person })
         
@@ -435,5 +436,31 @@ class ModelTests: XCTestCase {
         let company = Company()
         XCTAssertEqual(company.id.loadState, .notLoaded)
         XCTAssertEqual(company.employees.loadState, .notLoaded)
+    }
+    
+    fileprivate class TransformerFieldModel: Model {
+        let title = Field<String>()
+        let people = ModelField<Person>().transform(with: ModelValueTransformer(fields: { [$0.name] })).arrayField()
+        let person = ModelField<Person>()
+    }
+    
+    func testTransformerFields() {
+        let model = TransformerFieldModel()
+        
+        let person = Person()
+        person.rank.value = 100
+        person.name.value = "John"
+        
+        let person2 = Person()
+        person2.rank.value = 2
+        person2.name.value = "person 2"
+        
+        model.people.value = [person]
+        model.person.value = person
+        
+        let dict = model.dictionaryValue()
+        let johnDict = (dict["people"] as! [AttributeDictionary])[0]
+        XCTAssertEqual(johnDict.count, 1)
+        XCTAssertEqual(johnDict["name"] as! String, "John")
     }
 }
