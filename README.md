@@ -140,7 +140,7 @@ Transformer contexts provide a way to distinguish different situations in which 
 
 A context contains some global rules, like: 
 
-* Automatic casing of field keys (`.keyCase`)
+* Automatic casing of field keys (`.keyCase`: `.snake`, `.upperCamel`, `.lowerCamel`)
 * Whether nil values should be included in the serialization (`.explicitNull`)
 
 A context also provides a registry of value types to transformers. You can modify this at app startup; for example:
@@ -220,7 +220,4 @@ instancePath(for: person)
 
 Nested routes are generated automatically if your model conforms to `HasOwnerField`, which requires it to specify an owning field. If a person's owner field is its `company` field, for example, you might get `"/companies/10/employees/45"` for its instance path.
 
-It also contains a `ValueTransformerContext` var that can be used to customize serialization. For example:
-* `context.keyCase` - specify the casing style of keys (`.snake`, `.upperCamel`, `.lowerCamel`)
-* `context.explicitNull` - decide whether keys for null values should be included
-* Specify custom transformers
+It also contains a `ValueTransformerContext` var that can be used to customize serialization.
