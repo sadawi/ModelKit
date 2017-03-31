@@ -171,9 +171,14 @@ let name = Field<Int>().transform(with: MyCustomIntTransformer(), in: .myCustomC
 
 A `Model` object automatically converts to and from a dictionary representation of its `Field` properties.
 
-```
+```swift
 person.dictionaryValue()
 // --> ["name": "Bob", "tags": ["red", "blue", "green"]]
+```
+
+You can optionally provide a `ValueTransformerContext`:
+```swift
+person.dictionaryValue(in: .myCustomValueTransformerContext)
 ```
 
 If your field's value is a subclass of `Model`, you should use the `ModelField` subclass.
