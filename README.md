@@ -140,8 +140,8 @@ Transformer contexts provide a way to distinguish different situations in which 
 
 A context contains some global rules, like: 
 
-* Automatic casing of field keys (`.keyCase`: `.snake`, `.upperCamel`, `.lowerCamel`)
-* Whether nil values should be included in the serialization (`.explicitNull`)
+* Automatic casing of field keys (`keyCase`: `.snake`, `.upperCamel`, `.lowerCamel`)
+* Whether nil values should be included in the serialization (`explicitNull`)
 
 A context also provides a registry of value types to transformers. You can modify this at app startup; for example:
 
