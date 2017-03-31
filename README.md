@@ -126,6 +126,47 @@ Since `<--` is called first, both fields will initially have the value of `field
 
 Unregistering observers is done with the `removeObserver` method, or the `-/->` operator.  All observers can be removed with `removeAllObservers()`.
 
+### Value transformers
+
+When serializing and deserializing, every field value goes through a value transformer. You can implement your own `ValueTransformer` subclasses and tell fields to always use them:
+
+```swift
+let birthday = Field<Date>().transform(with: MyDateTransformer())
+```
+
+### Value transformer contexts
+
+Transformer contexts provide a way to distinguish different situations in which values are (de)serialized, and configure serialization differently in each case. 
+
+A context contains some global rules, like: 
+
+* Automatic casing of field keys (`.keyCase`)
+* Whether nil values should be included in the serialization (`.explicitNull`)
+
+A context also provides a registry of value types to transformers. You can modify this at app startup; for example:
+
+```swift
+ValueTransformerContext.defaultContext.transform(Float.self, with: MyCustomFloatValueTransformer())
+```
+
+You can also register a new context in an extension:
+
+```swift
+extension ValueTransformerContext {
+    static let myCustomContext: ValueTransformerContext = {
+        let context = ValueTransformerContext(name: "custom")
+        context.transform(Int.self, with: MyCustomIntTransformer())
+        return context
+    }()
+}
+```
+
+Finally, you can tell each field which ValueTransformer to use in each context:
+
+```swift
+let name = Field<Int>().transform(with: MyCustomIntTransformer(), in: .myCustomContext)
+```
+
 ## Models
 
 A `Model` object automatically converts to and from a dictionary representation of its `Field` properties.
